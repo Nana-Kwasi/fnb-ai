@@ -1,0 +1,58 @@
+# ── API Framework ──────────────────────────────
+fastapi==0.111.0
+uvicorn[standard]==0.30.0
+pydantic>=2.7.4,<3
+pydantic-settings>=2.4.0,<3
+python-multipart==0.0.9
+
+# ── Authentication ──────────────────────────────
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-dotenv==1.0.1
+
+# ── Database ────────────────────────────────────
+sqlalchemy==2.0.30
+asyncpg>=0.30.0
+aiosqlite>=0.19.0
+alembic==1.13.1
+psycopg2-binary==2.9.9
+pgvector==0.2.5
+
+# ── ML / Fraud Detection ────────────────────────
+lightgbm==4.3.0
+scikit-learn==1.8.0
+shap==0.51.0
+# Pin to 2.0.x to avoid NumPy 2.3+ ABI break with torch (ARRAY_API / 1.x-compiled wheels)
+numpy>=2.0,<2.2
+pandas==3.0.1
+imbalanced-learn==0.12.2
+joblib==1.5.3
+
+# ── NLP / LLM ───────────────────────────────────
+transformers==4.41.0
+torch>=2.2.0,<2.4
+sentence-transformers==3.0.0
+llama-cpp-python==0.2.77
+
+# ── RAG / LangChain ─────────────────────────────
+langchain==0.3.28
+langchain-community==0.3.23
+langchain-postgres==0.0.17
+
+# ── Async / Queue ───────────────────────────────
+celery[redis]==5.4.0
+redis==5.0.4
+aiohttp==3.9.5
+
+# ── Scheduler (like Spring @Scheduled) ──────────
+apscheduler==3.10.4
+
+# ── Rules: Excel / Word (care intent rules) ─────
+openpyxl==3.1.5
+python-docx==1.1.2
+
+# ── Utilities ───────────────────────────────────
+httpx==0.27.0
+tenacity==8.3.0
+structlog==24.1.0
+prometheus-fastapi-instrumentator==7.0.0

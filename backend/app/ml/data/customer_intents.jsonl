@@ -1,0 +1,36 @@
+{"text": "Why was my card transaction at the supermarket declined yesterday?", "intent": "FRAUD_INQUIRY"}
+{"text": "I just got a message that my payment was blocked, what happened?", "intent": "FRAUD_INQUIRY"}
+{"text": "There is a charge on my account that I do not recognize.", "intent": "DISPUTE_TRANSACTION"}
+{"text": "I think someone used my card without my permission.", "intent": "DISPUTE_TRANSACTION"}
+{"text": "Please block my card immediately, it may be compromised.", "intent": "FRAUD_INQUIRY"}
+{"text": "Why did you flag my online purchase as suspicious?", "intent": "FRAUD_INQUIRY"}
+{"text": "I confirmed the OTP but my transaction is still pending.", "intent": "FRAUD_INQUIRY"}
+{"text": "My account is locked and I cannot log into the app.", "intent": "ACCOUNT_LOCKED"}
+{"text": "I forgot my PIN and I am locked out of my card.", "intent": "ACCOUNT_LOCKED"}
+{"text": "Why can’t I access my online banking this morning?", "intent": "ACCOUNT_LOCKED"}
+{"text": "How do I reset my online banking password?", "intent": "ACCOUNT_LOCKED"}
+{"text": "What is my current account balance?", "intent": "BALANCE_INQUIRY"}
+{"text": "Can you tell me how much money I have left?", "intent": "BALANCE_INQUIRY"}
+{"text": "What are the last five transactions on my savings account?", "intent": "BALANCE_INQUIRY"}
+{"text": "Show me my recent activity for this month.", "intent": "BALANCE_INQUIRY"}
+{"text": "I want to dispute a transaction from last week.", "intent": "DISPUTE_TRANSACTION"}
+{"text": "How do I raise a dispute for an unauthorized charge?", "intent": "DISPUTE_TRANSACTION"}
+{"text": "The merchant charged me twice for the same purchase.", "intent": "DISPUTE_TRANSACTION"}
+{"text": "I was charged but the ATM did not give me any cash.", "intent": "DISPUTE_TRANSACTION"}
+{"text": "I need help understanding the fees on my statement.", "intent": "GENERAL_SUPPORT"}
+{"text": "Can someone explain why I was charged a maintenance fee?", "intent": "GENERAL_SUPPORT"}
+{"text": "How can I change my daily ATM withdrawal limit?", "intent": "GENERAL_SUPPORT"}
+{"text": "What is the interest rate on my savings account?", "intent": "GENERAL_SUPPORT"}
+{"text": "How do I update my phone number and email address?", "intent": "GENERAL_SUPPORT"}
+{"text": "I am extremely frustrated, no one has resolved my issue for three days.", "intent": "HUMAN_ESCALATION"}
+{"text": "This is unacceptable, I need to speak to a human supervisor now.", "intent": "HUMAN_ESCALATION"}
+{"text": "Your bot is not helping at all, connect me to a real agent.", "intent": "HUMAN_ESCALATION"}
+{"text": "I have already contacted support twice, why is my problem still not fixed?", "intent": "HUMAN_ESCALATION"}
+{"text": "I want to close my account and file a formal complaint.", "intent": "HUMAN_ESCALATION"}
+{"text": "My card was stolen and I need urgent assistance.", "intent": "FRAUD_INQUIRY"}
+{"text": "There are multiple small transactions I do not recognize, please investigate.", "intent": "FRAUD_INQUIRY"}
+{"text": "The dispute you resolved last month has reappeared on my statement.", "intent": "DISPUTE_TRANSACTION"}
+{"text": "I cannot verify my account with the code you sent.", "intent": "ACCOUNT_LOCKED"}
+{"text": "What charges will apply if I withdraw cash abroad?", "intent": "GENERAL_SUPPORT"}
+{"text": "How can I increase my card limit temporarily for a big purchase?", "intent": "GENERAL_SUPPORT"}
+

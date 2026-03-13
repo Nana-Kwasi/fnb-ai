@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "BankAI Tester",
+    "slug": "bankai-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "splash": { "backgroundColor": "#0f4c75" },
+    "ios": { "supportsTablet": true, "bundleIdentifier": "com.bankai.tester" },
+    "android": { "adaptiveIcon": { "backgroundColor": "#0f4c75" }, "package": "com.bankai.tester" }
+  }
+}

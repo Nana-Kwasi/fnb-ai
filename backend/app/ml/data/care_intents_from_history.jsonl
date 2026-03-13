@@ -1,0 +1,50 @@
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "What is Ghanaian.", "intent": "GENERAL_SUPPORT"}
+{"text": "What is my balance", "intent": "BALANCE_INQUIRY"}
+{"text": "what is Ghanaian", "intent": "GENERAL_SUPPORT"}
+{"text": "What is my balance?", "intent": "GENERAL_SUPPORT"}
+{"text": "What is my balance?", "intent": "GENERAL_SUPPORT"}
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "How are you", "intent": "GENERAL_SUPPORT"}
+{"text": "View transactions", "intent": "TRANSACTION_HISTORY"}
+{"text": "Tell us which transaction", "intent": "TRANSACTION_HISTORY"}
+{"text": "View transactions in app", "intent": "TRANSACTION_HISTORY"}
+{"text": "What is my balance", "intent": "BALANCE_INQUIRY"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "Yes", "intent": "HUMAN_ESCALATION"}
+{"text": "How are you", "intent": "GENERAL_SUPPORT"}
+{"text": "Thank you", "intent": "GENERAL_SUPPORT"}
+{"text": "What is Ghanaian", "intent": "GENERAL_SUPPORT"}
+{"text": "Balance inquiry", "intent": "BALANCE_INQUIRY"}
+{"text": "View balance in app", "intent": "BALANCE_INQUIRY"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "Stay on channel", "intent": "GENERAL_SUPPORT"}
+{"text": "Branch or ATM locations", "intent": "BRANCH_ATM"}
+{"text": "Call contact centre", "intent": "GENERAL_SUPPORT"}
+{"text": "Complaints", "intent": "COMPLAINT"}
+{"text": "Submit complaint in app", "intent": "COMPLAINT"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "What is him", "intent": "GENERAL_SUPPORT"}
+{"text": "I am mad", "intent": "GENERAL_SUPPORT"}
+{"text": "Locked account help", "intent": "ACCOUNT_LOCKED"}
+{"text": "Contact support", "intent": "GENERAL_SUPPORT"}
+{"text": "Branch or ATM locations", "intent": "BRANCH_ATM"}
+{"text": "Find branch/ATM in app", "intent": "BRANCH_ATM"}
+{"text": "Call contact centre", "intent": "GENERAL_SUPPORT"}
+{"text": "need to ask something", "intent": "GENERAL_SUPPORT"}
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "View transactions", "intent": "TRANSACTION_HISTORY"}
+{"text": "Tell us which transaction", "intent": "TRANSACTION_HISTORY"}
+{"text": "View transactions in app", "intent": "TRANSACTION_HISTORY"}
+{"text": "View transactions in app", "intent": "TRANSACTION_HISTORY"}
+{"text": "Thank you", "intent": "GENERAL_SUPPORT"}
+{"text": "Thank you", "intent": "GENERAL_SUPPORT"}
+{"text": "Raise dispute", "intent": "FRAUD_DISPUTE"}
+{"text": "Raise dispute", "intent": "FRAUD_DISPUTE"}
+{"text": "Freeze card", "intent": "GENERAL_SUPPORT"}
+{"text": "Block card", "intent": "CARD_BLOCK"}
+{"text": "Contact support", "intent": "CONTACT_SUPPORT"}
+{"text": "Email support", "intent": "CONTACT_SUPPORT"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "Stay on channel", "intent": "GENERAL_SUPPORT"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}

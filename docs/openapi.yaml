@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  title: BankAI Platform API
+  version: 1.0.0
+  description: White-label Fraud Detection + Customer Care API
+paths:
+  /api/v1/health:
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: OK
+  /api/v1/admin/onboard:
+    post:
+      summary: Register a new bank tenant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, country_code]
+              properties:
+                name: { type: string }
+                country_code: { type: string }
+      responses:
+        "200":
+          description: Created; returns bank_id and api_key (show once)
+  /api/v1/fraud/score:
+    post:
+      summary: Score a transaction for fraud
+      security: [{ ApiKeyAuth: [] }]
+      responses:
+        "200":
+          description: Fraud score and decision
+  /api/v1/care/chat:
+    post:
+      summary: Send customer message to care agent
+      security: [{ ApiKeyAuth: [] }]
+      responses:
+        "200":
+          description: Agent response and suggested actions
+securitySchemes:
+  ApiKeyAuth:
+    type: apiKey
+    in: header
+    name: X-API-Key

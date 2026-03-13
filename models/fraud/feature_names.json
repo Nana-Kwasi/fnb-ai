@@ -1,0 +1,1 @@
+["amount", "txn_count_1h", "total_amount_1h", "txn_count_24h", "total_amount_24h", "txn_count_7d", "total_amount_7d", "amount_vs_avg_ratio", "is_new_device", "hour_of_day", "is_weekend", "days_since_last_txn", "customer_risk_score", "merchant_cat_risk"]

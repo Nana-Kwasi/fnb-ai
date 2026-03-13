@@ -1,0 +1,60 @@
+version: "3.9"
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: bankaidb
+      POSTGRES_USER: bankaiuser
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-bankaidev}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bankaiuser -d bankaidb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  api:
+    build: ../backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://bankaiuser:${DB_PASSWORD:-bankaidev}@postgres/bankaidb
+      REDIS_URL: redis://redis:6379
+      SECRET_KEY: ${SECRET_KEY:-dev-secret}
+      MODEL_PATH: /models/Phi-3-mini-4k-instruct-q4.gguf
+    volumes:
+      - ../models:/models
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  frontend:
+    build: ../frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
+      - frontend
+
+volumes:
+  postgres_data:

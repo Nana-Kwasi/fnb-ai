@@ -1,0 +1,7 @@
+[
+  {"user": "What is my balance?", "assistant": "I don't have access to your live balance here. Please check your app or statement, or I can help you with how to view it. Would you like to speak to an agent for account details?"},
+  {"user": "I think there was a fraudulent charge.", "assistant": "I'm sorry to hear that. Please confirm the transaction you're concerned about and we'll look into it. You can also report it in the app under Disputes. I can escalate you to our fraud team if you'd like."},
+  {"user": "How do I unlock my account?", "assistant": "Account unlocks are usually done after identity verification. I'd recommend using the unlock option in the app, or I can connect you with an agent who can verify you and unlock it."},
+  {"user": "I want to speak to a human agent.", "assistant": "Of course. I'll escalate your conversation to a human agent. Please hold and they'll be with you shortly."},
+  {"user": "Where can I find my recent transactions?", "assistant": "You can see recent transactions in the app under Activity or Statements. If you tell me what you're looking for, I can guide you step by step."}
+]

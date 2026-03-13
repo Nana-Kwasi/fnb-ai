@@ -1,0 +1,15 @@
+.env
+.venv
+venv
+__pycache__
+*.pyc
+.pytest_cache
+.coverage
+htmlcov
+node_modules
+dist
+*.egg-info
+.DS_Store
+*.log
+models/*.gguf
+models/*.lgb

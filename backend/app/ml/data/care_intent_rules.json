@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "intents": [
+    {
+      "id": "BALANCE_INQUIRY",
+      "phrases": [
+        "balance", "my balance", "account balance", "check balance", "view balance", "how much do i have", "available balance",
+        "current balance", "what is my balance", "balance check", "check my balance", "see my balance", "show balance",
+        "account balance check", "how much money", "how much is in my account", "what do i have", "funds available",
+        "available funds", "balance enquiry", "balance inquiry", "get my balance", "what's my balance", "tell me my balance",
+        "can i see my balance", "i want to check balance", "need to know my balance", "balance please", "check account balance",
+        "view my balance", "see balance", "display balance", "current account balance", "savings balance", "checking balance"
+      ],
+      "response": "I don't have direct access to your live account balance, but you can see it in your mobile app or online banking under Accounts or Overview. If you'd like, I can help with the steps or connect you with a human agent.",
+      "short_phrases": ["view balance", "balance in app", "check balance", "see balance", "show balance"],
+      "short_response": "You can see your balance in the app under Accounts or Overview. Need help with something else?",
+      "suggested_actions": ["View balance in app", "Talk to agent"],
+      "append_kb": true
+    },
+    {
+      "id": "FRAUD_DISPUTE",
+      "phrases": [
+        "fraud", "fraudulent", "dispute", "chargeback", "unauthorized", "don't recognise", "didn't make", "stolen card",
+        "report fraud", "fraudulent transaction", "someone used my card", "unauthorized charge", "unauthorized transaction",
+        "i didn't make this payment", "wrong charge", "incorrect charge", "dispute transaction", "chargeback request",
+        "refund unauthorized", "card used without permission", "fraud alert", "suspect fraud", "possible fraud",
+        "transaction not mine", "unknown transaction", "mystery charge", "scam", "i was charged for something i didn't buy",
+        "dispute this charge", "reverse this transaction", "cancel this transaction", "report unauthorized", "fraud claim",
+        "someone stole my card", "lost card and someone used it", "identity theft", "card compromised", "report suspicious"
+      ],
+      "response": "If you see a transaction you don't recognise, please freeze the card or account in your app and raise a dispute from the transaction details screen. Our fraud team will review it and keep you updated. For urgent cases, contact support immediately so they can block further activity.",
+      "short_phrases": ["freeze card", "raise dispute", "dispute transaction", "report fraud"],
+      "short_response": "In the app, open the transaction and use 'Raise dispute' or freeze the card under Security. Need more help?",
+      "suggested_actions": ["Freeze card", "Raise dispute", "Talk to agent"],
+      "prepend_tx_context": true,
+      "append_kb": true
+    },
+    {
+      "id": "ACCOUNT_LOCKED",
+      "phrases": [
+        "unlock", "locked", "blocked", "account locked", "can't log in", "access denied",
+        "unlock account", "my account is locked", "account blocked", "cannot access", "locked out",
+        "can't access my account", "account suspended", "suspended account", "restore access", "regain access",
+        "why is my account locked", "how to unlock", "unlock my account", "remove block", "account access denied",
+        "login blocked", "blocked from logging in", "security lock", "temporarily locked", "account frozen",
+        "unfreeze account", "reactivate account", "account disabled", "enable my account", "get back into account"
+      ],
+      "response": "Locked accounts can only be unlocked after we verify your identity. In the app, look for 'Unlock account' or 'Reset access', or contact support with your ID so they can complete the checks and restore access.",
+      "suggested_actions": ["Unlock in app", "Contact support"]
+    },
+    {
+      "id": "CONTACT_SUPPORT",
+      "phrases": [
+        "contact support", "support number", "support email", "phone number", "customer service", "help line", "call support", "email support",
+        "contact options", "what are your contact options", "your contact options", "how to contact", "reach support", "get in touch", "speak to someone", "customer care", "support line",
+        "helpline", "support phone", "support contact", "bank phone number", "bank email", "call the bank",
+        "email the bank", "contact centre", "contact center", "customer support number", "where can i call",
+        "how do i call", "what's the support number", "give me support number", "need to call", "need to email",
+        "talk to customer service", "reach customer service", "complaints number", "general enquiries number"
+      ],
+      "response_no_contact": "Please check the app under Help or Contact us for our current support number and email. You can also ask to speak to an agent and we'll connect you.",
+      "response_with_contact": "You can reach us at: {{contact}}. For the latest hours and options, check the app under Help or Contact.",
+      "suggested_actions": ["Call support", "Email support", "Talk to agent"],
+      "max_message_len": 80
+    },
+    {
+      "id": "HUMAN_ESCALATION",
+      "phrases": [
+        "agent", "human", "someone", "speak to", "talk to a person", "real person", "representative",
+        "human agent", "live agent", "speak to agent", "talk to agent", "connect me to someone", "transfer to agent",
+        "i want to talk to someone", "need a person", "need human help", "can i speak to a person",
+        "escalate", "escalate to agent", "transfer to human", "put me through", "connect me to support",
+        "customer service agent", "speak to representative", "talk to representative", "real human",
+        "not a bot", "human being", "live support", "live chat with person", "speak to adviser",
+        "financial adviser", "banker", "talk to banker", "customer adviser", "get me an agent"
+      ],
+      "response": "I can escalate this to a human agent for you. They'll be able to review your specific account details and complete any actions you need. Please stay available on this channel while we connect you. Reply 'yes' if you want me to escalate now.",
+      "suggested_actions": ["Stay on channel", "Talk to agent"]
+    },
+    {
+      "id": "TRANSACTION_HISTORY",
+      "phrases": [
+        "transaction", "recent", "history", "past transactions", "activity", "statement", "where did my money go",
+        "transaction history", "recent transactions", "my transactions", "see transactions", "view transactions",
+        "list of transactions", "payment history", "spending history", "what did i spend", "show my transactions",
+        "last transactions", "recent activity", "account activity", "transaction list", "payment list",
+        "where did my money go", "money gone", "missing money", "unexplained transaction", "what was this charge",
+        "transaction details", "past payments", "recent payments", "debit history", "credits and debits",
+        "monthly statement", "bank statement", "download statement", "export transactions", "transaction log"
+      ],
+      "response": "You can view recent transactions in the app under Activity or Transactions. Choose the relevant account to see the list. Tell me which transaction you're curious about and I can explain what it usually means.",
+      "short_phrases": ["view transactions", "tell us which transaction", "transactions in app", "see transactions", "recent activity"],
+      "short_response": "Open the app → Activity or Transactions, then pick the account. Tell me which transaction you want to look at.",
+      "suggested_actions": ["View transactions in app", "Tell us which transaction"],
+      "prepend_tx_context": true
+    },
+    {
+      "id": "CARD_BLOCK",
+      "phrases": [
+        "block card", "block my card", "freeze card", "lost card", "stolen card", "cancel card",
+        "stop my card", "disable card", "deactivate card", "card lost", "card stolen", "misplaced card",
+        "can't find my card", "block my debit card", "block my credit card", "freeze my card",
+        "temporarily block", "suspend card", "card compromised", "cancel my card", "report lost card",
+        "report stolen card", "lost my wallet", "card missing", "someone has my card", "block card immediately",
+        "stop card", "turn off card", "lock card", "secure my card", "card security", "prevent card use"
+      ],
+      "response": "You can block your card instantly in the app under Card settings or Security. For lost or stolen cards, block first then request a replacement. If you need help, contact support.",
+      "suggested_actions": ["Block card in app", "Contact support"]
+    },
+    {
+      "id": "PIN_RESET",
+      "phrases": [
+        "pin", "reset pin", "change pin", "forgot pin", "new pin", "pin number",
+        "forgotten pin", "don't remember pin", "change my pin", "update pin", "set new pin",
+        "create new pin", "pin reset", "reset my pin", "unlock pin", "wrong pin", "pin blocked",
+        "too many wrong pins", "atm pin", "card pin", "debit card pin", "change atm pin",
+        "how to change pin", "how to reset pin", "forgot my pin", "recover pin", "get new pin"
+      ],
+      "response": "You can reset or change your PIN in the app under Card or Security settings, or at an ATM. If you've forgotten your PIN, visit a branch with ID to set a new one, or use the app option if available.",
+      "suggested_actions": ["Reset PIN in app", "Visit branch", "Contact support"]
+    },
+    {
+      "id": "BRANCH_ATM",
+      "phrases": [
+        "branch", "atm", "location", "where", "nearest", "find branch", "cash machine",
+        "branch location", "atm location", "nearest branch", "nearest atm", "find atm",
+        "where is the branch", "branch address", "atm near me", "cash withdrawal", "withdraw cash",
+        "branch hours", "opening hours", "when does the branch open", "branch opening times",
+        "locate branch", "locate atm", "bank branch", "service centre", "service center",
+        "physical branch", "in person", "visit branch", "go to branch", "directions to branch",
+        "cash point", "cashpoint", "money machine", "withdrawal machine", "branch finder", "atm finder"
+      ],
+      "response": "You can find branches and ATMs in the app under Locations or Services, or on our website. For opening times and services, use the app or call our contact centre.",
+      "suggested_actions": ["Find branch/ATM in app", "Call contact centre"]
+    },
+    {
+      "id": "COMPLAINT",
+      "phrases": [
+        "complaint", "unhappy", "terrible", "not satisfied", "poor service", "escalate complaint",
+        "make a complaint", "file complaint", "submit complaint", "formal complaint", "official complaint",
+        "very unhappy", "disappointed", "frustrated", "bad experience", "awful service", "worst experience",
+        "want to complain", "need to complain", "register complaint", "lodge complaint", "raise a complaint",
+        "complaint procedure", "how to complain", "complaints department", "customer complaint",
+        "not happy with service", "dissatisfied", "unacceptable", "want my complaint heard", "escalate to complaints"
+      ],
+      "response": "I'm sorry to hear that. You can submit a formal complaint in the app under Support or Complaints, or I can escalate you to a human agent who can log it and follow up. Reply 'yes' to be connected to an agent.",
+      "suggested_actions": ["Submit complaint in app", "Talk to agent"]
+    }
+  ],
+  "out_of_scope": {
+    "response": "I'm your bank's virtual assistant. I'm here to help only with: account balance, fraud and disputes, locked account, recent transactions, blocking your card, PIN reset, branch and ATM locations, complaints, and connecting you to a human agent. Your question is outside what I can answer — please pick one of these topics or ask to speak to an agent for anything else.",
+    "suggested_actions": [
+      "Balance inquiry",
+      "Report fraud or dispute",
+      "Locked account help",
+      "Recent transactions",
+      "Block card",
+      "PIN reset",
+      "Branch or ATM locations",
+      "Complaints",
+      "Talk to agent"
+    ]
+  }
+}
