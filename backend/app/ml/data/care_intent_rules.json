@@ -120,6 +120,48 @@
       "suggested_actions": ["Reset PIN in app", "Visit branch", "Contact support"]
     },
     {
+      "id": "SECURITY_GUIDANCE",
+      "phrases": [
+        "secure my account", "secure account", "protect my account", "protect account",
+        "internet banking security", "online banking security", "mobile app security",
+        "how to keep my account safe", "how to protect my account", "how do i secure my account",
+        "how can i protect my account", "keep my money safe", "prevent fraud", "avoid scams",
+        "phishing", "phishing scam", "phishing email", "phishing sms", "smishing",
+        "suspicious link", "suspicious website", "fake website", "fake bank site", "clicking a link",
+        "someone asked for my otp", "otp requested", "one time password scam", "share my otp",
+        "should i share otp", "never share otp", "don't share otp", "otp safety",
+        "transaction scam", "transfer scam", "beneficiary scam", "wrong transfer scam",
+        "verify transfer", "check beneficiary", "confirm recipient", "how to avoid transfer scams",
+        "is this message real", "is this email real", "is this sms real", "is it a scam",
+        "someone is calling me", "phone scam", "call me for otp", "caller asking for otp",
+        "social engineering", "impersonation", "pretending to be bank", "bank staff scam",
+        "secure device", "secure my phone", "protect my device", "device security",
+        "public wifi", "avoid public wifi", "use secure wifi", "vpn", "download apps safely",
+        "update my phone", "update ios", "update android", "keep my phone updated",
+        "antivirus", "malware", "protect against malware",
+        "protect card", "card security", "account security", "online account safety",
+        "how to recognize scams", "how do i know it's a scam",
+        "i received an sms", "i received an email", "i received a message", "message asking for otp",
+        "urgent otp", "urgent transfer", "urgent payment", "pay now scam",
+        "bank will never ask for otp", "bank never asks for otp",
+        "what is phishing", "what is smishing", "what is social engineering",
+        "safety tips", "security tips", "protecting my account", "account protection",
+        "secure transactions", "secure payments", "safer transfers",
+        "avoid suspicious transfers", "help me stay safe", "keep my banking safe",
+        "fraud prevention tips", "anti phishing tips", "anti scam tips",
+        "protect my login", "protect my password", "password safety", "change password safety",
+        "enable 2fa", "two factor authentication", "two factor", "2fa",
+        "do not share credentials", "never share password", "never share passcode"
+      ],
+      "response": "To keep your online banking safe, follow these security tips (especially for Internet banking / mobile app):\n\n1) Protect your login (most important)\n- Never share your password, passcode, or any one-time codes (OTP / verification codes).\n- Never share your full card details, PIN, CVV, or credentials.\n- Only sign in using the official bank app or by typing the official website address yourself (do not open banking from links in SMS/email).\n- If you suspect someone has your credentials, change your password immediately and sign out of other devices.\n\n2) OTP / approvals safety (OTP scams)\n- Banks will never ask you to share OTP/verification codes with anyone (including “bank staff”, “fraud team”, or “IT support”).\n- If someone asks for your OTP, treat it as a scam and stop immediately.\n- If you already shared an OTP (or you received an OTP you didn’t request):\n  a) Stop talking to the caller/scammer.\n  b) Change your password right away.\n  c) Check your recent transactions/beneficiaries in the app.\n  d) Freeze your card / block suspicious activity if available.\n  e) Contact support so they can secure your account and review activity.\n\n3) Beware of phishing (SMS/email/calls) and fake bank pages\n- Don’t click links or open attachments from unexpected messages.\n- Check the sender and the exact message wording; scammers often mimic urgency and official language.\n- If a message claims something like “your account will be locked” or “verify now”, don’t panic.\n- Open the bank app directly instead of using a link.\n- If you clicked a link:\n  a) Do not enter OTP/password.\n  b) Close the page/app and go to the official app/website manually.\n  c) If you entered credentials, change your password.\n  d) If your phone feels compromised (popups, unknown apps), secure your device and contact support.\n\n4) Safe transfers and payment scams\nScammers often try to trick you into approving transfers you didn’t intend.\n- Always verify the beneficiary/recipient details inside the app before confirming.\n- If anyone pressures you to act fast (\"act now\", \"urgent transfer\", \"payment pending\"), pause and verify in the app.\n- If you’re asked to change beneficiary details or share screen/remote access: stop.\n- If you suspect a transfer scam:\n  a) Do not confirm any new transfer.\n  b) Check the transaction list in your app for recent outflows.\n  c) If you see an unauthorized transaction, freeze/block cards (if relevant) and raise a dispute.\n  d) Contact support immediately for investigation.\n\n5) Secure your device (reduce takeover risk)\n- Keep your phone updated (OS updates) and keep the bank app updated.\n- Install apps only from trusted stores.\n- Avoid banking on public/shared Wi‑Fi when possible; if you must, use a trusted connection.\n- Watch for signs of compromise: frequent popups, unknown admin access, unexpected apps, browser redirects.\n- If compromised: remove unknown apps, run security checks, and change your password.\n\n6) SIM swap / number takeover (when scammers can intercept OTP)\n- Never share your SIM/phone verification PIN or any OTP.\n- If you notice sudden loss of network or your number is “not registered”, treat it as possible SIM swap.\n- Contact your telecom provider quickly, and then contact bank support so they can secure your account.\n\n7) What to do right now (quick checklist)\nReply with the closest option:\n- \"OTP requested\" (someone asked for OTP/verification code)\n- \"Clicked a link\" (phishing site / suspicious URL)\n- \"Transfer scam\" (someone pushed me to transfer or change beneficiary)\n- \"Device looks compromised\" (popups/unknown apps)\n- \"I think my account was accessed\" (unknown login or changes)\n\nThen I’ll guide you step-by-step on the exact actions to take in the app and what to report.\n\nIf you want, tell me what happened in one sentence (example: \"I got an sms asking for otp\" or \"someone asked me to transfer money\"), and I’ll tailor the steps.",
+      "short_phrases": [
+        "otp", "otp requested", "otp request", "verification code", "sms", "sms asking", "text message"
+      ],
+      "short_response": "If someone is asking you for OTP/verification codes, it’s a scam. Stop talking to them and do this now: (1) never share the OTP, (2) change your password, (3) check recent transactions/beneficiaries in the app, and (4) contact support so they can secure your account.",
+      "suggested_actions": ["Talk to agent"],
+      "max_message_len": 120
+    },
+    {
       "id": "BRANCH_ATM",
       "phrases": [
         "branch", "atm", "location", "where", "nearest", "find branch", "cash machine",
@@ -153,6 +195,7 @@
       "Balance inquiry",
       "Report fraud or dispute",
       "Locked account help",
+      "Security tips",
       "Recent transactions",
       "Block card",
       "PIN reset",

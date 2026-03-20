@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     redis_url: str = "redis://localhost:6379"
     secret_key: str = "change-me-in-production"
     model_path: str = "/models/Phi-3-mini-4k-instruct-q4.gguf"
+    care_jwt_secret: str = "dev-care-secret-change-me"
+    strict_model_loading: bool = True
+    allow_heuristic_fallback: bool = False
 
     rate_limit_per_minute: int = 1000
     api_key_header: str = "X-API-Key"

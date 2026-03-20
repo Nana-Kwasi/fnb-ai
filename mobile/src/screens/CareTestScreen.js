@@ -10,8 +10,10 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
+  Linking,
 } from "react-native";
 import { useApiKey } from "../context/ApiKeyContext";
+import { useAuth } from "../context/AuthContext";
 import { careChat } from "../api";
 
 const TYPEWRITER_CHARS_PER_TICK = 2;
@@ -19,13 +21,15 @@ const TYPEWRITER_MS = 30;
 
 export default function CareTestScreen() {
   const { apiKey, baseUrl, hasKey } = useApiKey();
+  const { careToken, accountId } = useAuth();
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [revealLen, setRevealLen] = useState(0);
   const [sessionId] = useState(() => `sess-${Date.now()}`);
-  const [customerId] = useState("acc-demo-001");
+  const customerId = accountId || "acc-demo-001";
   const [message, setMessage] = useState("");
   const [suggestedActions, setSuggestedActions] = useState([]);
+  const [pdfLink, setPdfLink] = useState(null);
   const scrollRef = useRef(null);
 
   const lastAssistant = messages.length > 0 && messages[messages.length - 1].role === "assistant" ? messages[messages.length - 1].content : null;
@@ -60,22 +64,31 @@ export default function CareTestScreen() {
       Alert.alert("No API key", "Set your API key in Settings first.");
       return;
     }
+    if (!careToken) {
+      Alert.alert("Not logged in", "Sign in first so Care can access your transactions.");
+      return;
+    }
     setMessage("");
     setMessages((prev) => [...prev, { role: "user", content: toSend }]);
     setLoading(true);
     setSuggestedActions([]);
+    setPdfLink(null);
     try {
       const data = await careChat(apiKey, baseUrl, {
         session_id: sessionId,
         customer_id: customerId,
         message: toSend,
         channel: "mobile_app",
-      });
+      }, { careToken });
       if (data.error) {
         setMessages((prev) => [...prev, { role: "assistant", content: "Sorry, something went wrong. " + data.error }]);
       } else {
         setMessages((prev) => [...prev, { role: "assistant", content: data.response }]);
         if (data.suggested_actions?.length) setSuggestedActions(data.suggested_actions);
+        if (data.pdf_url) {
+          const full = `${(baseUrl || "http://localhost:8000").replace(/\/$/, "")}${data.pdf_url}`;
+          setPdfLink(full);
+        }
       }
     } catch (e) {
       setMessages((prev) => [...prev, { role: "assistant", content: "Error: " + e.message }]);
@@ -131,6 +144,16 @@ export default function CareTestScreen() {
             ))}
           </View>
         )}
+        {pdfLink && !loading ? (
+          <View style={{ marginTop: 10 }}>
+            <TouchableOpacity
+              style={[styles.actionChip, { backgroundColor: "#0f4c75", borderColor: "#0f4c75" }]}
+              onPress={() => Linking.openURL(pdfLink)}
+            >
+              <Text style={[styles.actionChipText, { color: "#fff" }]}>Download PDF statement</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </ScrollView>
 
       <View style={styles.inputRow}>

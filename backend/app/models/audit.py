@@ -1,7 +1,10 @@
 import uuid
 from datetime import datetime
+
 from sqlalchemy import String, BigInteger, DateTime, JSON
+from sqlalchemy.dialects.postgresql import INET
 from sqlalchemy.orm import Mapped, mapped_column
+
 from app.database import Base
 from app.db_types import UuidType
 
@@ -17,5 +20,5 @@ class AuditLog(Base):
     actor_type: Mapped[str | None] = mapped_column(String(20), nullable=True)
     actor_id: Mapped[str | None] = mapped_column(String(255), nullable=True)
     event_data: Mapped[dict] = mapped_column(JSON, default=dict)
-    ip_address: Mapped[str | None] = mapped_column(String(45), nullable=True)
+    ip_address: Mapped[str | None] = mapped_column(INET, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)

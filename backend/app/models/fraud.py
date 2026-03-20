@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 from decimal import Decimal
-from sqlalchemy import String, Integer, DateTime, ForeignKey, Text, JSON
+from sqlalchemy import String, Integer, DateTime, ForeignKey, JSON
 from sqlalchemy.orm import Mapped, mapped_column
 from app.database import Base
 from app.db_types import UuidType, StringArrayType
@@ -17,7 +17,7 @@ class FraudScore(Base):
     isolation_score: Mapped[Decimal | None] = mapped_column(nullable=True)
     rule_score: Mapped[Decimal | None] = mapped_column(nullable=True)
     ensemble_score: Mapped[Decimal] = mapped_column(nullable=False)
-    decision: Mapped[str] = mapped_column(String(10), nullable=False)
+    decision: Mapped[str] = mapped_column(String(32), nullable=False)
     confidence: Mapped[str] = mapped_column(String(6), nullable=False)
     shap_values: Mapped[dict] = mapped_column(JSON, nullable=False)
     reason_codes: Mapped[list] = mapped_column(StringArrayType(), nullable=False)

@@ -28,6 +28,8 @@ INTENT_LABELS = [
     "COMPLAINT",
     "CONTACT_SUPPORT",
     "GENERAL_SUPPORT",
+    # Newly added / already used by care_engine rules.
+    "SECURITY_GUIDANCE",
 ]
 VALID_INTENTS = frozenset(INTENT_LABELS)
 
@@ -88,7 +90,22 @@ def export_chat_history_to_jsonl(max_pairs: int = 50_000) -> int:
     for r in rows:
         if r.role == "user" and (r.content or "").strip():
             prev_user_content = (r.content or "").strip()
-        elif r.role == "assistant" and prev_user_content is not None and r.intent and r.intent in VALID_INTENTS:
+        elif (
+            r.role == "assistant"
+            and prev_user_content is not None
+            and r.intent
+            and r.intent in VALID_INTENTS
+        ):
+            assistant_text = (r.content or "").strip().lower()
+            # Skip low-signal clarification / out-of-scope assistant replies so
+            # we don't train on noisy labels.
+            if assistant_text.startswith("i'm not sure i understood that") and "did you mean" in assistant_text:
+                prev_user_content = None
+                continue
+            if "virtual assistant" in assistant_text and "outside what i can answer" in assistant_text:
+                prev_user_content = None
+                continue
+
             pairs.append({"text": prev_user_content, "intent": r.intent})
             prev_user_content = None
         else:
@@ -158,7 +175,9 @@ def _train_on_examples(examples: list[tuple[str, str]]) -> bool:
     le = LabelEncoder()
     y = le.fit_transform(list(intents))
     pipeline = Pipeline([
-        ("tfidf", TfidfVectorizer(max_features=5000, ngram_range=(1, 2), min_df=1)),
+        # Use character n-grams so the intent model is robust to typos like
+        # "passwor", "phishng", "piin" even when word tokens don't match well.
+        ("tfidf", TfidfVectorizer(max_features=20000, analyzer="char_wb", ngram_range=(3, 5), min_df=1)),
         ("clf", LogisticRegression(max_iter=500, C=0.5)),
     ])
     pipeline.fit(list(texts), y)
