@@ -2,7 +2,8 @@
 
 ## 1. Fraud API input (TransactionIn)
 
-**Contract:** `POST /api/v1/fraud/score` (Bankai) accepts JSON:
+**Contract:** `POST /api/v1/fraud/score` (Bankai) accepts JSON.  
+**Header:** `X-API-Key: <tenant_api_key>`.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
@@ -79,6 +80,8 @@
 (IP is not sent by the app; gateway sets it from the request.)
 
 ### Gateway → Bankai (`POST /api/v1/fraud/score`)
+
+Gateway request includes `X-API-Key` for tenant scoping.
 
 Gateway builds the body sent to the fraud model:
 

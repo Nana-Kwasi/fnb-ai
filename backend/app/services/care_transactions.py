@@ -1,14 +1,15 @@
 from __future__ import annotations
 
+import uuid
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
-from typing import Literal
+from typing import Any, Literal
 from zoneinfo import ZoneInfo
 
-from sqlalchemy import func, select
+from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import Customer, FraudScore, TenantBank, Transaction
+from app.models import Customer, FraudScore, FraudOutcome, TenantBank, Transaction
 
 
 Decision = Literal["APPROVE", "LIMITED_APPROVAL", "REQUEST_OTP", "BLOCK"]
@@ -209,5 +210,86 @@ async def customer_transaction_stats(
         "scored_transactions": scored_total,
         "by_decision": by_decision,
         "fraud_like_transactions": fraud_like,
+    }
+
+
+async def fetch_customer_transaction_detail(
+    *,
+    db: AsyncSession,
+    bank: TenantBank,
+    customer: Customer,
+    ref: str,
+) -> dict[str, Any] | None:
+    """
+    Resolve a transaction for this customer by external_tx_id or internal Transaction.id (UUID).
+    Returns a dict safe for customer-facing summaries, or None if not found / wrong customer.
+    """
+    raw = (ref or "").strip()
+    if not raw:
+        return None
+
+    conds = [Transaction.external_tx_id == raw]
+    try:
+        uid = uuid.UUID(raw)
+        conds.append(Transaction.id == uid)
+    except (ValueError, TypeError):
+        pass
+
+    stmt_tx = (
+        select(Transaction)
+        .where(
+            Transaction.tenant_id == bank.id,
+            Transaction.customer_id == customer.id,
+            or_(*conds),
+        )
+        .limit(1)
+    )
+    tx = (await db.execute(stmt_tx)).scalar_one_or_none()
+    if tx is None:
+        return None
+
+    fscore = (
+        await db.execute(
+            select(FraudScore)
+            .where(FraudScore.transaction_id == tx.id)
+            .order_by(FraudScore.created_at.desc())
+            .limit(1)
+        )
+    ).scalar_one_or_none()
+
+    foutcome = (
+        await db.execute(
+            select(FraudOutcome)
+            .where(FraudOutcome.transaction_id == tx.id)
+            .order_by(FraudOutcome.created_at.desc())
+            .limit(1)
+        )
+    ).scalar_one_or_none()
+
+    dec = normalize_decision(fscore.decision) if fscore else None
+    reasons: list[str] = []
+    if fscore and fscore.reason_codes:
+        reasons = [str(r) for r in fscore.reason_codes[:8]]
+
+    return {
+        "internal_id": str(tx.id),
+        "external_tx_id": tx.external_tx_id,
+        "amount": float(tx.amount),
+        "currency": tx.currency,
+        "merchant_name": tx.merchant_name,
+        "merchant_category": tx.merchant_category,
+        "merchant_id": tx.merchant_id,
+        "channel": tx.channel,
+        "location_country": tx.location_country,
+        "status": tx.status,
+        "timestamp": tx.tx_timestamp.isoformat() if tx.tx_timestamp else None,
+        "model_decision": dec,
+        "fraud_score": float(fscore.ensemble_score) if fscore and fscore.ensemble_score is not None else None,
+        "model_confidence": fscore.confidence if fscore else None,
+        "lgbm_score": float(fscore.lgbm_score) if fscore and fscore.lgbm_score is not None else None,
+        "rule_score": float(fscore.rule_score) if fscore and fscore.rule_score is not None else None,
+        "reason_codes": reasons,
+        "outcome_classification": foutcome.classification if foutcome else None,
+        "outcome_source": foutcome.source if foutcome else None,
     }
 

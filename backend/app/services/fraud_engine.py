@@ -11,6 +11,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import select
 
 from app.config import settings
+from app.services.artifact_store import fetch_artifact_uri_to_local_path
 from app.services.feature_engine import FEATURE_NAMES
 from app.services.fraud_ring import compute_network_risk_score
 from app.services.adaptive_risk_engine import get_adaptive_state_and_modifier
@@ -44,10 +45,13 @@ REASON_MAP = {
 _lgb_model = None
 _sklearn_model = None
 _iso_model = None
+_platt_calibrator = None
+_isotonic_calibrator = None
 _shap_explainer = None
 _models_loaded = False
 _model_load_mode: str = "unknown"
 _model_load_errors: list[str] = []
+_ARTIFACT_CACHE: dict[str, dict[str, Any]] = {}
 _DYN_THRESH_CACHE: dict[tuple, tuple[float, float, float]] = {}  # key -> (block_th, otp_th, expires_at)
 _DYN_THRESH_CACHE_TTL_SECONDS = 60
 
@@ -67,7 +71,7 @@ def _get_models_path() -> Path:
 
 
 def _ensure_models():
-    global _lgb_model, _sklearn_model, _iso_model, _shap_explainer, _models_loaded
+    global _lgb_model, _sklearn_model, _iso_model, _platt_calibrator, _isotonic_calibrator, _shap_explainer, _models_loaded
     global _model_load_mode, _model_load_errors
     if _models_loaded:
         return
@@ -76,6 +80,8 @@ def _ensure_models():
     lgb_path = base / "lgb_fraud.txt"
     sklearn_path = base / "sklearn_fraud.joblib"
     iso_path = base / "isolation_forest.joblib"
+    platt_path = base / "platt_calibrator.joblib"
+    isotonic_path = base / "isotonic_calibrator.joblib"
     import joblib
     strict_loading = _env_bool("STRICT_MODEL_LOADING", bool(settings.strict_model_loading))
     heuristic_allowed = _env_bool("ALLOW_HEURISTIC_FALLBACK", bool(settings.allow_heuristic_fallback))
@@ -103,6 +109,16 @@ def _ensure_models():
             if strict_loading:
                 raise RuntimeError(f"Failed to load isolation forest model from {iso_path}.")
             _model_load_errors.append(f"Isolation forest load failed (strict off): {iso_path}")
+    if platt_path.exists():
+        try:
+            _platt_calibrator = joblib.load(platt_path)
+        except Exception:
+            _model_load_errors.append(f"Platt calibrator load failed: {platt_path}")
+    if isotonic_path.exists():
+        try:
+            _isotonic_calibrator = joblib.load(isotonic_path)
+        except Exception:
+            _model_load_errors.append(f"Isotonic calibrator load failed: {isotonic_path}")
     if _lgb_model is None and _sklearn_model is None:
         msg = (
             "No primary fraud model loaded. "
@@ -231,12 +247,117 @@ def _feature_vector_to_array(fv: dict) -> np.ndarray:
     return np.array([[fv.get(name, 0.0) for name in FEATURE_NAMES]], dtype=np.float32)
 
 
-def _score_lgb(fv: dict) -> float:
+def _normalize_artifact_uri(artifact_uri: str | None) -> str | None:
+    if not artifact_uri:
+        return None
+    raw = str(artifact_uri).strip()
+    if not raw:
+        return None
+    if raw.startswith("file://"):
+        return raw[len("file://") :]
+    return raw
+
+
+def _resolve_artifact_dir(artifact_uri: str | None) -> Path | None:
+    norm = _normalize_artifact_uri(artifact_uri)
+    if not norm:
+        return None
+    p = fetch_artifact_uri_to_local_path(norm)
+    if p is None:
+        return None
+    if p.is_file():
+        return p.parent
+    return p
+
+
+def _load_artifact_bundle(artifact_uri: str) -> dict[str, Any]:
+    cache_key = str(artifact_uri)
+    cached = _ARTIFACT_CACHE.get(cache_key)
+    if cached is not None:
+        return cached
+    out: dict[str, Any] = {
+        "lgb": None,
+        "sklearn": None,
+        "iso": None,
+        "platt": None,
+        "isotonic": None,
+        "status": "missing",
+    }
+    d = _resolve_artifact_dir(artifact_uri)
+    if d is None or not d.exists():
+        _ARTIFACT_CACHE[cache_key] = out
+        return out
+    import joblib
+
+    lgb_path = d / "lgb_fraud.txt"
+    sklearn_path = d / "sklearn_fraud.joblib"
+    iso_path = d / "isolation_forest.joblib"
+    platt_path = d / "platt_calibrator.joblib"
+    isotonic_path = d / "isotonic_calibrator.joblib"
+    try:
+        import lightgbm as lgb
+
+        if lgb_path.exists():
+            out["lgb"] = lgb.Booster(model_file=str(lgb_path))
+    except Exception:
+        out["lgb"] = None
+    if out["lgb"] is None and sklearn_path.exists():
+        try:
+            out["sklearn"] = joblib.load(sklearn_path)
+        except Exception:
+            out["sklearn"] = None
+    if iso_path.exists():
+        try:
+            out["iso"] = joblib.load(iso_path)
+        except Exception:
+            out["iso"] = None
+    if platt_path.exists():
+        try:
+            out["platt"] = joblib.load(platt_path)
+        except Exception:
+            out["platt"] = None
+    if isotonic_path.exists():
+        try:
+            out["isotonic"] = joblib.load(isotonic_path)
+        except Exception:
+            out["isotonic"] = None
+    out["status"] = "model" if (out["lgb"] is not None or out["sklearn"] is not None) else "missing"
+    _ARTIFACT_CACHE[cache_key] = out
+    return out
+
+
+def _score_lgb(fv: dict, *, artifact_uri: str | None = None, strict_artifact: bool = False) -> float:
     X = _feature_vector_to_array(fv)
-    if _lgb_model is not None:
-        return float(_lgb_model.predict(X)[0])
-    if _sklearn_model is not None:
-        return float(_sklearn_model.predict_proba(X)[0][1])
+    lgb_model = _lgb_model
+    sk_model = _sklearn_model
+    platt_cal = _platt_calibrator
+    iso_cal = _isotonic_calibrator
+    if artifact_uri:
+        bundle = _load_artifact_bundle(artifact_uri)
+        lgb_model = bundle.get("lgb")
+        sk_model = bundle.get("sklearn")
+        platt_cal = bundle.get("platt")
+        iso_cal = bundle.get("isotonic")
+    if lgb_model is not None:
+        raw = float(lgb_model.predict(X)[0])
+    elif sk_model is not None:
+        raw = float(sk_model.predict_proba(X)[0][1])
+    else:
+        raw = None
+    if raw is not None:
+        method = str(os.getenv("FRAUD_CALIBRATION_METHOD", "isotonic")).strip().lower()
+        try:
+            if method == "platt" and platt_cal is not None:
+                cal = float(platt_cal.predict_proba(np.array([[raw]], dtype=np.float32))[0][1])
+                return max(0.0, min(1.0, cal))
+            if method == "isotonic" and iso_cal is not None:
+                cal = float(iso_cal.predict(np.array([raw], dtype=np.float32))[0])
+                return max(0.0, min(1.0, cal))
+        except Exception:
+            pass
+        return max(0.0, min(1.0, raw))
+    if strict_artifact and artifact_uri:
+        raise RuntimeError(f"Fraud model artifact not loadable: {artifact_uri}")
     if not _env_bool("ALLOW_HEURISTIC_FALLBACK", bool(settings.allow_heuristic_fallback)):
         raise RuntimeError(
             "Fraud model unavailable and heuristic fallback is disabled. "
@@ -279,8 +400,10 @@ async def _stub_score(
     rule_weight: float,
     network_weight: float = 0.0,
     tenant_tone_config: dict | None = None,
+    model_artifact_uri: str | None = None,
+    strict_artifact: bool = False,
 ) -> tuple[float, float | None, float, float, list[str]]:
-    lgbm = _score_lgb(fv)
+    lgbm = _score_lgb(fv, artifact_uri=model_artifact_uri, strict_artifact=strict_artifact)
     iso_anomaly = None
     if _iso_model is not None:
         X = _feature_vector_to_array(fv)
@@ -458,6 +581,8 @@ async def score_and_explain(
     tenant_id: str | None,
     feature_vector: dict,
     tenant_tone_config: dict | None = None,
+    model_artifact_uri: str | None = None,
+    strict_artifact: bool = False,
 ) -> tuple[
     float,
     float | None,
@@ -492,6 +617,8 @@ async def score_and_explain(
         rule_weight=policy["rule_weight"],
         network_weight=policy.get("network_weight", 0.1),
         tenant_tone_config=tenant_tone_config,
+        model_artifact_uri=model_artifact_uri,
+        strict_artifact=strict_artifact,
     )
     graph_risk_score = float(feature_vector.get("graph_risk_score", 0) or 0)
     graph_weight = float(policy.get("graph_weight", 0.15))
@@ -607,6 +734,17 @@ async def score_and_explain(
         elif segment in ("NEW_CUSTOMER", "HIGH_RISK_REGION", "HIGH_VELOCITY_USER") and network_risk_score >= 0.6:
             block_threshold = max(0.4, block_threshold - 0.05)
             otp_threshold = max(0.25, otp_threshold - 0.05)
+
+    # Optional cost-based threshold policy by segment.
+    # Defaults can be overridden in tone_config.fraud_policy.segment_cost_policy.
+    cost_cfg = dict((fraud_policy_cfg or {}).get("segment_cost_policy") or {})
+    seg_cfg = dict(cost_cfg.get(segment) or {})
+    fp_cost = float(seg_cfg.get("fp_cost", 1.0))
+    fn_cost = float(seg_cfg.get("fn_cost", 4.0))
+    if fp_cost > 0 and fn_cost > 0:
+        bayes_cut = fp_cost / (fp_cost + fn_cost)
+        otp_threshold = min(otp_threshold, max(0.2, min(0.9, bayes_cut)))
+        block_threshold = min(block_threshold, max(otp_threshold + 0.05, min(0.98, bayes_cut + 0.15)))
 
     if ensemble_score >= block_threshold:
         decision = "BLOCK"

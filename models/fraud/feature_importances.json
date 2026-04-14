@@ -1,35 +1,35 @@
 [
   {
     "feature": "amount",
-    "importance_gain": 83447.71034656125
+    "importance_gain": 42610.13906260661
   },
   {
     "feature": "txn_count_1h",
-    "importance_gain": 30.719747273653326
+    "importance_gain": 27.814699172973633
   },
   {
     "feature": "total_amount_1h",
-    "importance_gain": 248.3163187410115
+    "importance_gain": 2.03666058951077e-05
   },
   {
     "feature": "txn_count_24h",
-    "importance_gain": 584.6817360120847
+    "importance_gain": 25.727899551798142
   },
   {
     "feature": "total_amount_24h",
-    "importance_gain": 1728.2872154269342
+    "importance_gain": 141.25168336458572
   },
   {
     "feature": "txn_count_7d",
-    "importance_gain": 716.895287048486
+    "importance_gain": 242.59883069778232
   },
   {
     "feature": "total_amount_7d",
-    "importance_gain": 1057.8273010945234
+    "importance_gain": 483.1933292846591
   },
   {
     "feature": "amount_vs_avg_ratio",
-    "importance_gain": 7941.618958907332
+    "importance_gain": 123.77365544842061
   },
   {
     "feature": "is_new_device",
@@ -37,15 +37,15 @@
   },
   {
     "feature": "hour_of_day",
-    "importance_gain": 489.4104150074288
+    "importance_gain": 18.77989959832608
   },
   {
     "feature": "is_weekend",
-    "importance_gain": 164.6494279787039
+    "importance_gain": 0.0
   },
   {
     "feature": "days_since_last_txn",
-    "importance_gain": 744.7753559212504
+    "importance_gain": 153.97560547157352
   },
   {
     "feature": "customer_risk_score",
@@ -53,23 +53,23 @@
   },
   {
     "feature": "merchant_cat_risk",
-    "importance_gain": 4363.938573054093
+    "importance_gain": 346.3360061645508
   },
   {
     "feature": "devices_seen_last_30d_for_customer",
-    "importance_gain": 52.899183305434676
+    "importance_gain": 0.0
   },
   {
     "feature": "customers_seen_last_7d_for_device",
-    "importance_gain": 81.41770277264202
+    "importance_gain": 0.0
   },
   {
     "feature": "ips_seen_last_30d_for_customer",
-    "importance_gain": 513.1295577103518
+    "importance_gain": 76.32339480532261
   },
   {
     "feature": "device_reuse_ratio",
-    "importance_gain": 228.37141156892622
+    "importance_gain": 0.006766099948436022
   },
   {
     "feature": "email_reuse_ratio",
@@ -77,11 +77,11 @@
   },
   {
     "feature": "device_fraud_ratio_90d",
-    "importance_gain": 1920.9854745786838
+    "importance_gain": 161.85874221577842
   },
   {
     "feature": "ip_fraud_ratio_90d",
-    "importance_gain": 0.0
+    "importance_gain": 137.82950278966564
   },
   {
     "feature": "card_fraud_ratio_90d",
@@ -89,59 +89,59 @@
   },
   {
     "feature": "merchant_fraud_rate_90d",
-    "importance_gain": 2001.3249504595967
+    "importance_gain": 1438.0807617174528
   },
   {
     "feature": "merchant_volume_7d",
-    "importance_gain": 478.25276462599305
+    "importance_gain": 81.97556001710062
   },
   {
     "feature": "merchant_country_mismatch",
-    "importance_gain": 325.5998429535672
+    "importance_gain": 0.0
   },
   {
     "feature": "accounts_seen_for_device_7d",
-    "importance_gain": 9.492056786017057
+    "importance_gain": 2.912370067331693e-10
   },
   {
     "feature": "accounts_seen_for_device_30d",
-    "importance_gain": 156.0761490696232
+    "importance_gain": 0.0
   },
   {
     "feature": "device_risk_score",
-    "importance_gain": 285.2542255618225
+    "importance_gain": 35.049938031472266
   },
   {
     "feature": "accounts_seen_for_ip_7d",
-    "importance_gain": 436.89097994320827
+    "importance_gain": 64.3240966796875
   },
   {
     "feature": "accounts_seen_for_ip_30d",
-    "importance_gain": 396.09780862192633
+    "importance_gain": 21.84694238329838
   },
   {
     "feature": "ip_risk_score",
-    "importance_gain": 484.8416698598336
+    "importance_gain": 20.740369655032396
   },
   {
     "feature": "merchant_fraud_rate_30d",
-    "importance_gain": 1000.1146670702647
+    "importance_gain": 594.6486332810297
   },
   {
     "feature": "merchant_transaction_volume_7d",
-    "importance_gain": 700.955492011787
+    "importance_gain": 18.8747314470932
   },
   {
     "feature": "merchant_risk_score",
-    "importance_gain": 294.74239387949405
+    "importance_gain": 87.3568286895752
   },
   {
     "feature": "device_shared_account_count",
-    "importance_gain": 32.140672419534894
+    "importance_gain": 0.0
   },
   {
     "feature": "ip_shared_account_count",
-    "importance_gain": 47.15488339748874
+    "importance_gain": 0.0
   },
   {
     "feature": "shared_email_accounts",
@@ -153,7 +153,7 @@
   },
   {
     "feature": "fraud_cluster_size",
-    "importance_gain": 63.79700957665056
+    "importance_gain": 0.0
   },
   {
     "feature": "fingerprint_repeat_count",
@@ -173,10 +173,10 @@
   },
   {
     "feature": "shortest_path_to_known_fraud",
-    "importance_gain": 1.0033069998025894
+    "importance_gain": 0.0
   },
   {
     "feature": "graph_risk_score",
-    "importance_gain": 904.3395158542019
+    "importance_gain": 127.9080610795063
   }
 ]

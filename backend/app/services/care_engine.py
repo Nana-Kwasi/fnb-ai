@@ -1,7 +1,9 @@
 import json
 import logging
 import os
+import re
 import time
+import unicodedata
 import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -14,6 +16,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.ml.care_rules_loader import load_intent_rules
 from app.config import settings
+from app.services.artifact_store import fetch_artifact_uri_to_local_path
 from app.models import (
     TenantBank,
     Customer,
@@ -24,6 +27,7 @@ from app.models import (
 )
 from app.services.care_transactions import (
     customer_transaction_stats,
+    fetch_customer_transaction_detail,
     list_customer_transactions,
     parse_time_range,
     TimeRange,
@@ -38,6 +42,7 @@ def _normalize_phrase(s: str) -> str:
     """Lower, strip punctuation, collapse spaces; drop optional 'a'/'the' so 'apply for a loan' matches 'apply for loan'."""
     if not s:
         return ""
+    s = unicodedata.normalize("NFKC", (s or "").strip())
     t = "".join(c for c in s.lower().strip() if c.isalnum() or c.isspace())
     t = " ".join(t.split())
     for word in (" a ", " the "):
@@ -186,6 +191,387 @@ def _log_care_event(event: Dict[str, Any]) -> None:
     except Exception:
         # Don't let analytics failures affect the customer flow.
         logger.debug("failed to log care event", exc_info=True)
+
+
+def _extract_transaction_ref(text: str) -> str | None:
+    raw = (text or "").strip()
+    if not raw:
+        return None
+    m = re.search(
+        r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\b",
+        raw,
+    )
+    if m:
+        return m.group(0)
+    compact = raw.replace(" ", "")
+    if re.fullmatch(r"[0-9a-fA-F]{32}", compact):
+        try:
+            return str(uuid.UUID(hex=compact))
+        except ValueError:
+            pass
+    if re.fullmatch(r"[0-9a-fA-F\-]{36}", compact):
+        try:
+            return str(uuid.UUID(compact))
+        except ValueError:
+            pass
+    m = re.search(
+        r"(?:transaction|txn|transfer|payment)\s*(?:id|#|number)?\s*[:#]?\s*([A-Za-z0-9_\-]{4,128})\b",
+        raw,
+        flags=re.I,
+    )
+    if m:
+        return m.group(1).strip().rstrip(".,;)")
+    if len(raw) <= 80 and re.fullmatch(r"[A-Za-z0-9_\-]+", raw) and len(raw) >= 4:
+        return raw
+    return None
+
+
+def _cancel_tx_lookup_phrase(tnorm: str) -> bool:
+    return tnorm in {
+        "cancel",
+        "never mind",
+        "nevermind",
+        "stop",
+        "forget it",
+        "no thanks",
+        "no thank you",
+        "dont bother",
+        "don't bother",
+    }
+
+
+def _tx_list_or_statement_request(tnorm: str) -> bool:
+    """True when user wants lists, counts, exports — not a single-tx fraud check."""
+    patterns = (
+        "how many",
+        "list ",
+        "list my",
+        "show all",
+        "show my",
+        "show the",
+        "show ",
+        "recent transactions",
+        "transaction history",
+        "transactions this",
+        "my transactions for",
+        "last 10",
+        "last ten",
+        "last seven",
+        "last 7",
+        "this week",
+        "this month",
+        "more transactions",
+        "next page",
+        "pdf",
+        "download",
+        "generate statement",
+        "bank statement",
+        "my statement",
+        "statement pdf",
+        "e statement",
+        "estatement",
+    )
+    if any(b in tnorm for b in patterns):
+        return True
+    if "count" in tnorm and ("transaction" in tnorm or "trans " in tnorm or " txn" in tnorm):
+        return True
+    return False
+
+
+def _wants_transaction_detail_lookup(user_message: str) -> bool:
+    """True when we should ask for a transaction ID (multi-turn) or single-shot lookup."""
+    raw = unicodedata.normalize("NFKC", (user_message or "").strip()).casefold()
+    tnorm = _normalize_phrase(user_message)
+    if not tnorm and not raw:
+        return False
+    if _tx_list_or_statement_request(tnorm):
+        return False
+    # Raw substring: survives odd Unicode / keyboard variants the alnum-stripping step can break.
+    if ("unauthor" in raw or "fraud" in raw or "scam" in raw) and any(
+        w in raw for w in ("payment", "charge", "transaction", "transfer", "txn", "debit", "purchase")
+    ):
+        return True
+    if not tnorm:
+        return False
+    triggers = (
+        "money is gone",
+        "money gone",
+        "missing money",
+        "money missing",
+        "stolen",
+        "disappeared",
+        "check if",
+        "is it fraud",
+        "is this fraud",
+        "fraud or not",
+        "was it fraud",
+        "verify transaction",
+        "transaction fraud",
+        "suspicious transaction",
+        "suspicious charge",
+        "unauthorised transaction",
+        "unauthorized transaction",
+        "wrong transaction",
+        "look up transaction",
+        "lookup transaction",
+        "track my transaction",
+        "track transaction",
+        "transaction status",
+        "why was my",
+        "why was declined",
+        "payment declined",
+        "can you check",
+        "investigate transaction",
+        "unauthorised payment",
+        "unauthorized payment",
+        "someone took",
+        "took money",
+        "didnt authorize",
+        "didn't authorize",
+        "charged me",
+        "unknown charge",
+        "unrecognised",
+        "unrecognized",
+        "dont recognise",
+        "don't recognise",
+        "dont recognize",
+        "don't recognize",
+    )
+    if any(x in tnorm for x in triggers):
+        return True
+    fraud_charge_probe = (
+        any(
+            k in tnorm
+            for k in (
+                "unauthor",
+                "fraud",
+                "fraudulent",
+                "scam",
+                "stolen",
+                "hacked",
+                "not me",
+                "wasnt me",
+                "wasn't me",
+                "didnt make",
+                "didn't make",
+            )
+        )
+        and any(
+            w in tnorm
+            for w in (
+                "payment",
+                "payement",
+                "charge",
+                "transaction",
+                "transfer",
+                "money",
+                "debit",
+                "credit",
+                "purchase",
+                "withdraw",
+            )
+        )
+    )
+    if fraud_charge_probe:
+        return True
+    dispute_specific = "dispute" in tnorm and any(
+        w in tnorm for w in ("charge", "payment", "transaction", "transfer", "fraud", "scam", "wrong")
+    )
+    return bool(dispute_specific)
+
+
+def _ref_pairs_with_lookup_intent(tnorm: str, ref: str | None) -> bool:
+    if not ref:
+        return False
+    hints = (
+        "check",
+        "verify",
+        "look up",
+        "lookup",
+        "find",
+        "track",
+        "status",
+        "fraud",
+        "suspicious",
+        "wrong",
+        "investigate",
+        "transaction",
+        "txn",
+        "payment",
+        "transfer",
+        "this",
+        "that",
+    )
+    return any(h in tnorm for h in hints)
+
+
+def _format_transaction_detail_for_care(detail: Dict[str, Any], bank: TenantBank) -> str:
+    tz_name = ((bank.tone_config or {}).get("timezone") or "Africa/Accra").strip()
+    tz = ZoneInfo(tz_name)
+    ts = detail.get("timestamp")
+    ts_h = "—"
+    if ts:
+        try:
+            dt = datetime.fromisoformat(str(ts).replace("Z", "+00:00"))
+            dt = dt.astimezone(tz)
+            label = "GMT" if tz_name == "Africa/Accra" else (dt.strftime("%Z") or tz_name)
+            ts_h = dt.strftime("%d %b %Y, %H:%M ") + label
+        except Exception:
+            ts_h = str(ts)
+    amt = detail.get("amount")
+    try:
+        amt_s = f"{float(amt):,.2f}" if amt is not None else "—"
+    except Exception:
+        amt_s = str(amt)
+    merchant = detail.get("merchant_name") or detail.get("merchant_category") or "—"
+    lines = [
+        f"Here's what I see for transaction **{detail.get('external_tx_id') or '—'}**:",
+        f"• When: {ts_h}",
+        f"• Amount: {amt_s} {detail.get('currency') or ''}",
+        f"• Merchant / category: {merchant}",
+        f"• Channel: {detail.get('channel') or '—'} · Status: {detail.get('status') or '—'}",
+    ]
+    if detail.get("model_decision"):
+        fs = detail.get("fraud_score")
+        try:
+            fs_s = f"{float(fs):.3f}" if fs is not None else "n/a"
+        except Exception:
+            fs_s = "n/a"
+        lines.append(
+            f"• Fraud engine decision: **{detail['model_decision']}** (risk score {fs_s}, "
+            f"confidence {detail.get('model_confidence') or '—'})."
+        )
+        dec = str(detail["model_decision"])
+        if dec == "BLOCK":
+            lines.append("  This payment was blocked or treated as high risk.")
+        elif dec == "REQUEST_OTP":
+            lines.append("  The system asked for extra verification (e.g. OTP) before approving.")
+        elif dec in ("APPROVE", "LIMITED_APPROVAL"):
+            lines.append("  The system allowed this payment (possibly with limits).")
+    else:
+        lines.append("• No fraud-engine score on file yet for this payment (it may still be pending).")
+    if detail.get("reason_codes"):
+        rc = ", ".join(str(x) for x in (detail["reason_codes"] or [])[:5])
+        lines.append(f"• Signals flagged: {rc}")
+    if detail.get("outcome_classification"):
+        oc = detail["outcome_classification"]
+        src = detail.get("outcome_source")
+        lines.append(
+            f"• Recorded outcome: **{oc}**" + (f" ({src})" if src else "") + "."
+        )
+    lines.append(
+        "\nIf this doesn't match what you expect, tap **Talk to agent** and we'll connect you to a person."
+    )
+    return "\n".join(lines)
+
+
+async def _maybe_transaction_detail_lookup_reply(
+    db: AsyncSession,
+    bank: TenantBank,
+    customer: Customer,
+    session: ChatSession,
+    user_message: str,
+) -> tuple[str, str | None] | None:
+    """
+    Multi-turn: ask for transaction ID, then return DB+fraud details for that payment (this customer only).
+    """
+    tnorm = _normalize_phrase(user_message)
+    ctx = session.metadata_ or {}
+    pending = ctx.get("tx_id_lookup_pending") is True
+
+    if pending and "thank" in tnorm and len(tnorm) < 48:
+        session.metadata_ = {**ctx, "tx_id_lookup_pending": False}
+        await db.flush()
+        return "You're welcome! If you need another transaction checked, just ask.", None
+
+    if pending and _cancel_tx_lookup_phrase(tnorm):
+        session.metadata_ = {**ctx, "tx_id_lookup_pending": False}
+        await db.flush()
+        return "Okay — cancelled. Tell me if you need anything else.", None
+
+    ref = _extract_transaction_ref(user_message)
+
+    if pending:
+        pivot = any(
+            p in tnorm
+            for p in (
+                "show ",
+                "list ",
+                "how many",
+                "statement",
+                "pdf",
+                "transaction history",
+                "recent transactions",
+            )
+        )
+        if pivot:
+            session.metadata_ = {**ctx, "tx_id_lookup_pending": False}
+            await db.flush()
+            return None
+        if not ref:
+            return (
+                "Please send your **transaction ID** (from the app or bank SMS), or say **cancel**.",
+                None,
+            )
+        detail = await fetch_customer_transaction_detail(
+            db=db, bank=bank, customer=customer, ref=ref
+        )
+        session.metadata_ = {**ctx, "tx_id_lookup_pending": False}
+        await db.flush()
+        if not detail:
+            return (
+                f"I couldn't find **{ref}** on your account. Check the ID or open **View transactions** and copy it from the payment details.",
+                None,
+            )
+        _log_care_event(
+            {
+                "kind": "care_reply",
+                "source": "transaction_detail_lookup",
+                "intent": "TRANSACTION_DETAIL_LOOKUP",
+                "user_message": user_message,
+                "ref": ref,
+            }
+        )
+        return _format_transaction_detail_for_care(detail, bank), None
+
+    if ref and _ref_pairs_with_lookup_intent(tnorm, ref):
+        detail = await fetch_customer_transaction_detail(
+            db=db, bank=bank, customer=customer, ref=ref
+        )
+        if detail:
+            _log_care_event(
+                {
+                    "kind": "care_reply",
+                    "source": "transaction_detail_lookup",
+                    "intent": "TRANSACTION_DETAIL_LOOKUP",
+                    "user_message": user_message,
+                    "ref": ref,
+                    "single_shot": True,
+                }
+            )
+            return _format_transaction_detail_for_care(detail, bank), None
+        return (
+            f"I couldn't find **{ref}** on your account. Double-check the transaction ID.",
+            None,
+        )
+
+    if _wants_transaction_detail_lookup(user_message) and not ref:
+        session.metadata_ = {**ctx, "tx_id_lookup_pending": True}
+        await db.flush()
+        _log_care_event(
+            {
+                "kind": "care_tx_lookup_prompt",
+                "user_message": user_message,
+            }
+        )
+        return (
+            "I can look up that payment and show what our fraud system decided. "
+            "Please send your **transaction ID** (the one in your app or bank message). "
+            "If you're not sure where to find it, tap **View transactions** and open the payment — the ID is on the details screen.",
+            None,
+        )
+
+    return None
 
 
 async def _maybe_tx_analytics_reply(
@@ -523,7 +909,6 @@ async def _maybe_tx_analytics_reply(
 
     # Time range
     range_key = None
-    import re
 
     # Explicit date range: "between 2026-03-01 and 2026-03-10"
     mb = re.search(r"between\\s+(\\d{4}-\\d{2}-\\d{2})\\s+and\\s+(\\d{4}-\\d{2}-\\d{2})", t)
@@ -1007,41 +1392,60 @@ def _load_general_chat() -> List[Dict[str, str]]:
 GENERAL_CHAT: List[Dict[str, str]] = _load_general_chat()
 
 _CARE_INTENT_MODEL: Any = None
+_CARE_INTENT_MODEL_BY_ARTIFACT: Dict[str, Any] = {}
 
 
-def _load_care_intent_model() -> Any:
+def _resolve_care_artifact_model_path(model_artifact_uri: str | None) -> Path:
+    if model_artifact_uri:
+        p = fetch_artifact_uri_to_local_path(model_artifact_uri)
+        if p is None:
+            # unresolved remote URI; preserve existing behavior by returning a missing path.
+            return Path("/nonexistent/care_intent_model.joblib")
+        if p.is_dir():
+            return p / "care_intent_model.joblib"
+        return p
+    return Path(__file__).resolve().parent.parent / "ml" / "models" / "care_intent_model.joblib"
+
+
+def _load_care_intent_model(model_artifact_uri: str | None = None) -> Any:
     global _CARE_INTENT_MODEL
-    if _CARE_INTENT_MODEL is not None:
+    if not model_artifact_uri and _CARE_INTENT_MODEL is not None:
         return _CARE_INTENT_MODEL
-    path = Path(__file__).resolve().parent.parent / "ml" / "models" / "care_intent_model.joblib"
+    path = _resolve_care_artifact_model_path(model_artifact_uri)
+    if model_artifact_uri:
+        cached = _CARE_INTENT_MODEL_BY_ARTIFACT.get(str(path))
+        if cached is not None:
+            return cached
     if not path.exists():
         return None
     try:
         import joblib
-        _CARE_INTENT_MODEL = joblib.load(path)
+        model = joblib.load(path)
+        if model_artifact_uri:
+            _CARE_INTENT_MODEL_BY_ARTIFACT[str(path)] = model
+            return model
+        _CARE_INTENT_MODEL = model
         return _CARE_INTENT_MODEL
     except Exception:
         return None
 
 
-def _predict_intent_from_model(message: str) -> Tuple[str | None, float]:
+def _predict_intent_from_model(message: str, model_artifact_uri: str | None = None) -> Tuple[str | None, float]:
     """Returns (intent, confidence) or (None, 0) if no model or low confidence."""
-    model = _load_care_intent_model()
+    model = _load_care_intent_model(model_artifact_uri=model_artifact_uri)
     if model is None:
         return None, 0.0
     pipeline = model.get("pipeline")
     le = model.get("label_encoder")
-    labels = model.get("labels")
-    if not pipeline or not le or not labels:
+    if not pipeline or not le:
         return None, 0.0
     try:
-        import numpy as np
         pred = pipeline.predict([message])
         proba = pipeline.predict_proba([message])[0]
         idx = int(pred[0])
         conf = float(proba[idx])
-        if idx < len(labels):
-            return labels[idx], conf
+        intent = str(le.inverse_transform([idx])[0])
+        return intent, conf
     except Exception:
         pass
     return None, 0.0
@@ -1291,6 +1695,7 @@ def _rule_based_reply(
     support_contact: Dict[str, str] | None = None,
     closing_message: str | None = None,
     max_suggestions: int = 5,
+    model_artifact_uri: str | None = None,
 ) -> Tuple[str, str, List[str], bool]:
     text = user_message.lower().strip()
     has_customer = customer_ctx.get("has_customer", False)
@@ -1683,7 +2088,7 @@ def _rule_based_reply(
 
     # No direct rule hit: fall back to the TF‑IDF model-based intent to propose example phrases,
     # but allow strong keyword hints to override the model when obvious.
-    pred_intent, _ = _predict_intent_from_model(user_message)
+    pred_intent, _ = _predict_intent_from_model(user_message, model_artifact_uri=model_artifact_uri)
     kw_intent = _keyword_intent(user_message)
     if kw_intent:
         pred_intent = kw_intent
@@ -1768,6 +2173,7 @@ async def handle_chat(
     customer_id: str,
     message: str,
     channel: str,
+    model_artifact_uri: str | None = None,
 ) -> Dict[str, Any]:
     t0 = time.perf_counter()
 
@@ -1793,6 +2199,31 @@ async def handle_chat(
         history = await _get_recent_messages_by_customer(db, bank, customer, limit=20)
     else:
         history = await _get_recent_messages(db, session.id, limit=20)
+
+    if customer:
+        detail_lookup = await _maybe_transaction_detail_lookup_reply(
+            db, bank, customer, session, message
+        )
+        if detail_lookup is not None:
+            dl_reply, dl_pdf = detail_lookup
+            assistant_msg = ChatMessage(
+                session_id=session.id,
+                role="assistant",
+                content=dl_reply,
+                intent="TRANSACTION_DETAIL_LOOKUP",
+                confidence=None,
+            )
+            db.add(assistant_msg)
+            elapsed_ms = int((time.perf_counter() - t0) * 1000)
+            return {
+                "session_id": str(session_id),
+                "intent": "TRANSACTION_DETAIL_LOOKUP",
+                "response": dl_reply,
+                "escalate_to_human": False,
+                "suggested_actions": ["View transactions", "Talk to agent"],
+                "processing_time_ms": elapsed_ms,
+                "pdf_url": dl_pdf,
+            }
 
     # Transaction analytics / history Q&A (DB-backed, scoped to this customer)
     analytics = await _maybe_tx_analytics_reply(db, bank, customer, session, message)
@@ -1849,6 +2280,7 @@ async def handle_chat(
         support_contact=support_contact or None,
         closing_message=closing_message,
         max_suggestions=max_suggestions,
+        model_artifact_uri=model_artifact_uri,
     )
     # Simple per‑session rate‑limit: if we've already escalated to a human in
     # this conversation, don't trigger another escalation flag.
@@ -1860,7 +2292,7 @@ async def handle_chat(
         if already_escalated:
             escalate = False
     if intent == "GENERAL_SUPPORT":
-        pred_intent, pred_conf = _predict_intent_from_model(message)
+        pred_intent, pred_conf = _predict_intent_from_model(message, model_artifact_uri=model_artifact_uri)
         if pred_intent and pred_conf >= model_threshold and pred_intent in INTENT_ACTIONS:
             intent = pred_intent
             suggested_actions = INTENT_ACTIONS.get(intent, suggested_actions)
@@ -1884,4 +2316,8 @@ async def handle_chat(
         "suggested_actions": suggested_actions,
         "processing_time_ms": elapsed_ms,
     }
+
+
+def predict_intent_shadow(message: str, *, model_artifact_uri: str | None = None) -> Tuple[str | None, float]:
+    return _predict_intent_from_model(message, model_artifact_uri=model_artifact_uri)
 

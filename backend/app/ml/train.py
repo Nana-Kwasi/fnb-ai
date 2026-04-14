@@ -21,7 +21,9 @@ from typing import Tuple
 import joblib
 import numpy as np
 from sklearn.ensemble import GradientBoostingClassifier, IsolationForest
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_auc_score, brier_score_loss
+from sklearn.isotonic import IsotonicRegression
+from sklearn.linear_model import LogisticRegression
 
 from sqlalchemy import select
 from app.database import AsyncSessionLocal
@@ -267,7 +269,8 @@ def _debug_scenarios(out_dir: Path, X_val: np.ndarray | None = None) -> None:
 
 
 def _split_train_val(X: np.ndarray, y: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    idx = np.random.RandomState(42).permutation(len(X))
+    rng = np.random.default_rng(42)
+    idx = rng.permutation(len(X))
     X, y = X[idx], y[idx]
     train_size = int(0.8 * len(X))
     return X[:train_size], y[:train_size], X[train_size:], y[train_size:]
@@ -279,6 +282,39 @@ def _evaluate(y_true: np.ndarray, y_proba: np.ndarray) -> None:
         print(f"AUC: {auc:.4f}")
     except Exception:
         pass
+
+
+def _fit_calibrators(
+    out_dir: Path,
+    raw_val_proba: np.ndarray,
+    y_val: np.ndarray,
+) -> None:
+    try:
+        iso = IsotonicRegression(out_of_bounds="clip")
+        iso.fit(raw_val_proba, y_val)
+        joblib.dump(iso, out_dir / "isotonic_calibrator.joblib")
+    except Exception as exc:
+        print("Warning: isotonic calibrator failed:", exc)
+    try:
+        platt = LogisticRegression(solver="lbfgs")
+        platt.fit(raw_val_proba.reshape(-1, 1), y_val)
+        joblib.dump(platt, out_dir / "platt_calibrator.joblib")
+    except Exception as exc:
+        print("Warning: platt calibrator failed:", exc)
+    try:
+        report = {
+            "raw_brier": float(brier_score_loss(y_val, raw_val_proba)),
+        }
+        if (out_dir / "isotonic_calibrator.joblib").exists():
+            iso = joblib.load(out_dir / "isotonic_calibrator.joblib")
+            report["isotonic_brier"] = float(brier_score_loss(y_val, iso.predict(raw_val_proba)))
+        if (out_dir / "platt_calibrator.joblib").exists():
+            platt = joblib.load(out_dir / "platt_calibrator.joblib")
+            report["platt_brier"] = float(brier_score_loss(y_val, platt.predict_proba(raw_val_proba.reshape(-1, 1))[:, 1]))
+        with open(out_dir / "calibration_report.json", "w", encoding="utf-8") as f:
+            json.dump(report, f, indent=2)
+    except Exception as exc:
+        print("Warning: calibration report failed:", exc)
 
 
 def main():
@@ -319,6 +355,21 @@ def main():
     X_train, y_train, X_val, y_val = _split_train_val(X, y)
     _train_supervised(X_train, y_train, X_val, y_val, out_dir)
     _train_iso(X, y, out_dir)
+    try:
+        if _HAS_LGB and (out_dir / "lgb_fraud.txt").exists():
+            import lightgbm as lgb
+
+            m = lgb.Booster(model_file=str(out_dir / "lgb_fraud.txt"))
+            raw_val = m.predict(X_val).astype(float)
+        elif (out_dir / "sklearn_fraud.joblib").exists():
+            m = joblib.load(out_dir / "sklearn_fraud.joblib")
+            raw_val = m.predict_proba(X_val)[:, 1].astype(float)
+        else:
+            raw_val = None
+        if raw_val is not None and len(raw_val) == len(y_val):
+            _fit_calibrators(out_dir, raw_val, y_val)
+    except Exception as exc:
+        print("Warning: calibration fit skipped:", exc)
 
     # Simple evaluation on validation set if LightGBM/GBM is available.
     # For now, we only compute AUC using a trivial probability proxy (class balance),

@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from sqlalchemy import select, func, and_
 
 from app.database import get_db
+from app.config import settings
 from app.middleware.auth import resolve_tenant
 from app.models import (
     TenantBank,
@@ -21,8 +22,13 @@ from app.models import (
     AuditLog,
     MerchantRisk,
 )
+from app.models.calibration import CalibrationArtifact
+from app.models.model_registry import InferenceTrace, TenantMapper
+from app.services.calibration import apply_calibration
 from app.services.feature_engine import build_feature_vector
 from app.services.fraud_engine import score_and_explain, recommended_action, MODEL_VERSION, _get_models_path
+from app.services.mapper_validation import validate_and_dry_run
+from app.services.model_routing import resolve_model_route, resolve_shadow_candidate
 from app.services.fraud_ring import (
     update_entity_maps,
     get_tenant_graph_data,
@@ -392,6 +398,76 @@ async def _ensure_customer(db, bank: TenantBank, account_id: str):
     return customer
 
 
+def _trace_payload(
+    route_source: str,
+    model_registry_id: str | None,
+    mapper_id: str | None,
+    policy_snapshot: dict | None,
+    mapper_validation: dict | None = None,
+    transaction_id: str | None = None,
+) -> dict:
+    return {
+        "route_source": route_source,
+        "model_registry_id": model_registry_id,
+        "mapper_id": mapper_id,
+        "transaction_id": transaction_id,
+        "policy_snapshot": policy_snapshot or {},
+        "mapper_validation": mapper_validation or {},
+    }
+
+
+async def _validate_fraud_mapper_contract(
+    db,
+    *,
+    route,
+    raw_payload: dict,
+) -> tuple[dict | None, dict]:
+    if not route.mapper_id:
+        # Non-strict mode may use model defaults without an active mapper.
+        return None, {"validated": False, "reason": "no_active_mapper"}
+    mapper = await db.get(TenantMapper, route.mapper_id)
+    if not mapper:
+        raise HTTPException(status_code=422, detail={"code": "mapper_not_configured", "errors": ["Active mapper not found."]})
+    canonical, errors = validate_and_dry_run(
+        model_type="fraud",
+        contract_version=route.contract_version or mapper.contract_version,
+        mapping_json=dict(mapper.mapping_json or {}),
+        raw_payload=raw_payload,
+    )
+    if errors:
+        raise HTTPException(status_code=422, detail={"code": "mapper_contract_validation_failed", "errors": errors})
+    return canonical, {
+        "validated": True,
+        "mapper_id": str(mapper.id),
+        "mapper_version": mapper.mapper_version,
+        "contract_version": route.contract_version or mapper.contract_version,
+    }
+
+
+async def _resolve_active_calibration(db, *, tenant_id, model_version: str) -> CalibrationArtifact | None:
+    return (
+        await db.execute(
+            select(CalibrationArtifact).where(
+                CalibrationArtifact.tenant_id == tenant_id,
+                CalibrationArtifact.model_type == "fraud",
+                CalibrationArtifact.model_version == model_version,
+                CalibrationArtifact.status == "active",
+            )
+        )
+    ).scalar_one_or_none()
+
+
+def _shadow_decision_from_policy(score: float, policy_snapshot: dict | None) -> str:
+    p = dict(policy_snapshot or {})
+    block_t = float(p.get("fraud_block_threshold") or 0.85)
+    otp_t = float(p.get("fraud_otp_threshold") or 0.65)
+    if score >= block_t:
+        return "BLOCK"
+    if score >= otp_t:
+        return "REQUEST_OTP"
+    return "APPROVE"
+
+
 @router.post("/predict", response_model=PredictOut)
 async def predict(
     payload: PredictIn,
@@ -401,6 +477,29 @@ async def predict(
     t0 = time.perf_counter()
     tx_ts = datetime.utcnow()
     customer = await _ensure_customer(db, bank, payload.account_id)
+    route = await resolve_model_route(
+        db,
+        tenant_id=bank.id,
+        model_type="fraud",
+        strict_mapper=bool(settings.strict_mapper_enforcement),
+    )
+    _canonical_payload, mapper_validation_meta = await _validate_fraud_mapper_contract(
+        db,
+        route=route,
+        raw_payload={
+            "transaction_id": f"pred-{int(t0)}",
+            "account_id": payload.account_id,
+            "amount": payload.amount,
+            "currency": payload.currency,
+            "channel": "api",
+            "device_id": payload.device_id,
+            "ip_address": payload.ip_address,
+            "merchant_id": payload.merchant_id,
+            "location_country": (payload.location[:2].upper() if payload.location and len(payload.location) >= 2 else None),
+            "tx_timestamp": tx_ts.isoformat(),
+            "velocity_1h": None,
+        },
+    )
     loc_country = payload.location[:2].upper() if payload.location and len(payload.location) >= 2 else None
 
     ip_hash = payload.ip_address[:64] if payload.ip_address else None
@@ -430,8 +529,47 @@ async def predict(
         ip_address=ip_hash,
     )
     lgbm, iso_sc, rule_sc, network_risk, ensemble, decision, confidence, shap, reason_codes, rule_reasons, _graph_risk, policy_snapshot = await score_and_explain(
-        db, str(bank.id), fv, tenant_tone_config=bank.tone_config
+        db,
+        str(bank.id),
+        fv,
+        tenant_tone_config=bank.tone_config,
+        model_artifact_uri=route.artifact_uri,
+        strict_artifact=bool(route.model_registry_id),
     )
+    raw_ensemble = float(ensemble)
+    calibration = await _resolve_active_calibration(db, tenant_id=bank.id, model_version=route.model_version)
+    if calibration:
+        ensemble = apply_calibration(
+            raw_ensemble,
+            method=calibration.method,
+            params=dict(calibration.params_json or {}),
+        )
+    shadow_meta = None
+    if settings.shadow_scoring_enabled:
+        shadow = await resolve_shadow_candidate(db, tenant_id=bank.id, model_type="fraud")
+        if shadow:
+            _, _, _, _, shadow_raw_ensemble, _, _, _, _, _, _, _ = await score_and_explain(
+                db,
+                str(bank.id),
+                fv,
+                tenant_tone_config=bank.tone_config,
+                model_artifact_uri=shadow.artifact_uri,
+                strict_artifact=True,
+            )
+            shadow_cal = await _resolve_active_calibration(db, tenant_id=bank.id, model_version=shadow.version)
+            shadow_score = apply_calibration(
+                float(shadow_raw_ensemble),
+                method=(shadow_cal.method if shadow_cal else "none"),
+                params=(dict(shadow_cal.params_json or {}) if shadow_cal else {}),
+            )
+            shadow_meta = {
+                "candidate_model_registry_id": str(shadow.id),
+                "candidate_model_version": shadow.version,
+                "candidate_score": round(float(shadow_score), 6),
+                "candidate_decision": _shadow_decision_from_policy(float(shadow_score), policy_snapshot),
+                "candidate_calibration_id": str(shadow_cal.id) if shadow_cal else None,
+                "candidate_calibration_method": shadow_cal.method if shadow_cal else "none",
+            }
     effective_decision, control_notes = _enforce_decision_controls(
         bank=bank,
         payload=payload,
@@ -463,6 +601,7 @@ async def predict(
         model_version=MODEL_VERSION,
         processing_ms=int((time.perf_counter() - t0) * 1000),
     )
+    score_row.model_version = route.model_version or MODEL_VERSION
     db.add(score_row)
     _add_alert_if_needed(
         db=db,
@@ -478,6 +617,30 @@ async def predict(
         float(payload.amount), tx_ts.hour,
     )
     await store_fingerprint(db, bank.id, txn.id, fp_id, payload.device_id, ip_hash, payload.merchant_id)
+    db.add(
+        InferenceTrace(
+            tenant_id=bank.id,
+            model_type="fraud",
+            model_version=route.model_version,
+            mapper_version=route.mapper_version,
+            contract_version=route.contract_version,
+            decision=effective_decision,
+            processing_ms=int((time.perf_counter() - t0) * 1000),
+            trace_json=_trace_payload(
+                route.source,
+                route.model_registry_id,
+                route.mapper_id,
+                policy_snapshot,
+                {
+                    **mapper_validation_meta,
+                    "calibration_id": str(calibration.id) if calibration else None,
+                    "calibration_method": calibration.method if calibration else "none",
+                    "shadow": shadow_meta,
+                },
+                transaction_id=str(txn.id),
+            ),
+        )
+    )
     await db.flush()
     return PredictOut(
         risk_score=round(ensemble, 4),
@@ -503,6 +666,29 @@ async def score_transaction(
         tx_ts = datetime.utcnow()
 
     customer = await _ensure_customer(db, bank, payload.account_id)
+    route = await resolve_model_route(
+        db,
+        tenant_id=bank.id,
+        model_type="fraud",
+        strict_mapper=bool(settings.strict_mapper_enforcement),
+    )
+    _canonical_payload, mapper_validation_meta = await _validate_fraud_mapper_contract(
+        db,
+        route=route,
+        raw_payload={
+            "transaction_id": payload.transaction_id,
+            "account_id": payload.account_id,
+            "amount": payload.amount,
+            "currency": payload.currency,
+            "channel": payload.channel or "api",
+            "device_id": payload.device_id,
+            "ip_address": payload.ip_address,
+            "merchant_id": payload.merchant_id or payload.merchant_category,
+            "location_country": _location_country(payload),
+            "tx_timestamp": payload.timestamp,
+            "velocity_1h": None,
+        },
+    )
     loc_country = _location_country(payload)
 
     ip_hash = payload.ip_address[:64] if payload.ip_address else None
@@ -534,8 +720,47 @@ async def score_transaction(
     )
 
     lgbm_score, iso_score, rule_score_val, network_risk_score, ensemble_score, decision, confidence, shap_values, reason_codes, rule_reasons, graph_risk_score, policy_snapshot = await score_and_explain(
-        db, str(bank.id), fv, tenant_tone_config=bank.tone_config
+        db,
+        str(bank.id),
+        fv,
+        tenant_tone_config=bank.tone_config,
+        model_artifact_uri=route.artifact_uri,
+        strict_artifact=bool(route.model_registry_id),
     )
+    raw_ensemble = float(ensemble_score)
+    calibration = await _resolve_active_calibration(db, tenant_id=bank.id, model_version=route.model_version)
+    if calibration:
+        ensemble_score = apply_calibration(
+            raw_ensemble,
+            method=calibration.method,
+            params=dict(calibration.params_json or {}),
+        )
+    shadow_meta = None
+    if settings.shadow_scoring_enabled:
+        shadow = await resolve_shadow_candidate(db, tenant_id=bank.id, model_type="fraud")
+        if shadow:
+            _, _, _, _, shadow_raw_ensemble, _, _, _, _, _, _, _ = await score_and_explain(
+                db,
+                str(bank.id),
+                fv,
+                tenant_tone_config=bank.tone_config,
+                model_artifact_uri=shadow.artifact_uri,
+                strict_artifact=True,
+            )
+            shadow_cal = await _resolve_active_calibration(db, tenant_id=bank.id, model_version=shadow.version)
+            shadow_score = apply_calibration(
+                float(shadow_raw_ensemble),
+                method=(shadow_cal.method if shadow_cal else "none"),
+                params=(dict(shadow_cal.params_json or {}) if shadow_cal else {}),
+            )
+            shadow_meta = {
+                "candidate_model_registry_id": str(shadow.id),
+                "candidate_model_version": shadow.version,
+                "candidate_score": round(float(shadow_score), 6),
+                "candidate_decision": _shadow_decision_from_policy(float(shadow_score), policy_snapshot),
+                "candidate_calibration_id": str(shadow_cal.id) if shadow_cal else None,
+                "candidate_calibration_method": shadow_cal.method if shadow_cal else "none",
+            }
     effective_decision, control_notes = _enforce_decision_controls(
         bank=bank,
         payload=payload,
@@ -570,6 +795,7 @@ async def score_transaction(
         model_version=MODEL_VERSION,
         processing_ms=int((time.perf_counter() - t0) * 1000),
     )
+    score_row.model_version = route.model_version or MODEL_VERSION
     db.add(score_row)
 
     shadow_mode = bool((bank.tone_config or {}).get("fraud_policy", {}).get("shadow_mode", False))
@@ -608,6 +834,30 @@ async def score_transaction(
         },
     )
     db.add(audit)
+    db.add(
+        InferenceTrace(
+            tenant_id=bank.id,
+            model_type="fraud",
+            model_version=route.model_version,
+            mapper_version=route.mapper_version,
+            contract_version=route.contract_version,
+            decision=effective_decision,
+            processing_ms=int((time.perf_counter() - t0) * 1000),
+            trace_json=_trace_payload(
+                route.source,
+                route.model_registry_id,
+                route.mapper_id,
+                policy_snapshot,
+                {
+                    **mapper_validation_meta,
+                    "calibration_id": str(calibration.id) if calibration else None,
+                    "calibration_method": calibration.method if calibration else "none",
+                    "shadow": shadow_meta,
+                },
+                transaction_id=str(txn.id),
+            ),
+        )
+    )
     await db.flush()
     processing_ms = int((time.perf_counter() - t0) * 1000)
 
@@ -634,6 +884,29 @@ async def score_transaction_detail(
     except Exception:
         tx_ts = datetime.utcnow()
     customer = await _ensure_customer(db, bank, payload.account_id)
+    route = await resolve_model_route(
+        db,
+        tenant_id=bank.id,
+        model_type="fraud",
+        strict_mapper=bool(settings.strict_mapper_enforcement),
+    )
+    _canonical_payload, mapper_validation_meta = await _validate_fraud_mapper_contract(
+        db,
+        route=route,
+        raw_payload={
+            "transaction_id": payload.transaction_id,
+            "account_id": payload.account_id,
+            "amount": payload.amount,
+            "currency": payload.currency,
+            "channel": payload.channel or "api",
+            "device_id": payload.device_id,
+            "ip_address": payload.ip_address,
+            "merchant_id": payload.merchant_id or payload.merchant_category,
+            "location_country": _location_country(payload),
+            "tx_timestamp": payload.timestamp,
+            "velocity_1h": None,
+        },
+    )
     loc_country = _location_country(payload)
     ip_hash = payload.ip_address[:64] if payload.ip_address else None
     merchant_entity_id = payload.merchant_id or payload.merchant_category
@@ -662,8 +935,47 @@ async def score_transaction_detail(
         ip_address=ip_hash,
     )
     lgbm_score, iso_score, rule_score_val, network_risk_score, ensemble_score, decision, confidence, shap_values, reason_codes, rule_reasons, graph_risk_score, policy_snapshot = await score_and_explain(
-        db, str(bank.id), fv, tenant_tone_config=bank.tone_config
+        db,
+        str(bank.id),
+        fv,
+        tenant_tone_config=bank.tone_config,
+        model_artifact_uri=route.artifact_uri,
+        strict_artifact=bool(route.model_registry_id),
     )
+    raw_ensemble = float(ensemble_score)
+    calibration = await _resolve_active_calibration(db, tenant_id=bank.id, model_version=route.model_version)
+    if calibration:
+        ensemble_score = apply_calibration(
+            raw_ensemble,
+            method=calibration.method,
+            params=dict(calibration.params_json or {}),
+        )
+    shadow_meta = None
+    if settings.shadow_scoring_enabled:
+        shadow = await resolve_shadow_candidate(db, tenant_id=bank.id, model_type="fraud")
+        if shadow:
+            _, _, _, _, shadow_raw_ensemble, _, _, _, _, _, _, _ = await score_and_explain(
+                db,
+                str(bank.id),
+                fv,
+                tenant_tone_config=bank.tone_config,
+                model_artifact_uri=shadow.artifact_uri,
+                strict_artifact=True,
+            )
+            shadow_cal = await _resolve_active_calibration(db, tenant_id=bank.id, model_version=shadow.version)
+            shadow_score = apply_calibration(
+                float(shadow_raw_ensemble),
+                method=(shadow_cal.method if shadow_cal else "none"),
+                params=(dict(shadow_cal.params_json or {}) if shadow_cal else {}),
+            )
+            shadow_meta = {
+                "candidate_model_registry_id": str(shadow.id),
+                "candidate_model_version": shadow.version,
+                "candidate_score": round(float(shadow_score), 6),
+                "candidate_decision": _shadow_decision_from_policy(float(shadow_score), policy_snapshot),
+                "candidate_calibration_id": str(shadow_cal.id) if shadow_cal else None,
+                "candidate_calibration_method": shadow_cal.method if shadow_cal else "none",
+            }
     effective_decision, control_notes = _enforce_decision_controls(
         bank=bank,
         payload=payload,
@@ -696,6 +1008,7 @@ async def score_transaction_detail(
         model_version=MODEL_VERSION,
         processing_ms=int((time.perf_counter() - t0) * 1000),
     )
+    score_row.model_version = route.model_version or MODEL_VERSION
     db.add(score_row)
     shadow_mode = bool((bank.tone_config or {}).get("fraud_policy", {}).get("shadow_mode", False))
     if not shadow_mode:
@@ -707,6 +1020,30 @@ async def score_transaction_detail(
             decision=effective_decision,
             risk_score=float(ensemble_score),
         )
+    db.add(
+        InferenceTrace(
+            tenant_id=bank.id,
+            model_type="fraud",
+            model_version=route.model_version,
+            mapper_version=route.mapper_version,
+            contract_version=route.contract_version,
+            decision=effective_decision,
+            processing_ms=int((time.perf_counter() - t0) * 1000),
+            trace_json=_trace_payload(
+                route.source,
+                route.model_registry_id,
+                route.mapper_id,
+                policy_snapshot,
+                {
+                    **mapper_validation_meta,
+                    "calibration_id": str(calibration.id) if calibration else None,
+                    "calibration_method": calibration.method if calibration else "none",
+                    "shadow": shadow_meta,
+                },
+                transaction_id=str(txn.id),
+            ),
+        )
+    )
     await db.flush()
     return ScoreDetailOut(
         transaction_id=payload.transaction_id,
@@ -855,6 +1192,7 @@ async def list_transactions(
     db=Depends(get_db),
     account_id: str | None = Query(None, description="Optional customer external_id to filter by account"),
     limit: int = Query(50, le=200),
+    offset: int = Query(0, ge=0, le=200000),
 ):
     """
     List recent transactions for this tenant, optionally filtered by customer external_id (account_id).
@@ -886,6 +1224,7 @@ async def list_transactions(
             fs.transaction_id == tx.id,
         )
         .order_by(tx.tx_timestamp.desc())
+        .offset(offset)
         .limit(limit)
     )
     if account_id:

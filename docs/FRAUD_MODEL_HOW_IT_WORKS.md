@@ -2,6 +2,8 @@
 
 One transaction in → one decision out (APPROVE / REQUEST_OTP / BLOCK / etc.). This doc covers the full fraud process and all Admin API/UI usage.
 
+Conventions reference: `docs/API_CONVENTIONS.md`.
+
 ---
 
 ## In very simple terms (for your bank)
@@ -9,16 +11,16 @@ One transaction in → one decision out (APPROVE / REQUEST_OTP / BLOCK / etc.). 
 **How it works for transactions**  
 When a customer tries to make a transaction, your system sends that transaction to our API. We look at things like: amount, how often this customer transacts, whether the device or location is new, and whether the same device or IP is used by many accounts. We combine that into a single risk score (0–1). If the score is high, we say BLOCK or REQUEST_OTP; if it’s low, we say APPROVE. Your bank then acts on that (e.g. block the payment or send an OTP).
 
-**How data is exchanged**  
-- **You send us**: For each transaction, you call our API with a secret key (X-API-Key) and the transaction details: transaction ID, account ID, amount, currency, time, and optionally device ID, IP, country, merchant type.  
-- **We send you back**: A decision (APPROVE / REQUEST_OTP / BLOCK), the risk score, and short reasons (e.g. “Unusual amount”, “New device”).  
+**How data is exchanged**
+- **You send us**: For each transaction, call API with `X-API-Key` and transaction details (transaction ID, account ID, amount, currency, timestamp; optional device/IP/location/merchant fields).
+- **We send you back**: Decision (`APPROVE` / `LIMITED_APPROVAL` / `REQUEST_OTP` / `SOFT_DECLINE` / `BLOCK`), risk score, and reasons.
 - **We store**: The transaction and score on our side so we can improve the model and show you alerts and dashboards. Your data is tied to your bank (tenant) via the API key.
 
 **Is the model trained on past transactions?**  
 Yes. The main fraud model (LightGBM) is trained on **past transactions that were labelled** as fraud or not fraud. Those labels come from your analysts or chargebacks (e.g. “this transaction was CONFIRMED_FRAUD” or “FALSE_POSITIVE”), stored in our system. When a retrain runs, we use that history to update the model so it gets better over time. So: more past data + clear labels → better future decisions.
 
-**Is training automatic or manual?**  
-Both. Training runs **automatically every 24 hours** (scheduled job). You can also run it **on demand** from the Admin tab by clicking **“Trigger fraud train”** (e.g. after uploading new labels). The job uses the same logic: it loads labelled transactions from `fraud_outcomes`, builds features, and retrains the model.
+**Is training automatic or manual?**
+Both. Scheduled jobs exist, and you can run training on demand via upload-based admin workflows (`/api/v1/admin/training/upload`, `/api/v1/admin/training/fraud/global-pooled/trigger`).
 
 ---
 
@@ -27,7 +29,7 @@ Both. Training runs **automatically every 24 hours** (scheduled job). You can al
 ### A.1 End-to-end flow (one transaction)
 
 1. **Request**  
-   Bank sends **POST /api/v1/fraud/score** (or `/score/detail`) with `transaction_id`, `account_id`, `amount`, `currency`, `timestamp`, and optional `device_id`, `ip_address`, `location` (country), `merchant_category`. Header: `X-API-Key`.
+   Bank sends **POST /api/v1/fraud/score** (or `/api/v1/fraud/score/detail`) with `transaction_id`, `account_id`, `amount`, `currency`, `timestamp`, and optional `device_id`, `ip_address`, `location` (country), `merchant_category`. Header: `X-API-Key`.
 
 2. **Auth & tenant**  
    API key is validated; **tenant (TenantBank)** is resolved. Customer is created or looked up by `account_id`; a **Transaction** row is created (PENDING).
@@ -157,7 +159,7 @@ All fraud endpoints require **X-API-Key** (tenant-scoped). Dashboard shows “Vi
 
 ## Part B: Admin API and usage
 
-Base path: **/api/v1/admin**. No API key required for these (assumed internal/ops).
+Base path: **/api/v1/admin**. Requires platform admin auth (JWT; legacy token optional if enabled).
 
 ### B.1 Admin API endpoints
 
@@ -167,7 +169,9 @@ Base path: **/api/v1/admin**. No API key required for these (assumed internal/op
 | GET | /api/v1/admin/tenants | List all tenants. Returns `[{ id, name, country_code }]`. |
 | GET | /api/v1/admin/tenants/{tenant_id}/fraud-policy | Get fraud policy for tenant: model_weight, iso_weight, rule_weight, network_weight, fraud_block_threshold, fraud_otp_threshold, shadow_mode. |
 | PATCH | /api/v1/admin/tenants/{tenant_id}/fraud-policy | Update fraud policy (any subset of the above). Body: same keys, optional. |
-| POST | /api/v1/admin/trigger-fraud-train | Start fraud model retrain in background. Returns immediately with status “started”. |
+| POST | /api/v1/admin/training/upload | Upload labelled training data. |
+| POST | /api/v1/admin/training/fraud/global-pooled/trigger | Trigger pooled fraud training from uploaded data. |
+| POST | /api/v1/admin/trigger-fraud-train | Legacy trigger endpoint (compatibility path). |
 | GET | /api/v1/admin/care/metrics | Customer care metrics (window_hours, total_replies, rule_hit_rate, suggestion_rate, escalation_rate, intent_counts, alerts). Query: `window_hours` (default 24). |
 
 ### B.2 Fraud policy fields (what each does, in simple terms)
@@ -207,7 +211,7 @@ Base path: **/api/v1/admin**. No API key required for these (assumed internal/op
 
 - **Onboarding**: ops when adding a new bank; API key is given to the bank for fraud (and care) APIs.  
 - **Fraud policy**: ops or bank’s integration owner; controls how strict the model is (weights and thresholds) and whether to run in shadow_mode (no real alerts).  
-- **Trigger fraud train**: ops after new fraud outcomes or periodically to refresh the model.  
+- **Training triggers**: prefer upload-based trigger endpoints; keep legacy trigger only for backward compatibility.
 - **Care metrics**: ops to monitor customer care health.  
 
 ---

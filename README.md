@@ -80,12 +80,42 @@ curl -X POST http://localhost:8000/api/v1/admin/onboard \
 
 Use the returned `api_key` in `X-API-Key` for all fraud and care endpoints.
 
+## Admin auth (JWT + DB users)
+
+1. `alembic upgrade head`
+2. Set `PLATFORM_BOOTSTRAP_OWNER_EMAIL` and `PLATFORM_BOOTSTRAP_OWNER_PASSWORD` in `backend/.env`, restart API (creates first owner if `platform_users` is empty). **Remove password from env after first login in production.**
+3. Open the frontend → sign in → bank picker (owners / multi-bank users) → optional forced password change for invited users.
+4. Owner-only: **Team / users** tab → create users with tenant UUIDs; new users must change password on first login.
+
+Legacy file tokens (`admin_rbac.json` + `X-Admin-Token`) still work if `ADMIN_LEGACY_TOKEN_AUTH=true`.
+
+Hardening notes: [`docs/PRODUCTION_AUTH.md`](docs/PRODUCTION_AUTH.md).  
+Route × role matrix (admin API): [`docs/ADMIN_RBAC_ROUTES.md`](docs/ADMIN_RBAC_ROUTES.md).
+
 ## Project layout
 
 - `backend/` — FastAPI app, SQLAlchemy models, Alembic, routers (fraud, care, admin), middleware (auth, rate limit)
 - `frontend/` — React + Vite + Tailwind; architecture/flow/stack blueprint UI
 - `infra/` — docker-compose (postgres, redis, api, frontend, nginx), nginx.conf
 - `models/` — (optional) place Phi-3 GGUF and other model files here; mounted into API container
+- `docs/ops/` — operational runbooks, SLO/SLI catalog, release gates, on-call playbook, chaos drills
+
+## Production readiness checklist
+
+- [ ] Backend smoke workflow is green (CI).
+- [ ] Release gates reviewed: `docs/ops/RELEASE_GATES.md`.
+- [ ] SLO/SLI thresholds reviewed: `docs/ops/SLO_SLI_CATALOG.md`.
+- [ ] Incident runbooks validated: `docs/ops/RUNBOOKS.md`.
+- [ ] On-call owner assigned with response plan: `docs/ops/ONCALL_PLAYBOOK.md`.
+- [ ] Latest chaos drill evidence attached: `docs/ops/CHAOS_DRILLS.md`.
+
+Ops docs index: `docs/ops/README.md`.
+API documentation conventions: `docs/API_CONVENTIONS.md`.
+
+Architecture and presentation assets:
+- `docs/SYSTEM_ARCHITECTURE_BANK_LEVEL.md`
+- `docs/PRESENTATION_DEMO_INVESTOR_SLIDES.md`
+- `docs/TECHNICAL_ARCHITECTURE_AUDIT_GUIDE.md`
 
 ## Phase 1 — Foundation
 

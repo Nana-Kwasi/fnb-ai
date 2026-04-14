@@ -8,8 +8,12 @@
 {"text": "Find branch/ATM in app", "intent": "PIN_RESET"}
 {"text": "Yes", "intent": "HUMAN_ESCALATION"}
 {"text": "Stay on channel", "intent": "HUMAN_ESCALATION"}
+{"text": "Contact support", "intent": "CONTACT_SUPPORT"}
+{"text": "missing money", "intent": "TRANSACTION_HISTORY"}
 {"text": "hi", "intent": "BRANCH_ATM"}
 {"text": "View transactions", "intent": "TRANSACTION_HISTORY"}
+{"text": "How about last week", "intent": "TRANSACTION_HISTORY"}
+{"text": "Tell us which transaction", "intent": "TRANSACTION_HISTORY"}
 {"text": "Good morning", "intent": "GENERAL_SUPPORT"}
 {"text": "View transactions", "intent": "TRANSACTION_HISTORY"}
 {"text": "How do I check\tmy balance?", "intent": "BALANCE_INQUIRY"}
@@ -103,6 +107,7 @@
 {"text": "Yes", "intent": "HUMAN_ESCALATION"}
 {"text": "Hi", "intent": "BRANCH_ATM"}
 {"text": "I got an sms asking for otp", "intent": "SECURITY_GUIDANCE"}
+{"text": "unauthorised payment", "intent": "FRAUD_DISPUTE"}
 {"text": "I see a suspicious transaction", "intent": "BALANCE_INQUIRY"}
 {"text": "View transactions", "intent": "TRANSACTION_HISTORY"}
 {"text": "got an sms asking for otp", "intent": "SECURITY_GUIDANCE"}
@@ -121,8 +126,11 @@
 {"text": "Reset PIN in app", "intent": "PIN_RESET"}
 {"text": "Yes", "intent": "HUMAN_ESCALATION"}
 {"text": "Stay on channel", "intent": "HUMAN_ESCALATION"}
+{"text": "unauthorised payment", "intent": "FRAUD_DISPUTE"}
+{"text": "unauthorised payment", "intent": "FRAUD_DISPUTE"}
 {"text": "Hi", "intent": "GENERAL_SUPPORT"}
 {"text": "How do I secure\tmy account", "intent": "BALANCE_INQUIRY"}
+{"text": "unauthorised payment", "intent": "FRAUD_DISPUTE"}
 {"text": "Do it again", "intent": "ACCOUNT_LOCKED"}
 {"text": "I don’t like this, do it properly", "intent": "BALANCE_INQUIRY"}
 {"text": "Hi", "intent": "BRANCH_ATM"}

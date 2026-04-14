@@ -143,6 +143,34 @@ def train_intent_from_jsonl() -> bool:
     return _train_on_examples(examples)
 
 
+def train_intent_from_external_jsonl(path: str) -> bool:
+    """Build examples from rules seed + provided JSONL, then train."""
+    p = Path(path)
+    examples = list(get_seed_from_rules())
+    seed_count = len(examples)
+    if p.exists():
+        with open(p, encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                obj = json.loads(line)
+                intent = obj.get("intent")
+                if intent not in VALID_INTENTS:
+                    continue
+                msg = (obj.get("text") or "").strip()
+                if not msg:
+                    continue
+                examples.append((msg, intent))
+    if len(examples) < 10:
+        print(
+            f"Care training skipped: need >= 10 examples, got {len(examples)} "
+            f"(seed={seed_count}, uploaded={len(examples)-seed_count})."
+        )
+        return False
+    return _train_on_examples(examples)
+
+
 def run_care_training() -> dict:
     """Export history and train (seed + history). Used by the 6h scheduler."""
     count = export_chat_history_to_jsonl()
@@ -189,8 +217,12 @@ def _train_on_examples(examples: list[tuple[str, str]]) -> bool:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Care intent model training")
     parser.add_argument("--from-rules", action="store_true", help="Train from rules file only (no DB); use after editing care_intent_rules")
+    parser.add_argument("--from-jsonl", type=str, default=None, help="Train from external JSONL (merged with rules seed)")
     args = parser.parse_args()
-    if args.from_rules:
+    if args.from_jsonl:
+        ok = train_intent_from_external_jsonl(args.from_jsonl)
+        print("Care training (external jsonl):", {"path": args.from_jsonl, "trained": ok})
+    elif args.from_rules:
         out = run_care_training_from_rules_only()
         print("Care training (rules only):", out)
     else:

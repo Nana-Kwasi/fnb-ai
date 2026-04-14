@@ -4,14 +4,21 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import Response
 from jose import jwt
 from pydantic import BaseModel
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import TenantBank
+from app.models.calibration import CalibrationArtifact
+from app.models.model_registry import InferenceTrace, TenantMapper
 from app.database import get_db
 from app.middleware.auth import resolve_tenant
 from app.middleware.end_user_auth import resolve_end_user
 from app.config import settings
 from app.services import handle_chat
+from app.services.care_engine import predict_intent_shadow
+from app.services.calibration import apply_calibration
+from app.services.mapper_validation import validate_and_dry_run
+from app.services.model_routing import resolve_model_route, resolve_shadow_candidate
 from app.services.care_transactions import (
     customer_transaction_stats,
     list_customer_transactions,
@@ -21,6 +28,60 @@ from app.services.care_transactions import (
 from app.services.care_pdf import StatementRow, render_statement_pdf
 
 router = APIRouter()
+
+
+def _care_trace_payload(route, mapper_validation: dict) -> dict:
+    return {
+        "route_source": route.source,
+        "model_registry_id": route.model_registry_id,
+        "mapper_id": route.mapper_id,
+        "mapper_validation": mapper_validation,
+    }
+
+
+async def _validate_care_mapper_contract(
+    db: AsyncSession,
+    *,
+    route,
+    raw_payload: dict,
+) -> tuple[dict | None, dict]:
+    if not route.mapper_id:
+        return None, {"validated": False, "reason": "no_active_mapper"}
+    mapper = await db.get(TenantMapper, route.mapper_id)
+    if not mapper:
+        raise HTTPException(status_code=422, detail={"code": "mapper_not_configured", "errors": ["Active mapper not found."]})
+    canonical, errors = validate_and_dry_run(
+        model_type="care",
+        contract_version=route.contract_version or mapper.contract_version,
+        mapping_json=dict(mapper.mapping_json or {}),
+        raw_payload=raw_payload,
+    )
+    if errors:
+        raise HTTPException(status_code=422, detail={"code": "mapper_contract_validation_failed", "errors": errors})
+    return canonical, {
+        "validated": True,
+        "mapper_id": str(mapper.id),
+        "mapper_version": mapper.mapper_version,
+        "contract_version": route.contract_version or mapper.contract_version,
+    }
+
+
+async def _resolve_active_care_calibration(
+    db: AsyncSession,
+    *,
+    tenant_id,
+    model_version: str,
+) -> CalibrationArtifact | None:
+    return (
+        await db.execute(
+            select(CalibrationArtifact).where(
+                CalibrationArtifact.tenant_id == tenant_id,
+                CalibrationArtifact.model_type == "care",
+                CalibrationArtifact.model_version == model_version,
+                CalibrationArtifact.status == "active",
+            )
+        )
+    ).scalar_one_or_none()
 
 
 class ChatIn(BaseModel):
@@ -50,6 +111,25 @@ async def chat(
     # Backward compatibility: client may still send customer_id, but it must match the token.
     if payload.customer_id != customer_external_id:
         raise HTTPException(status_code=403, detail="Customer mismatch")
+    route = await resolve_model_route(
+        db,
+        tenant_id=bank.id,
+        model_type="care",
+        strict_mapper=bool(settings.strict_mapper_enforcement),
+    )
+    _canonical_payload, mapper_validation_meta = await _validate_care_mapper_contract(
+        db,
+        route=route,
+        raw_payload={
+            "session_id": payload.session_id,
+            "customer_id": customer_external_id,
+            "message_text": payload.message,
+            "channel": payload.channel,
+            "language": None,
+            "intent_metadata": None,
+            "message_ts": datetime.now(timezone.utc).isoformat(),
+        },
+    )
     result = await handle_chat(
         db=db,
         bank=bank,
@@ -57,7 +137,62 @@ async def chat(
         customer_id=customer_external_id,
         message=payload.message,
         channel=payload.channel,
+        model_artifact_uri=route.artifact_uri,
     )
+    calibration = await _resolve_active_care_calibration(db, tenant_id=bank.id, model_version=route.model_version)
+    # Care pipeline has no single raw risk score yet; use a stable intent-confidence proxy.
+    base_confidence = 0.9 if str(result.get("intent")) not in {"GENERAL_SUPPORT", "UNKNOWN"} else 0.55
+    calibrated_confidence = (
+        apply_calibration(base_confidence, method=calibration.method, params=dict(calibration.params_json or {}))
+        if calibration
+        else base_confidence
+    )
+    shadow_meta = None
+    if settings.shadow_scoring_enabled:
+        shadow = await resolve_shadow_candidate(db, tenant_id=bank.id, model_type="care")
+        if shadow:
+            shadow_intent, shadow_conf = predict_intent_shadow(payload.message, model_artifact_uri=shadow.artifact_uri)
+            shadow_cal = await _resolve_active_care_calibration(db, tenant_id=bank.id, model_version=shadow.version)
+            shadow_conf_cal = (
+                apply_calibration(
+                    shadow_conf,
+                    method=(shadow_cal.method if shadow_cal else "none"),
+                    params=(dict(shadow_cal.params_json or {}) if shadow_cal else {}),
+                )
+                if shadow_conf is not None
+                else None
+            )
+            shadow_meta = {
+                "candidate_model_registry_id": str(shadow.id),
+                "candidate_model_version": shadow.version,
+                "candidate_intent": shadow_intent,
+                "candidate_confidence": shadow_conf,
+                "candidate_confidence_calibrated": shadow_conf_cal,
+                "candidate_calibration_id": str(shadow_cal.id) if shadow_cal else None,
+                "candidate_calibration_method": shadow_cal.method if shadow_cal else "none",
+            }
+    db.add(
+        InferenceTrace(
+            tenant_id=bank.id,
+            model_type="care",
+            model_version=route.model_version,
+            mapper_version=route.mapper_version,
+            contract_version=route.contract_version,
+            decision=result.get("intent"),
+            processing_ms=result.get("processing_time_ms"),
+            trace_json={
+                **_care_trace_payload(route, mapper_validation_meta),
+                "confidence_proxy": {
+                    "base": base_confidence,
+                    "calibrated": calibrated_confidence,
+                    "calibration_id": str(calibration.id) if calibration else None,
+                    "calibration_method": calibration.method if calibration else "none",
+                },
+                "shadow": shadow_meta,
+            },
+        )
+    )
+    await db.flush()
     return ChatOut(**result)
 
 

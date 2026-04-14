@@ -5,6 +5,8 @@ from app.services.care_engine import (
     INTENT_ACTIONS,
     _rag_snippet,
     _tx_context_line,
+    _extract_transaction_ref,
+    _wants_transaction_detail_lookup,
 )
 
 
@@ -49,6 +51,32 @@ class TestTxContext(unittest.TestCase):
         self.assertIn("Your recent activity includes", line)
         self.assertIn("50 GHS at Shop A", line)
         self.assertIn("20 GHS at merchant", line)
+
+
+class TestTransactionRefExtract(unittest.TestCase):
+    def test_plain_external_id(self):
+        self.assertEqual(_extract_transaction_ref("ABC-12345"), "ABC-12345")
+
+    def test_uuid_embedded(self):
+        u = "550e8400-e29b-41d4-a716-446655440000"
+        self.assertEqual(_extract_transaction_ref(f"please check {u} thanks"), u)
+
+    def test_transaction_id_prefix(self):
+        self.assertEqual(_extract_transaction_ref("Transaction id: TX-999"), "TX-999")
+
+
+class TestWantsTransactionDetailLookup(unittest.TestCase):
+    def test_money_gone_triggers(self):
+        self.assertTrue(_wants_transaction_detail_lookup("My money is gone"))
+
+    def test_unauthorised_payment_triggers(self):
+        self.assertTrue(_wants_transaction_detail_lookup("unauthorised payment"))
+
+    def test_unauthorized_charge_triggers(self):
+        self.assertTrue(_wants_transaction_detail_lookup("unauthorized charge on my card"))
+
+    def test_list_blocked(self):
+        self.assertFalse(_wants_transaction_detail_lookup("show my transactions this week"))
 
 
 class TestRuleBasedReply(unittest.TestCase):
