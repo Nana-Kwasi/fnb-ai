@@ -131,7 +131,11 @@ def verify_s3_tenant_prefixes(*, tenant_ids: list[uuid.UUID]) -> list[str]:
     except ImportError:
         return ["s3:boto3_not_installed"]
     errs: list[str] = []
-    s3 = boto3.client("s3")
+    # Support S3-compatible backends (Cloudflare R2, MinIO, etc.).
+    # boto3 does NOT automatically read AWS_ENDPOINT_URL, so we plumb it through.
+    import os
+    endpoint_url = os.getenv("AWS_ENDPOINT_URL") or None
+    s3 = boto3.client("s3", endpoint_url=endpoint_url)
     strict = bool(settings.data_plane_s3_require_objects)
     for tid in tenant_ids:
         if "{tenant_id}" in tmpl or "{tenant_id_short}" in tmpl:

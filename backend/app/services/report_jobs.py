@@ -15,6 +15,7 @@ from reportlab.platypus import Image, Paragraph, SimpleDocTemplate, Spacer, Tabl
 from sqlalchemy import func, select
 
 from app.database import AsyncSessionLocal
+from app.config import settings
 from app.models import TenantBank
 from app.models.audit import AuditLog
 from app.models.customer import Customer
@@ -22,6 +23,7 @@ from app.models.fraud import FraudScore
 from app.models.fraud_extra import FraudAlert
 from app.models.reporting import ReportJob
 from app.models.transaction import Transaction
+from app.services.cloudinary_store import upload_bytes, destroy
 
 REPORTS_DIR = Path(__file__).resolve().parents[1] / "ml" / "data" / "reports"
 EXPORTS_DIR = Path(__file__).resolve().parents[1] / "ml" / "data" / "exports"
@@ -219,6 +221,39 @@ async def run_report_job(job_id: uuid.UUID) -> None:
                 return
             _render_xlsx(xlsx_path, tx_rows)
 
+            # Upload artifacts to Cloudinary (optional). Render disks are ephemeral, so prefer URLs when enabled.
+            if bool(getattr(bank, "id", None)) and bool(getattr(settings, "cloudinary_store_reports", True)):
+                pdf_res = None
+                xlsx_res = None
+                try:
+                    pdf_res = upload_bytes(
+                        content=pdf_path.read_bytes(),
+                        filename=f"tenant-report-{str(tenant_id)[:8]}-{str(job.id)[:8]}.pdf",
+                        folder=f"reports/{tenant_id}",
+                        resource_type="raw",
+                        delivery_type="private",
+                        tags=["report", "tenant_report"],
+                        context={"tenant_id": str(tenant_id), "job_id": str(job.id)},
+                    )
+                    xlsx_res = upload_bytes(
+                        content=xlsx_path.read_bytes(),
+                        filename=f"tenant-report-{str(tenant_id)[:8]}-{str(job.id)[:8]}.xlsx",
+                        folder=f"reports/{tenant_id}",
+                        resource_type="raw",
+                        delivery_type="private",
+                        tags=["report", "tenant_report"],
+                        context={"tenant_id": str(tenant_id), "job_id": str(job.id)},
+                    )
+                except Exception:
+                    pdf_res = None
+                    xlsx_res = None
+                if pdf_res is not None:
+                    job.artifact_pdf_url = pdf_res.url
+                    job.artifact_pdf_public_id = pdf_res.public_id
+                if xlsx_res is not None:
+                    job.artifact_xlsx_url = xlsx_res.url
+                    job.artifact_xlsx_public_id = xlsx_res.public_id
+
             job.summary = summary
             job.status = "done"
             job.error = None
@@ -280,9 +315,21 @@ async def cleanup_old_report_artifacts(retention_days: int = 30) -> dict[str, in
                     except Exception:
                         pass
                 changed = True
+            # Best-effort delete remote Cloudinary artifacts if we have public IDs.
+            if bool(getattr(settings, "cloudinary_store_reports", True)):
+                if job.artifact_pdf_public_id:
+                    destroy(public_id=str(job.artifact_pdf_public_id), resource_type="raw")
+                    changed = True
+                if job.artifact_xlsx_public_id:
+                    destroy(public_id=str(job.artifact_xlsx_public_id), resource_type="raw")
+                    changed = True
             if changed:
                 job.artifact_pdf_path = None
                 job.artifact_xlsx_path = None
+                job.artifact_pdf_url = None
+                job.artifact_xlsx_url = None
+                job.artifact_pdf_public_id = None
+                job.artifact_xlsx_public_id = None
                 touched_jobs += 1
         if touched_jobs:
             await db.flush()

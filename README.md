@@ -56,10 +56,11 @@ npm run dev
 - Docs: http://localhost:8000/docs  
 - Frontend: http://localhost:3000  
 
+The frontend start command is `npm run dev`.
+
 ### 3. Full stack with Docker
 
 ```bash
-cd infra
 export DB_PASSWORD=yourpassword SECRET_KEY=yoursecret
 docker compose up --build
 ```
@@ -67,6 +68,8 @@ docker compose up --build
 - API: http://localhost:8000  
 - Frontend: http://localhost:3000  
 - Nginx: http://localhost:80 (proxies to API + frontend)  
+
+You can run that command from the repository root because `docker-compose.yml` now lives there.
 
 ## First tenant
 

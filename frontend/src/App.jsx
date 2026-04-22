@@ -3,20 +3,13 @@ import PlatformSidebar from "./components/PlatformSidebar";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
-function OnboardTab({ adminFetch }) {
+function OnboardBankForm({ adminFetch, className = "", onCreated }) {
   const [name, setName] = useState("");
   const [countryCode, setCountryCode] = useState("GH");
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [banks, setBanks] = useState([]);
-  const [banksLoading, setBanksLoading] = useState(false);
-  const [banksError, setBanksError] = useState(null);
-  const [selectedBank, setSelectedBank] = useState(null);
-  const [rotateLoading, setRotateLoading] = useState(false);
-  const [rotateError, setRotateError] = useState(null);
-  const [rotateResult, setRotateResult] = useState(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -32,6 +25,7 @@ function OnboardTab({ adminFetch }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || res.statusText);
       setResult(data);
+      if (typeof onCreated === "function") onCreated(data);
     } catch (err) {
       setError(err.message || "Request failed");
     } finally {
@@ -45,6 +39,80 @@ function OnboardTab({ adminFetch }) {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }
+
+  return (
+    <div className={className}>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-[11px] tracking-wider text-slate-500 uppercase mb-1.5">Bank name</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="e.g. Bank A"
+            required
+            className="w-full rounded-lg border border-slate-700 bg-slate-950/60 px-4 py-2.5 text-slate-100 placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
+          />
+        </div>
+        <div>
+          <label className="block text-[11px] tracking-wider text-slate-500 uppercase mb-1.5">Country code</label>
+          <input
+            type="text"
+            value={countryCode}
+            onChange={(e) => setCountryCode(e.target.value)}
+            placeholder="e.g. GH"
+            required
+            maxLength={2}
+            className="w-full rounded-lg border border-slate-700 bg-slate-950/60 px-4 py-2.5 text-slate-100 placeholder-slate-500 focus:border-cyan-400 focus:outline-none uppercase"
+          />
+        </div>
+        {error && (
+          <div className="rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-2 text-sm text-red-200">{error}</div>
+        )}
+        <button
+          type="submit"
+          disabled={loading}
+          className="px-6 py-2.5 rounded-md border border-cyan-400/80 bg-cyan-500/10 text-cyan-200 text-xs tracking-wider uppercase disabled:opacity-50"
+        >
+          {loading ? "Creating…" : "Onboard bank"}
+        </button>
+      </form>
+      {result && (
+        <div className="mt-6 rounded-xl border border-emerald-400/40 bg-emerald-500/10 p-5 space-y-3">
+          <div className="text-[11px] tracking-wider text-emerald-300 uppercase">Created</div>
+          <div>
+            <div className="text-[10px] text-slate-400 uppercase mb-1">Bank ID</div>
+            <code className="text-sm text-slate-100 break-all">{result.bank_id}</code>
+          </div>
+          <div>
+            <div className="text-[10px] text-slate-400 uppercase mb-1">API Key (use in X-API-Key header)</div>
+            <div className="flex items-center gap-2">
+              <code className="flex-1 text-sm text-slate-100 break-all bg-slate-950/80 rounded px-2 py-1.5">
+                {result.api_key}
+              </code>
+              <button
+                type="button"
+                onClick={copyKey}
+                className="px-3 py-1.5 rounded border border-emerald-400/70 text-xs text-emerald-200 hover:bg-emerald-500/10"
+              >
+                {copied ? "Copied" : "Copy"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function OnboardTab({ adminFetch }) {
+  const [banks, setBanks] = useState([]);
+  const [banksLoading, setBanksLoading] = useState(false);
+  const [banksError, setBanksError] = useState(null);
+  const [selectedBank, setSelectedBank] = useState(null);
+  const [rotateLoading, setRotateLoading] = useState(false);
+  const [rotateError, setRotateError] = useState(null);
+  const [rotateResult, setRotateResult] = useState(null);
 
   async function loadBanks() {
     setBanksLoading(true);
@@ -84,65 +152,7 @@ function OnboardTab({ adminFetch }) {
     <div className="p-8 space-y-8">
       <div className="max-w-xl">
         <p className="text-slate-400 text-xs tracking-wider mb-6 uppercase">Onboard a new bank tenant</p>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-[11px] tracking-wider text-slate-500 uppercase mb-1.5">Bank name</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. Bank A"
-              required
-              className="w-full rounded-lg border border-slate-700 bg-slate-950/60 px-4 py-2.5 text-slate-100 placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-[11px] tracking-wider text-slate-500 uppercase mb-1.5">Country code</label>
-            <input
-              type="text"
-              value={countryCode}
-              onChange={(e) => setCountryCode(e.target.value)}
-              placeholder="e.g. GH"
-              required
-              maxLength={2}
-              className="w-full rounded-lg border border-slate-700 bg-slate-950/60 px-4 py-2.5 text-slate-100 placeholder-slate-500 focus:border-cyan-400 focus:outline-none uppercase"
-            />
-          </div>
-          {error && (
-            <div className="rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-2 text-sm text-red-200">{error}</div>
-          )}
-          <button
-            type="submit"
-            disabled={loading}
-            className="px-6 py-2.5 rounded-md border border-cyan-400/80 bg-cyan-500/10 text-cyan-200 text-xs tracking-wider uppercase disabled:opacity-50"
-          >
-            {loading ? "Creating…" : "Onboard bank"}
-          </button>
-        </form>
-        {result && (
-          <div className="mt-8 rounded-xl border border-emerald-400/40 bg-emerald-500/10 p-5 space-y-3">
-            <div className="text-[11px] tracking-wider text-emerald-300 uppercase">Created</div>
-            <div>
-              <div className="text-[10px] text-slate-400 uppercase mb-1">Bank ID</div>
-              <code className="text-sm text-slate-100 break-all">{result.bank_id}</code>
-            </div>
-            <div>
-              <div className="text-[10px] text-slate-400 uppercase mb-1">API Key (use in X-API-Key header)</div>
-              <div className="flex items-center gap-2">
-                <code className="flex-1 text-sm text-slate-100 break-all bg-slate-950/80 rounded px-2 py-1.5">
-                  {result.api_key}
-                </code>
-                <button
-                  type="button"
-                  onClick={copyKey}
-                  className="px-3 py-1.5 rounded border border-emerald-400/70 text-xs text-emerald-200 hover:bg-emerald-500/10"
-                >
-                  {copied ? "Copied" : "Copy"}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        <OnboardBankForm adminFetch={adminFetch} />
       </div>
 
       <div className="rounded-2xl border border-slate-800 bg-slate-950/60 shadow-[0_18px_60px_rgba(15,23,42,0.75)]">
@@ -259,7 +269,7 @@ function OnboardTab({ adminFetch }) {
   );
 }
 
-function CareMetricsPanel({ adminFetch, platformTenantId }) {
+function CareMetricsPanel({ adminFetch, platformTenantId, careModelRegistered, tenantRegLoading }) {
   const [metrics, setMetrics] = useState(null);
   const [careKpis, setCareKpis] = useState(null);
   const [error, setError] = useState(null);
@@ -273,7 +283,7 @@ function CareMetricsPanel({ adminFetch, platformTenantId }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || res.statusText);
       setMetrics(data);
-      if (platformTenantId) {
+      if (platformTenantId && careModelRegistered) {
         const kRes = await adminFetch(
           `${API_BASE}/api/v1/admin/monitoring/model-kpis?tenant_id=${encodeURIComponent(platformTenantId)}&model_type=care&days=30`
         );
@@ -313,7 +323,7 @@ function CareMetricsPanel({ adminFetch, platformTenantId }) {
           {error}
         </div>
       )}
-      {careKpis && platformTenantId && (
+      {careKpis && platformTenantId && careModelRegistered && (
         <div className="rounded-lg border border-cyan-900/50 bg-slate-900/60 p-4 mb-4">
           <p className="text-[10px] text-cyan-400/90 uppercase tracking-wider mb-3">Care model KPIs (30d, inference traces)</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -625,7 +635,7 @@ function OpsCutoverPanel({ adminFetch }) {
   );
 }
 
-function TenantObservabilityPanel({ adminFetch, platformTenantId }) {
+function TenantObservabilityPanel({ adminFetch, platformTenantId, fraudModelRegistered, careModelRegistered, tenantRegLoading, onOpenModelRegistry }) {
   const [fraudKpi, setFraudKpi] = useState(null);
   const [careKpi, setCareKpi] = useState(null);
   const [isoFraud, setIsoFraud] = useState(null);
@@ -643,30 +653,56 @@ function TenantObservabilityPanel({ adminFetch, platformTenantId }) {
     setErr(null);
     try {
       const tid = encodeURIComponent(platformTenantId);
-      const urls = [
-        ["fk", `${API_BASE}/api/v1/admin/monitoring/model-kpis?tenant_id=${tid}&model_type=fraud&days=30`],
-        ["ck", `${API_BASE}/api/v1/admin/monitoring/model-kpis?tenant_id=${tid}&model_type=care&days=30`],
-        ["if", `${API_BASE}/api/v1/admin/monitoring/isolation-readiness?tenant_id=${tid}&model_type=fraud`],
-        ["ic", `${API_BASE}/api/v1/admin/monitoring/isolation-readiness?tenant_id=${tid}&model_type=care`],
-        ["cf", `${API_BASE}/api/v1/admin/monitoring/champion-challenger?tenant_id=${tid}&model_type=fraud&window_hours=24`],
-        ["cc", `${API_BASE}/api/v1/admin/monitoring/champion-challenger?tenant_id=${tid}&model_type=care&window_hours=24`],
-        ["gf", `${API_BASE}/api/v1/admin/monitoring/cutover-gate?tenant_id=${tid}&model_type=fraud`],
-        ["gc", `${API_BASE}/api/v1/admin/monitoring/cutover-gate?tenant_id=${tid}&model_type=care`],
-      ];
+      const urls = [];
+      if (fraudModelRegistered) {
+        urls.push(
+          ["fk", `${API_BASE}/api/v1/admin/monitoring/model-kpis?tenant_id=${tid}&model_type=fraud&days=30`],
+          ["if", `${API_BASE}/api/v1/admin/monitoring/isolation-readiness?tenant_id=${tid}&model_type=fraud`],
+          ["cf", `${API_BASE}/api/v1/admin/monitoring/champion-challenger?tenant_id=${tid}&model_type=fraud&window_hours=24`],
+          ["gf", `${API_BASE}/api/v1/admin/monitoring/cutover-gate?tenant_id=${tid}&model_type=fraud`],
+        );
+      } else {
+        setFraudKpi(null);
+        setIsoFraud(null);
+        setCcFraud(null);
+        setGateFraud(null);
+      }
+      if (careModelRegistered) {
+        urls.push(
+          ["ck", `${API_BASE}/api/v1/admin/monitoring/model-kpis?tenant_id=${tid}&model_type=care&days=30`],
+          ["ic", `${API_BASE}/api/v1/admin/monitoring/isolation-readiness?tenant_id=${tid}&model_type=care`],
+          ["cc", `${API_BASE}/api/v1/admin/monitoring/champion-challenger?tenant_id=${tid}&model_type=care&window_hours=24`],
+          ["gc", `${API_BASE}/api/v1/admin/monitoring/cutover-gate?tenant_id=${tid}&model_type=care`],
+        );
+      } else {
+        setCareKpi(null);
+        setIsoCare(null);
+        setCcCare(null);
+        setGateCare(null);
+      }
+      if (urls.length === 0) {
+        setLoading(false);
+        return;
+      }
       const responses = await Promise.all(urls.map(([, u]) => adminFetch(u)));
       const bodies = await Promise.all(responses.map((r) => r.json().catch(() => null)));
-      const pick = (i) => (responses[i]?.ok ? bodies[i] : null);
-      setFraudKpi(pick(0));
-      setCareKpi(pick(1));
-      setIsoFraud(pick(2));
-      setIsoCare(pick(3));
-      setCcFraud(pick(4));
-      setCcCare(pick(5));
-      setGateFraud(pick(6));
-      setGateCare(pick(7));
-      const bad = responses.find((r, i) => !r.ok && i < 2);
+      const byKey = Object.fromEntries(urls.map(([k], i) => [k, responses[i]?.ok ? bodies[i] : null]));
+      if (fraudModelRegistered) {
+        setFraudKpi(byKey.fk ?? null);
+        setIsoFraud(byKey.if ?? null);
+        setCcFraud(byKey.cf ?? null);
+        setGateFraud(byKey.gf ?? null);
+      }
+      if (careModelRegistered) {
+        setCareKpi(byKey.ck ?? null);
+        setIsoCare(byKey.ic ?? null);
+        setCcCare(byKey.cc ?? null);
+        setGateCare(byKey.gc ?? null);
+      }
+      const bad = responses.find((r) => !r.ok);
       if (bad) {
-        const d = bodies[responses.indexOf(bad)];
+        const idx = responses.indexOf(bad);
+        const d = bodies[idx];
         setErr(typeof d?.detail === "string" ? d.detail : "Some observability endpoints failed");
       }
     } catch (e) {
@@ -678,7 +714,7 @@ function TenantObservabilityPanel({ adminFetch, platformTenantId }) {
 
   useEffect(() => {
     load();
-  }, [platformTenantId]);
+  }, [platformTenantId, fraudModelRegistered, careModelRegistered]);
 
   function kpiGrid(title, k, accent) {
     if (!k) return null;
@@ -751,12 +787,36 @@ function TenantObservabilityPanel({ adminFetch, platformTenantId }) {
     );
   }
 
+  if (tenantRegLoading) {
+    return (
+      <div className="p-8 max-w-5xl space-y-4">
+        <p className="text-slate-500 text-[11px] tracking-wider uppercase">Tenant observability</p>
+        <p className="text-sm text-slate-400">Checking model registration…</p>
+      </div>
+    );
+  }
+
+  if (!fraudModelRegistered && !careModelRegistered) {
+    return (
+      <div className="p-8 max-w-5xl space-y-4">
+        <p className="text-slate-500 text-[11px] tracking-wider uppercase">Tenant observability</p>
+        <ModelRegistryGateNotice
+          title="No models registered for this bank"
+          body="Observability KPIs and gates are tied to registered fraud and care models. Register the models you need in Model registry first; then refresh this page."
+          onOpenRegistry={onOpenModelRegistry}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="p-8 max-w-5xl space-y-4">
       <div className="flex items-center justify-between gap-4">
         <div>
           <p className="text-slate-500 text-[11px] tracking-wider uppercase">Tenant observability</p>
-          <p className="text-slate-400 text-xs">KPIs, isolation readiness, champion/challenger, cutover gate — fraud & care parity.</p>
+          <p className="text-slate-400 text-xs">
+            KPIs, isolation readiness, champion/challenger, cutover gate — only for model types registered for this bank.
+          </p>
         </div>
         <button
           type="button"
@@ -769,26 +829,44 @@ function TenantObservabilityPanel({ adminFetch, platformTenantId }) {
       </div>
       {err && <div className="rounded border border-amber-600/50 bg-amber-500/10 px-3 py-2 text-xs text-amber-200">{err}</div>}
       <div className="grid md:grid-cols-2 gap-3">
-        {kpiGrid("Fraud model KPIs", fraudKpi, "")}
-        {kpiGrid("Care model KPIs", careKpi, "border-cyan-900/30")}
+        {fraudModelRegistered && kpiGrid("Fraud model KPIs", fraudKpi, "")}
+        {careModelRegistered && kpiGrid("Care model KPIs", careKpi, "border-cyan-900/30")}
       </div>
       <div className="grid md:grid-cols-2 gap-3">
-        {isoRow("Fraud", isoFraud)}
-        {isoRow("Care", isoCare)}
+        {fraudModelRegistered && isoRow("Fraud", isoFraud)}
+        {careModelRegistered && isoRow("Care", isoCare)}
       </div>
       <div className="grid md:grid-cols-2 gap-3">
-        {ccRow("Fraud", ccFraud)}
-        {ccRow("Care", ccCare)}
+        {fraudModelRegistered && ccRow("Fraud", ccFraud)}
+        {careModelRegistered && ccRow("Care", ccCare)}
       </div>
       <div className="grid md:grid-cols-2 gap-3">
-        {gateRow("Fraud", gateFraud)}
-        {gateRow("Care", gateCare)}
+        {fraudModelRegistered && gateRow("Fraud", gateFraud)}
+        {careModelRegistered && gateRow("Care", gateCare)}
       </div>
     </div>
   );
 }
 
-function TenantHomePanel({ adminFetch, platformTenantId, platformTenantName }) {
+function ModelRegistryGateNotice({ title, body, onOpenRegistry }) {
+  return (
+    <div className="rounded-xl border border-amber-900/55 bg-amber-950/30 p-6 max-w-xl">
+      <p className="text-sm font-semibold text-amber-100 mb-2">{title}</p>
+      <p className="text-xs text-slate-400 mb-4">{body}</p>
+      {typeof onOpenRegistry === "function" && (
+        <button
+          type="button"
+          onClick={onOpenRegistry}
+          className="px-4 py-2 rounded-lg border border-cyan-600/70 text-cyan-200 text-xs uppercase tracking-wider hover:bg-cyan-950/40"
+        >
+          Open model registry
+        </button>
+      )}
+    </div>
+  );
+}
+
+function TenantHomePanel({ adminFetch, platformTenantId, platformTenantName, fraudModelRegistered, tenantRegLoading, onOpenModelRegistry }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [alerts, setAlerts] = useState([]);
@@ -802,42 +880,49 @@ function TenantHomePanel({ adminFetch, platformTenantId, platformTenantName }) {
     setLoading(true);
     setError(null);
     try {
-      const [aRes, tRes, nRes, dRes, dLiveRes, kRes] = await Promise.all([
+      const [aRes, tRes, nRes] = await Promise.all([
         adminFetch(`${API_BASE}/api/v1/fraud/alerts?status=OPEN`),
         adminFetch(`${API_BASE}/api/v1/fraud/transactions?limit=150`),
         adminFetch(`${API_BASE}/api/v1/fraud/network/analytics?since_days=30`),
-        adminFetch(`${API_BASE}/api/v1/admin/monitoring/fraud-drift-status?tenant_id=${encodeURIComponent(platformTenantId)}`),
-        adminFetch(`${API_BASE}/api/v1/admin/monitoring/fraud-drift?tenant_id=${encodeURIComponent(platformTenantId)}`),
-        adminFetch(`${API_BASE}/api/v1/admin/monitoring/model-kpis?tenant_id=${encodeURIComponent(platformTenantId)}&model_type=fraud&days=30`),
       ]);
-      const [aData, tData, nData, dData, dLiveData, kData] = await Promise.all([
-        aRes.json(),
-        tRes.json(),
-        nRes.json(),
-        dRes.json(),
-        dLiveRes.json().catch(() => []),
-        kRes.json().catch(() => ({})),
-      ]);
+      const [aData, tData, nData] = await Promise.all([aRes.json(), tRes.json(), nRes.json()]);
       if (!aRes.ok) throw new Error(aData.detail || "Failed to load alerts");
       if (!tRes.ok) throw new Error(tData.detail || "Failed to load transactions");
       if (!nRes.ok) throw new Error(nData.detail || "Failed to load analytics");
-      if (!dRes.ok) throw new Error(dData.detail || "Failed to load drift status");
       setAlerts(Array.isArray(aData) ? aData : []);
       setTx(Array.isArray(tData) ? tData : []);
       setAnalytics(nData || null);
-      if (kRes.ok) setModelKpis(kData || null);
-      let driftData = dData || null;
-      if (driftData?.status === "unknown" && dLiveRes.ok && Array.isArray(dLiveData)) {
-        const alertCount = dLiveData.filter((f) => !!f?.alert).length;
-        driftData = {
-          ...driftData,
-          status: alertCount > 0 ? "yellow" : "green",
-          alerts_count: alertCount,
-          checked_at: new Date().toISOString(),
-          source: "live_compute",
-        };
+
+      if (fraudModelRegistered) {
+        const [dRes, dLiveRes, kRes] = await Promise.all([
+          adminFetch(`${API_BASE}/api/v1/admin/monitoring/fraud-drift-status?tenant_id=${encodeURIComponent(platformTenantId)}`),
+          adminFetch(`${API_BASE}/api/v1/admin/monitoring/fraud-drift?tenant_id=${encodeURIComponent(platformTenantId)}`),
+          adminFetch(`${API_BASE}/api/v1/admin/monitoring/model-kpis?tenant_id=${encodeURIComponent(platformTenantId)}&model_type=fraud&days=30`),
+        ]);
+        const [dData, dLiveData, kData] = await Promise.all([
+          dRes.json(),
+          dLiveRes.json().catch(() => []),
+          kRes.json().catch(() => ({})),
+        ]);
+        if (!dRes.ok) throw new Error(dData.detail || "Failed to load drift status");
+        if (kRes.ok) setModelKpis(kData || null);
+        else setModelKpis(null);
+        let driftData = dData || null;
+        if (driftData?.status === "unknown" && dLiveRes.ok && Array.isArray(dLiveData)) {
+          const alertCount = dLiveData.filter((f) => !!f?.alert).length;
+          driftData = {
+            ...driftData,
+            status: alertCount > 0 ? "yellow" : "green",
+            alerts_count: alertCount,
+            checked_at: new Date().toISOString(),
+            source: "live_compute",
+          };
+        }
+        setDrift(driftData);
+      } else {
+        setDrift(null);
+        setModelKpis(null);
       }
-      setDrift(driftData);
     } catch (err) {
       setError(err.message || "Failed to load dashboard");
     } finally {
@@ -847,7 +932,7 @@ function TenantHomePanel({ adminFetch, platformTenantId, platformTenantName }) {
 
   useEffect(() => {
     load();
-  }, [platformTenantId]);
+  }, [platformTenantId, fraudModelRegistered]);
 
   const totalTx = tx.length;
   const blocked = tx.filter((x) => x?.decision === "BLOCK").length;
@@ -918,7 +1003,21 @@ function TenantHomePanel({ adminFetch, platformTenantId, platformTenantName }) {
       )}
       {error && <div className="rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-2 text-sm text-red-300">{error}</div>}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+      {platformTenantId && tenantRegLoading && (
+        <div className="rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2 text-xs text-slate-400">
+          Checking fraud model registration for this bank…
+        </div>
+      )}
+
+      {platformTenantId && !tenantRegLoading && !fraudModelRegistered && (
+        <ModelRegistryGateNotice
+          title="No fraud model registered for this bank"
+          body="Register at least one fraud model in Model registry before this dashboard shows model KPIs, drift, or average fraud scores. Operational tiles below still reflect alerts and transactions."
+          onOpenRegistry={onOpenModelRegistry}
+        />
+      )}
+
+      <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 ${fraudModelRegistered ? "xl:grid-cols-4" : "xl:grid-cols-3"}`}>
         <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
           <p className="text-[10px] uppercase tracking-wider text-slate-500">Transactions (last pull)</p>
           <p className="text-2xl font-semibold text-slate-100 mt-2">{totalTx}</p>
@@ -931,13 +1030,15 @@ function TenantHomePanel({ adminFetch, platformTenantId, platformTenantName }) {
           <p className="text-[10px] uppercase tracking-wider text-slate-500">Blocked / OTP</p>
           <p className="text-2xl font-semibold text-slate-100 mt-2">{blocked} / {otp}</p>
         </div>
-        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
-          <p className="text-[10px] uppercase tracking-wider text-slate-500">Avg fraud score</p>
-          <p className="text-2xl font-semibold text-cyan-200 mt-2">{avgScore.toFixed(3)}</p>
-        </div>
+        {fraudModelRegistered && (
+          <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
+            <p className="text-[10px] uppercase tracking-wider text-slate-500">Avg fraud score</p>
+            <p className="text-2xl font-semibold text-cyan-200 mt-2">{avgScore.toFixed(3)}</p>
+          </div>
+        )}
       </div>
 
-      {modelKpis && (
+      {modelKpis && fraudModelRegistered && (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-9 gap-4">
           <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
             <p className="text-[10px] uppercase tracking-wider text-slate-500">30d scored</p>
@@ -1022,11 +1123,13 @@ function TenantHomePanel({ adminFetch, platformTenantId, platformTenantName }) {
               </div>
             ))}
           </div>
-          <div className="mt-4 rounded border border-slate-800 bg-slate-950/50 p-3 text-xs text-slate-400">
-            Drift status: <span className="text-slate-200">{drift?.status || "unknown"}</span>
-            {typeof drift?.alerts_count === "number" && <> · Alerts: <span className="text-slate-200">{drift.alerts_count}</span></>}
-            {drift?.source === "live_compute" && <> · <span className="text-cyan-200">live computed</span></>}
-          </div>
+          {fraudModelRegistered && (
+            <div className="mt-4 rounded border border-slate-800 bg-slate-950/50 p-3 text-xs text-slate-400">
+              Drift status: <span className="text-slate-200">{drift?.status || "unknown"}</span>
+              {typeof drift?.alerts_count === "number" && <> · Alerts: <span className="text-slate-200">{drift.alerts_count}</span></>}
+              {drift?.source === "live_compute" && <> · <span className="text-cyan-200">live computed</span></>}
+            </div>
+          )}
         </div>
       </div>
 
@@ -1110,7 +1213,7 @@ function TenantHomePanel({ adminFetch, platformTenantId, platformTenantName }) {
   );
 }
 
-function FraudPolicyPanel({ adminFetch, platformTenantId, platformTenantName }) {
+function FraudPolicyPanel({ adminFetch, platformTenantId, platformTenantName, fraudModelRegistered, tenantRegLoading, onOpenModelRegistry }) {
   const PRESETS = {
     STRICT: {
       label: "Strict",
@@ -1444,8 +1547,30 @@ function FraudPolicyPanel({ adminFetch, platformTenantId, platformTenantName }) 
   }
 
   useEffect(() => {
-    if (tenantId) loadPolicy();
-  }, [tenantId]);
+    if (tenantId && fraudModelRegistered) loadPolicy();
+  }, [tenantId, fraudModelRegistered]);
+
+  if (platformTenantId && tenantRegLoading) {
+    return (
+      <div className="p-8">
+        <p className="text-slate-500 text-[11px] tracking-wider mb-4 uppercase">Fraud policy &amp; training</p>
+        <p className="text-sm text-slate-400">Checking model registration…</p>
+      </div>
+    );
+  }
+
+  if (platformTenantId && !fraudModelRegistered) {
+    return (
+      <div className="p-8">
+        <p className="text-slate-500 text-[11px] tracking-wider mb-4 uppercase">Fraud policy &amp; training</p>
+        <ModelRegistryGateNotice
+          title="Fraud policy is not available yet"
+          body="Fraud policy configures thresholds for a deployed fraud model. Register at least one fraud model for this bank in Model registry first; then you can load and edit policy here."
+          onOpenRegistry={onOpenModelRegistry}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="p-8">
@@ -2824,7 +2949,7 @@ function TenantReportsPanel({
   );
 }
 
-function ManualModelTrainingPanel({ adminFetch, platformTenantId }) {
+function ManualModelTrainingPanel({ adminFetch, platformTenantId, fraudModelRegistered, careModelRegistered, tenantRegLoading, onOpenModelRegistry }) {
   const [modelType, setModelType] = useState("fraud");
   const [contractVersion, setContractVersion] = useState("v1");
   const [file, setFile] = useState(null);
@@ -3186,6 +3311,36 @@ function ManualModelTrainingPanel({ adminFetch, platformTenantId }) {
     } catch (err) {
       setMsg(err.message || "Failed to reset recommendation config");
     }
+  }
+
+  if (tenantRegLoading && platformTenantId) {
+    return (
+      <div className="space-y-4 p-2">
+        <p className="text-sm text-slate-400">Checking model registration for this bank…</p>
+      </div>
+    );
+  }
+  if (platformTenantId && modelType === "fraud" && !fraudModelRegistered) {
+    return (
+      <div className="space-y-4">
+        <ModelRegistryGateNotice
+          title="Fraud training is locked"
+          body="Register at least one fraud model for this bank in Model registry before uploading tenant training data or triggering fraud training."
+          onOpenRegistry={onOpenModelRegistry}
+        />
+      </div>
+    );
+  }
+  if (platformTenantId && modelType === "care" && !careModelRegistered) {
+    return (
+      <div className="space-y-4">
+        <ModelRegistryGateNotice
+          title="Care training is locked"
+          body="Register at least one care model for this bank in Model registry before uploading care training data."
+          onOpenRegistry={onOpenModelRegistry}
+        />
+      </div>
+    );
   }
 
   return (
@@ -4071,7 +4226,7 @@ function TriggerFraudTrain({ adminFetch }) {
   );
 }
 
-function FraudTab({ adminFetch, platformTenantId }) {
+function FraudTab({ adminFetch, platformTenantId, fraudModelRegistered, tenantRegLoading, onOpenModelRegistry }) {
   const [alerts, setAlerts] = useState([]);
   const [alertsLoading, setAlertsLoading] = useState(false);
   const [alertsError, setAlertsError] = useState(null);
@@ -4104,6 +4259,7 @@ function FraudTab({ adminFetch, platformTenantId }) {
   const [analytics, setAnalytics] = useState(null);
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
   const [featureImp, setFeatureImp] = useState([]);
+  const [featureImpMeta, setFeatureImpMeta] = useState(null);
   const [featureImpLoading, setFeatureImpLoading] = useState(false);
   const [featureImpError, setFeatureImpError] = useState(null);
   const [reviewAlerts, setReviewAlerts] = useState([]);
@@ -4370,9 +4526,16 @@ function FraudTab({ adminFetch, platformTenantId }) {
       const res = await adminFetch(`${API_BASE}/api/v1/fraud/feature-importances`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || res.statusText);
-      setFeatureImp(Array.isArray(data) ? data : []);
+      const feats = Array.isArray(data?.features)
+        ? data.features
+        : Array.isArray(data)
+          ? data
+          : [];
+      setFeatureImp(feats);
+      setFeatureImpMeta(data?.meta && typeof data.meta === "object" ? data.meta : null);
     } catch (err) {
       setFeatureImpError(err.message || "Failed to load feature importances");
+      setFeatureImpMeta(null);
     } finally {
       setFeatureImpLoading(false);
     }
@@ -4447,6 +4610,26 @@ function FraudTab({ adminFetch, platformTenantId }) {
     if (s === "LOW") return "border-slate-600 bg-white/5 text-slate-200";
     return "border-slate-600 bg-white/5 text-slate-200";
   };
+
+  if (platformTenantId && tenantRegLoading) {
+    return (
+      <div className="px-10 py-8">
+        <p className="text-sm text-slate-400">Checking fraud model registration…</p>
+      </div>
+    );
+  }
+  if (platformTenantId && !fraudModelRegistered) {
+    return (
+      <div className="px-10 py-8 space-y-4">
+        <p className="text-slate-500 text-[11px] tracking-wider uppercase">Fraud ops</p>
+        <ModelRegistryGateNotice
+          title="Fraud ops is not available for this bank yet"
+          body="This workspace shows model-backed scores, feature importances, and fraud monitoring. Register at least one fraud model for this tenant in Model registry before using Fraud Ops."
+          onOpenRegistry={onOpenModelRegistry}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="px-10 py-8 space-y-8">
@@ -5153,6 +5336,59 @@ function FraudTab({ adminFetch, platformTenantId }) {
           </button>
         </div>
         {featureImpError && <p className="text-xs text-red-400 mb-2">{featureImpError}</p>}
+        {featureImpMeta && (
+          <p className="text-[11px] text-slate-500 mb-2">
+            {featureImpMeta.resolved_from === "routed_artifact" && (
+              <>
+                Showing importances from the{" "}
+                <span className="text-slate-300">routed fraud artifact</span>
+                {featureImpMeta.route_source ? (
+                  <>
+                    {" "}
+                    (<span className="font-mono text-slate-400">{featureImpMeta.route_source}</span>
+                    {featureImpMeta.model_version ? (
+                      <>
+                        , <span className="font-mono text-slate-400">{featureImpMeta.model_version}</span>
+                      </>
+                    ) : null}
+                    )
+                  </>
+                ) : null}
+                {featureImpMeta.artifact_uri ? (
+                  <>
+                    {" "}
+                    ·{" "}
+                    <span className="font-mono text-slate-500 break-all">{featureImpMeta.artifact_uri}</span>
+                  </>
+                ) : null}
+              </>
+            )}
+            {featureImpMeta.resolved_from === "global_default" && (
+              <>
+                Showing importances from the{" "}
+                <span className="text-slate-300">default bundled fraud model</span>
+                {featureImpMeta.reason ? (
+                  <>
+                    {" "}
+                    (<span className="text-slate-400">{String(featureImpMeta.reason).replace(/_/g, " ")}</span>)
+                  </>
+                ) : null}
+                {featureImpMeta.route_source && featureImpMeta.route_source !== "tenant" ? (
+                  <>
+                    {" "}
+                    · route <span className="font-mono text-slate-500">{featureImpMeta.route_source}</span>
+                  </>
+                ) : null}
+              </>
+            )}
+            {featureImpMeta.resolved_from === "none" && (
+              <span className="text-amber-200/90">
+                No feature importances JSON found for the routed bundle or the default model path.
+                {featureImpMeta.reason ? ` (${String(featureImpMeta.reason).replace(/_/g, " ")})` : null}
+              </span>
+            )}
+          </p>
+        )}
         {featureImp.length > 0 && (
           <div className="rounded-lg border border-slate-700 bg-slate-900/60 p-4">
             <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-2">Top features (by gain)</p>
@@ -5168,7 +5404,10 @@ function FraudTab({ adminFetch, platformTenantId }) {
           </div>
         )}
         {!featureImp.length && !featureImpError && !featureImpLoading && (
-          <p className="text-xs text-slate-500">Click &quot;Load&quot; to fetch feature importances from the latest trained model.</p>
+          <p className="text-xs text-slate-500">
+            Click &quot;Load&quot; to fetch LightGBM gain importances for the fraud bundle routed for this bank
+            (falls back to the platform default if the bundle has no feature_importances.json).
+          </p>
         )}
       </div>
 
@@ -7027,6 +7266,7 @@ export default function App() {
   const [loginLoading, setLoginLoading] = useState(false);
   const [meLoading, setMeLoading] = useState(false);
   const [activeBankLogoSrc, setActiveBankLogoSrc] = useState(null);
+  const [showBankOnboard, setShowBankOnboard] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("bankai_access_token", accessToken || "");
@@ -7041,6 +7281,10 @@ export default function App() {
   useEffect(() => {
     if (!accessToken) setBankPicked(false);
   }, [accessToken]);
+
+  useEffect(() => {
+    setShowBankOnboard(false);
+  }, [accessToken, userMe?.email]);
 
   async function adminFetch(input, init = {}) {
     const headers = new Headers(init?.headers || {});
@@ -7059,6 +7303,44 @@ export default function App() {
     }
     return fetch(input, { ...init, headers });
   }
+
+  const [tenantModelReg, setTenantModelReg] = useState({
+    loading: false,
+    fraudRegistered: false,
+    careRegistered: false,
+  });
+
+  useEffect(() => {
+    if (!activeTenantId) {
+      setTenantModelReg({ loading: false, fraudRegistered: false, careRegistered: false });
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      setTenantModelReg((s) => ({ ...s, loading: true }));
+      try {
+        const res = await adminFetch(
+          `${API_BASE}/api/v1/admin/tenants/${encodeURIComponent(activeTenantId)}/model-registration-status`
+        );
+        const d = await res.json();
+        if (cancelled) return;
+        if (res.ok) {
+          setTenantModelReg({
+            loading: false,
+            fraudRegistered: !!d.fraud_registered,
+            careRegistered: !!d.care_registered,
+          });
+        } else {
+          setTenantModelReg({ loading: false, fraudRegistered: false, careRegistered: false });
+        }
+      } catch {
+        if (!cancelled) setTenantModelReg({ loading: false, fraudRegistered: false, careRegistered: false });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [activeTenantId, accessToken, legacyAdminToken, activeView]);
 
   async function refreshMe() {
     if (!accessToken) {
@@ -7302,7 +7584,20 @@ export default function App() {
       {showBankModal && (
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="w-full max-w-lg rounded-xl border border-slate-700 bg-slate-900 p-6 shadow-2xl max-h-[80vh] overflow-y-auto">
-            <h3 className="text-slate-100 font-semibold mb-1">Choose bank</h3>
+            <div className="flex items-start justify-between gap-3 mb-1">
+              <h3 className="text-slate-100 font-semibold">Choose bank</h3>
+              {userMe?.is_owner && (
+                <button
+                  type="button"
+                  title="Onboard a new bank"
+                  aria-label="Onboard a new bank"
+                  onClick={() => setShowBankOnboard((v) => !v)}
+                  className="shrink-0 h-9 w-9 rounded-lg border border-cyan-500/50 bg-cyan-500/10 text-cyan-200 text-lg leading-none hover:bg-cyan-500/20"
+                >
+                  +
+                </button>
+              )}
+            </div>
             <p className="text-xs text-slate-500 mb-4">
               {userMe?.is_owner ? "All banks on the platform." : "Banks assigned to your account."}
             </p>
@@ -7324,7 +7619,27 @@ export default function App() {
                 </li>
               ))}
             </ul>
-            {!userMe?.banks?.length && <p className="text-amber-400 text-sm">No banks available. Onboard a bank first (owner).</p>}
+            {!userMe?.banks?.length && (
+              <p className="text-amber-400 text-sm mt-3">
+                No banks yet. Owners can onboard one with the <span className="font-semibold">+</span> button above.
+              </p>
+            )}
+            {showBankOnboard && userMe?.is_owner && (
+              <div className="mt-5 rounded-lg border border-slate-800 bg-slate-950/60 p-4">
+                <p className="text-[11px] text-slate-500 uppercase tracking-wider mb-3">Onboard bank</p>
+                <OnboardBankForm
+                  adminFetch={adminFetch}
+                  onCreated={async (data) => {
+                    await refreshMe();
+                    if (data?.bank_id) {
+                      setActiveTenantId(data.bank_id);
+                      setBankPicked(true);
+                      setShowBankOnboard(false);
+                    }
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -7402,21 +7717,39 @@ export default function App() {
                   adminFetch={adminFetch}
                   platformTenantId={activeTenantId || undefined}
                   platformTenantName={activeBankName || undefined}
+                  fraudModelRegistered={tenantModelReg.fraudRegistered}
+                  tenantRegLoading={tenantModelReg.loading}
+                  onOpenModelRegistry={() => setActiveView("model-registry")}
                 />
               )}
               {activeView === "onboard" && <OnboardTab adminFetch={adminFetch} />}
               {activeView === "care" && (
-                <CareMetricsPanel adminFetch={adminFetch} platformTenantId={activeTenantId} />
+                <CareMetricsPanel
+                  adminFetch={adminFetch}
+                  platformTenantId={activeTenantId}
+                  careModelRegistered={tenantModelReg.careRegistered}
+                  tenantRegLoading={tenantModelReg.loading}
+                />
               )}
               {activeView === "ops-cutover" && <OpsCutoverPanel adminFetch={adminFetch} />}
               {activeView === "observability" && (
-                <TenantObservabilityPanel adminFetch={adminFetch} platformTenantId={activeTenantId} />
+                <TenantObservabilityPanel
+                  adminFetch={adminFetch}
+                  platformTenantId={activeTenantId}
+                  fraudModelRegistered={tenantModelReg.fraudRegistered}
+                  careModelRegistered={tenantModelReg.careRegistered}
+                  tenantRegLoading={tenantModelReg.loading}
+                  onOpenModelRegistry={() => setActiveView("model-registry")}
+                />
               )}
               {activeView === "policy" && (
                 <FraudPolicyPanel
                   adminFetch={adminFetch}
                   platformTenantId={activeTenantId || undefined}
                   platformTenantName={activeBankName || undefined}
+                  fraudModelRegistered={tenantModelReg.fraudRegistered}
+                  tenantRegLoading={tenantModelReg.loading}
+                  onOpenModelRegistry={() => setActiveView("model-registry")}
                 />
               )}
               {activeView === "reports" && (
@@ -7432,12 +7765,24 @@ export default function App() {
                   <p className="text-slate-400 text-[11px] tracking-wider mb-4 uppercase">
                     Fraud model training
                   </p>
+                  {activeTenantId && tenantModelReg.loading ? (
+                    <p className="text-sm text-slate-400 mb-4">Checking model registration…</p>
+                  ) : null}
                   <div className="rounded-xl border border-cyan-900/40 bg-slate-900/40 p-5 mb-4 ring-1 ring-cyan-500/10">
-                    <ManualModelTrainingPanel adminFetch={adminFetch} platformTenantId={activeTenantId || undefined} />
+                    <ManualModelTrainingPanel
+                      adminFetch={adminFetch}
+                      platformTenantId={activeTenantId || undefined}
+                      fraudModelRegistered={tenantModelReg.fraudRegistered}
+                      careModelRegistered={tenantModelReg.careRegistered}
+                      tenantRegLoading={tenantModelReg.loading}
+                      onOpenModelRegistry={() => setActiveView("model-registry")}
+                    />
                   </div>
-                  <div className="rounded-xl border border-amber-900/40 bg-slate-900/40 p-5 ring-1 ring-amber-500/10">
-                    <TriggerFraudTrain adminFetch={adminFetch} />
-                  </div>
+                  {(!activeTenantId || tenantModelReg.fraudRegistered) && (
+                    <div className="rounded-xl border border-amber-900/40 bg-slate-900/40 p-5 ring-1 ring-amber-500/10">
+                      <TriggerFraudTrain adminFetch={adminFetch} />
+                    </div>
+                  )}
                 </div>
               )}
               {activeView === "fraud-ops" && (
@@ -7445,7 +7790,13 @@ export default function App() {
                   <p className="text-slate-400 text-[11px] tracking-wider mb-4 uppercase">
                     Fraud ops — alerts, review queue, network &amp; analytics
                   </p>
-                  <FraudTab adminFetch={adminFetch} platformTenantId={activeTenantId || undefined} />
+                  <FraudTab
+                    adminFetch={adminFetch}
+                    platformTenantId={activeTenantId || undefined}
+                    fraudModelRegistered={tenantModelReg.fraudRegistered}
+                    tenantRegLoading={tenantModelReg.loading}
+                    onOpenModelRegistry={() => setActiveView("model-registry")}
+                  />
                 </div>
               )}
               {activeView === "model-registry" && (

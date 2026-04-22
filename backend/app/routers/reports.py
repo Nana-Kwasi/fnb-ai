@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse, StreamingResponse, RedirectResponse
 from pydantic import BaseModel, Field
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
@@ -717,6 +717,12 @@ async def download_report_artifact(
     expected = _sign_payload(payload)
     if not hmac.compare_digest(expected, sig):
         raise HTTPException(status_code=403, detail="Invalid signature")
+    # Prefer Cloudinary URLs when configured (Render disks are ephemeral).
+    url = (job.artifact_pdf_url if fmt == "pdf" else job.artifact_xlsx_url) or ""
+    url = str(url).strip()
+    if url:
+        return RedirectResponse(url=url, status_code=302)
+
     path = Path(job.artifact_pdf_path if fmt == "pdf" else job.artifact_xlsx_path or "")
     if not path.exists():
         raise HTTPException(status_code=404, detail="Artifact missing")

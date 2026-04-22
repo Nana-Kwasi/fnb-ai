@@ -33,6 +33,7 @@ from app.auth.platform_deps import (
     visible_tenant_ids_for_list,
 )
 from app.config import settings
+from app.services.tenant_registry_gate import tenant_has_registered_model
 from app.database import get_db, get_read_db
 from app.models import TenantBank
 from app.models.audit import AuditLog
@@ -503,6 +504,14 @@ async def upload_training_file(
     tenant_uuid = uuid.UUID(tenant_id) if tenant_id else None
     if tenant_uuid:
         await ensure_tenant_access(db, admin_ctx, tenant_uuid)
+        if not await tenant_has_registered_model(db, tenant_id=tenant_uuid, model_type=model_type):
+            raise HTTPException(
+                status_code=403,
+                detail=(
+                    f"Register a {model_type} model for this tenant in Model registry "
+                    "before uploading training data."
+                ),
+            )
     existing_rows = (
         await db.execute(select(TrainingUpload).where(TrainingUpload.model_type == model_type).limit(1000))
     ).scalars().all()
@@ -890,6 +899,19 @@ async def test_fraud_training_upload(
     db: AsyncSession = Depends(get_db),
 ):
     uid = uuid.UUID(upload_id)
+    upload = (await db.execute(select(TrainingUpload).where(TrainingUpload.id == uid))).scalar_one_or_none()
+    if not upload:
+        raise HTTPException(status_code=404, detail="Upload not found.")
+    meta = upload.meta if isinstance(upload.meta, dict) else {}
+    tid = meta.get("tenant_id")
+    if tid:
+        t_uuid = uuid.UUID(str(tid))
+        await ensure_tenant_access(db, _admin, t_uuid)
+        if not await tenant_has_registered_model(db, tenant_id=t_uuid, model_type="fraud"):
+            raise HTTPException(
+                status_code=403,
+                detail="Register a fraud model for this tenant in Model registry before evaluating uploads.",
+            )
     if sample_max < 50 or sample_max > 5000:
         raise HTTPException(status_code=400, detail="sample_max must be between 50 and 5000.")
     try:
@@ -908,6 +930,19 @@ async def test_care_training_upload(
     db: AsyncSession = Depends(get_db),
 ):
     uid = uuid.UUID(upload_id)
+    upload = (await db.execute(select(TrainingUpload).where(TrainingUpload.id == uid))).scalar_one_or_none()
+    if not upload:
+        raise HTTPException(status_code=404, detail="Upload not found.")
+    meta = upload.meta if isinstance(upload.meta, dict) else {}
+    tid = meta.get("tenant_id")
+    if tid:
+        t_uuid = uuid.UUID(str(tid))
+        await ensure_tenant_access(db, _admin, t_uuid)
+        if not await tenant_has_registered_model(db, tenant_id=t_uuid, model_type="care"):
+            raise HTTPException(
+                status_code=403,
+                detail="Register a care model for this tenant in Model registry before evaluating uploads.",
+            )
     if sample_max < 20 or sample_max > 2000:
         raise HTTPException(status_code=400, detail="sample_max must be between 20 and 2000.")
     try:
@@ -1145,6 +1180,16 @@ async def fraud_data_quality(
     upload = (await db.execute(select(TrainingUpload).where(TrainingUpload.id == uid))).scalar_one_or_none()
     if not upload or upload.model_type != "fraud":
         raise HTTPException(status_code=400, detail="Upload not found or not a fraud upload.")
+    meta_u = upload.meta if isinstance(upload.meta, dict) else {}
+    tid_u = meta_u.get("tenant_id")
+    if tid_u:
+        t_uuid = uuid.UUID(str(tid_u))
+        await ensure_tenant_access(db, _admin, t_uuid)
+        if not await tenant_has_registered_model(db, tenant_id=t_uuid, model_type="fraud"):
+            raise HTTPException(
+                status_code=403,
+                detail="Register a fraud model for this tenant in Model registry before analyzing upload quality.",
+            )
     rows_q = await db.execute(
         select(TrainingUploadRow).where(TrainingUploadRow.upload_id == uid).order_by(TrainingUploadRow.row_index.asc())
     )
@@ -1211,12 +1256,23 @@ async def fraud_data_quality(
 @router.get("/training/care/data-quality", response_model=CareDataQualityOut)
 async def care_data_quality(
     upload_id: str = Query(...),
+    _admin: AdminContext = Depends(require_platform_roles({"viewer", "editor", "owner"})),
     db: AsyncSession = Depends(get_db),
 ):
     uid = uuid.UUID(upload_id)
     upload = (await db.execute(select(TrainingUpload).where(TrainingUpload.id == uid))).scalar_one_or_none()
     if not upload or upload.model_type != "care":
         raise HTTPException(status_code=400, detail="Upload not found or not a care upload.")
+    meta_u = upload.meta if isinstance(upload.meta, dict) else {}
+    tid_u = meta_u.get("tenant_id")
+    if tid_u:
+        t_uuid = uuid.UUID(str(tid_u))
+        await ensure_tenant_access(db, _admin, t_uuid)
+        if not await tenant_has_registered_model(db, tenant_id=t_uuid, model_type="care"):
+            raise HTTPException(
+                status_code=403,
+                detail="Register a care model for this tenant in Model registry before analyzing upload quality.",
+            )
 
     rows_q = await db.execute(
         select(TrainingUploadRow).where(TrainingUploadRow.upload_id == uid).order_by(TrainingUploadRow.row_index.asc())
@@ -1394,7 +1450,16 @@ async def trigger_training_from_upload(
     meta = upload.meta if isinstance(upload.meta, dict) else {}
     tid = meta.get("tenant_id")
     if tid:
-        await ensure_tenant_access(db, admin_ctx, uuid.UUID(str(tid)))
+        t_uuid = uuid.UUID(str(tid))
+        await ensure_tenant_access(db, admin_ctx, t_uuid)
+        if not await tenant_has_registered_model(db, tenant_id=t_uuid, model_type=model_type):
+            raise HTTPException(
+                status_code=403,
+                detail=(
+                    f"Register a {model_type} model for this tenant in Model registry "
+                    "before starting training from tenant uploads."
+                ),
+            )
     await assert_training_upload_allowed(db, upload=upload, model_type=model_type)
     if upload.status == "TRAINING":
         raise HTTPException(status_code=400, detail="Training already in progress for this upload.")
@@ -2151,6 +2216,36 @@ def _calibration_out(row: CalibrationArtifact) -> CalibrationArtifactOut:
     )
 
 
+class TenantModelRegistrationStatusOut(BaseModel):
+    fraud_registered: bool
+    care_registered: bool
+
+
+async def _ensure_tenant_model_registered_or_403(
+    db: AsyncSession, *, tenant_id: uuid.UUID, model_type: str
+) -> None:
+    if not await tenant_has_registered_model(db, tenant_id=tenant_id, model_type=model_type):
+        raise HTTPException(
+            status_code=403,
+            detail=(
+                f"Register a {model_type} model for this tenant in Model registry "
+                "before using this resource."
+            ),
+        )
+
+
+@router.get("/tenants/{tenant_id}/model-registration-status", response_model=TenantModelRegistrationStatusOut)
+async def tenant_model_registration_status(
+    tenant_id: uuid.UUID,
+    _admin: AdminContext = Depends(require_platform_roles({"viewer", "editor", "owner"})),
+    db: AsyncSession = Depends(get_db),
+):
+    await ensure_tenant_access(db, _admin, tenant_id)
+    fraud_registered = await tenant_has_registered_model(db, tenant_id=tenant_id, model_type="fraud")
+    care_registered = await tenant_has_registered_model(db, tenant_id=tenant_id, model_type="care")
+    return TenantModelRegistrationStatusOut(fraud_registered=fraud_registered, care_registered=care_registered)
+
+
 @router.get("/tenants/{tenant_id}/fraud-policy", response_model=FraudPolicyOut)
 async def get_fraud_policy(
     tenant_id: uuid.UUID,
@@ -2161,6 +2256,11 @@ async def get_fraud_policy(
     bank = (await db.execute(select(TenantBank).where(TenantBank.id == tenant_id))).scalar_one_or_none()
     if not bank:
         raise HTTPException(status_code=404, detail="Tenant not found")
+    if not await tenant_has_registered_model(db, tenant_id=tenant_id, model_type="fraud"):
+        raise HTTPException(
+            status_code=403,
+            detail="Register a fraud model for this tenant in Model registry before viewing fraud policy.",
+        )
     policy = (bank.tone_config or {}).get("fraud_policy") or {}
     return FraudPolicyOut(
         model_weight=policy.get("model_weight"),
@@ -2203,6 +2303,11 @@ async def update_fraud_policy(
     bank = (await db.execute(select(TenantBank).where(TenantBank.id == tenant_id))).scalar_one_or_none()
     if not bank:
         raise HTTPException(status_code=404, detail="Tenant not found")
+    if not await tenant_has_registered_model(db, tenant_id=tenant_id, model_type="fraud"):
+        raise HTTPException(
+            status_code=403,
+            detail="Register a fraud model for this tenant in Model registry before updating fraud policy.",
+        )
     if bank.tone_config is None:
         bank.tone_config = {}
     policy = dict(bank.tone_config.get("fraud_policy") or {})
@@ -3009,6 +3114,7 @@ async def fraud_drift_monitor(
     db: AsyncSession = Depends(get_db),
 ):
     await ensure_tenant_access(db, _admin, tenant_id)
+    await _ensure_tenant_model_registered_or_403(db, tenant_id=tenant_id, model_type="fraud")
     drift = await compute_tenant_drift(db, tenant_id, recent_limit=recent_limit, baseline_limit=baseline_limit)
     if drift.get("status") == "insufficient_data":
         raise HTTPException(status_code=400, detail="Not enough fraud scores for drift monitoring.")
@@ -3058,6 +3164,7 @@ async def model_kpis(
     db: AsyncSession = Depends(get_db),
 ):
     await ensure_tenant_access(db, _admin, tenant_id)
+    await _ensure_tenant_model_registered_or_403(db, tenant_id=tenant_id, model_type=model_type)
     if model_type == "care":
         k = await compute_care_kpis(db, tenant_id=tenant_id, days=days)
     else:
@@ -3093,6 +3200,7 @@ async def model_kpis_history(
     db: AsyncSession = Depends(get_db),
 ):
     await ensure_tenant_access(db, _admin, tenant_id)
+    await _ensure_tenant_model_registered_or_403(db, tenant_id=tenant_id, model_type=model_type)
     rows = (
         await db.execute(
             select(ModelKpiSnapshot)
@@ -3165,6 +3273,7 @@ async def challenger_policy(
     overrides: dict = {}
     if tenant_id is not None:
         await ensure_tenant_access(db, _admin, tenant_id)
+        await _ensure_tenant_model_registered_or_403(db, tenant_id=tenant_id, model_type="fraud")
         bank = (await db.execute(select(TenantBank).where(TenantBank.id == tenant_id))).scalar_one_or_none()
         if not bank:
             raise HTTPException(status_code=404, detail="Tenant not found")
@@ -3192,6 +3301,7 @@ async def update_challenger_policy(
     db: AsyncSession = Depends(get_db),
 ):
     await ensure_tenant_access(db, admin_ctx, tenant_id)
+    await _ensure_tenant_model_registered_or_403(db, tenant_id=tenant_id, model_type="fraud")
     bank = (await db.execute(select(TenantBank).where(TenantBank.id == tenant_id))).scalar_one_or_none()
     if not bank:
         raise HTTPException(status_code=404, detail="Tenant not found")
@@ -3231,6 +3341,7 @@ async def reset_challenger_policy(
     db: AsyncSession = Depends(get_db),
 ):
     await ensure_tenant_access(db, admin_ctx, tenant_id)
+    await _ensure_tenant_model_registered_or_403(db, tenant_id=tenant_id, model_type="fraud")
     bank = (await db.execute(select(TenantBank).where(TenantBank.id == tenant_id))).scalar_one_or_none()
     if not bank:
         raise HTTPException(status_code=404, detail="Tenant not found")
@@ -3600,6 +3711,7 @@ async def champion_challenger_kpis(
     write_db: AsyncSession = Depends(get_db),
 ):
     await ensure_tenant_access(write_db, _admin, tenant_id)
+    await _ensure_tenant_model_registered_or_403(write_db, tenant_id=tenant_id, model_type=model_type)
     cutoff = datetime.now(timezone.utc) - timedelta(hours=window_hours)
     rows = (
         await db.execute(
@@ -3689,6 +3801,7 @@ async def isolation_readiness(
     db: AsyncSession = Depends(get_db),
 ):
     await ensure_tenant_access(db, _admin, tenant_id)
+    await _ensure_tenant_model_registered_or_403(db, tenant_id=tenant_id, model_type=model_type)
     mapper = (
         await db.execute(
             select(TenantMapper).where(
@@ -3760,6 +3873,7 @@ async def cutover_gate(
     db: AsyncSession = Depends(get_db),
 ):
     await ensure_tenant_access(db, _admin, tenant_id)
+    await _ensure_tenant_model_registered_or_403(db, tenant_id=tenant_id, model_type=model_type)
     blockers: list[str] = []
     warnings: list[str] = []
 
@@ -3881,14 +3995,12 @@ async def cutover_gate_batch(
     mt = [m.strip().lower() for m in str(model_types or "").split(",") if m.strip()]
     mt = [m for m in mt if m in {"fraud", "care"}] or ["fraud", "care"]
     visible = await visible_tenant_ids_for_list(db, _admin)
-    tenants = (
-        await db.execute(
-            select(TenantBank).where(
-                TenantBank.id.in_(visible),
-                TenantBank.is_active.is_(True),
-            )
-        )
-    ).scalars().all()
+    _tenant_stmt = select(TenantBank).where(TenantBank.is_active.is_(True))
+    if visible is not None:
+        if not visible:
+            return []
+        _tenant_stmt = _tenant_stmt.where(TenantBank.id.in_(visible))
+    tenants = (await db.execute(_tenant_stmt)).scalars().all()
     items: list[BatchCutoverGateItemOut] = []
     pass_count = 0
     fail_count = 0
@@ -4073,6 +4185,14 @@ async def start_tenant_finetune(
     if model_type not in {"fraud", "care"}:
         raise HTTPException(status_code=400, detail="Invalid model_type.")
     await ensure_tenant_access(db, admin_ctx, tenant_id)
+    if not await tenant_has_registered_model(db, tenant_id=tenant_id, model_type=model_type):
+        raise HTTPException(
+            status_code=403,
+            detail=(
+                f"Register a {model_type} model for this tenant in Model registry "
+                "before starting tenant fine-tune."
+            ),
+        )
     uid = uuid.UUID(upload_id)
     upload = (await db.execute(select(TrainingUpload).where(TrainingUpload.id == uid))).scalar_one_or_none()
     if not upload:
@@ -4378,6 +4498,7 @@ async def fraud_drift_status(
         except ValueError as exc:
             raise HTTPException(status_code=400, detail="Invalid tenant_id.") from exc
         await ensure_tenant_access(db, _admin, tid)
+        await _ensure_tenant_model_registered_or_403(db, tenant_id=tid, model_type="fraud")
     stmt = (
         select(AuditLog)
         .where(AuditLog.event_type == "FRAUD_DRIFT_STATUS", AuditLog.entity_type == "monitoring")
@@ -4416,6 +4537,7 @@ async def fraud_drift_alerts(
         except ValueError as exc:
             raise HTTPException(status_code=400, detail="Invalid tenant_id.") from exc
         await ensure_tenant_access(db, _admin, tid)
+        await _ensure_tenant_model_registered_or_403(db, tenant_id=tid, model_type="fraud")
     stmt = (
         select(AuditLog)
         .where(AuditLog.event_type == "FRAUD_DRIFT_STATUS", AuditLog.entity_type == "monitoring")

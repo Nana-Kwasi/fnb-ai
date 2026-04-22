@@ -1,10 +1,26 @@
+import os
 from pathlib import Path
 
 from pydantic import field_validator
 from pydantic_settings import BaseSettings
 
 _BACKEND_ROOT = Path(__file__).resolve().parent.parent
-_ENV_FILE = _BACKEND_ROOT / ".env"
+_DEFAULT_ENV_FILE = _BACKEND_ROOT / ".env"
+_PROD_ENV_FILE = _BACKEND_ROOT / ".env.production"
+
+
+def _pick_env_file() -> Path:
+    # Allows Render/containers to specify a different dotenv file when desired.
+    env_file_override_raw = os.environ.get("ENV_FILE")
+    env_file_override = (Path.cwd() / env_file_override_raw).resolve() if env_file_override_raw else None
+    if env_file_override and env_file_override.exists():
+        return env_file_override
+    if _PROD_ENV_FILE.exists():
+        return _PROD_ENV_FILE
+    return _DEFAULT_ENV_FILE
+
+
+_ENV_FILE = _pick_env_file()
 
 
 class Settings(BaseSettings):
@@ -109,6 +125,44 @@ class Settings(BaseSettings):
     # Phase 3: periodic job logs eligible tenants (audit + optional alert); does not train automatically.
     auto_tenant_finetune_scout_enabled: bool = False
     auto_tenant_finetune_scout_min_rows: int = 800
+
+    # ── Observability ──────────────────────────────────────────────────────────
+    sentry_dsn: str = ""
+    log_level: str = "INFO"
+    # Set to "false" to disable the /metrics Prometheus endpoint
+    prometheus_metrics_enabled: bool = True
+    # Reject inference: include blocked transactions with pseudo-labels in retraining
+    reject_inference_enabled: bool = True
+    reject_inference_fraud_threshold: float = 0.80
+    reject_inference_legit_threshold: float = 0.40
+    # GNN embeddings: compute graph-based node risk scores during feature engineering
+    gnn_embeddings_enabled: bool = True
+    # Behavioral biometrics: accept biometric signals from mobile SDK
+    biometrics_enabled: bool = True
+
+    # ── Cloudinary (optional file storage) ─────────────────────────────────────
+    # Prefer setting CLOUDINARY_URL in the environment.
+    cloudinary_url: str = ""
+    cloudinary_uploads_enabled: bool = True
+    cloudinary_folder_prefix: str = "bankai"
+    # If true, report/statements are uploaded to Cloudinary and download endpoints redirect.
+    cloudinary_store_reports: bool = True
+    # If true, the Care statement.pdf endpoint uploads to Cloudinary (raw) and redirects.
+    cloudinary_store_statements: bool = True
+    # Upload delivery type: "upload" (public) or "private" (requires signed URLs).
+    cloudinary_delivery_type: str = "private"
+
+    # End-user uploads (Care) quotas + limits
+    care_uploads_enabled: bool = True
+    care_upload_max_bytes: int = 8 * 1024 * 1024  # 8MB per file
+    care_upload_max_files_per_day: int = 20  # per (tenant, customer) per UTC day
+    care_upload_max_bytes_per_day: int = 40 * 1024 * 1024  # 40MB per day per (tenant, customer)
+    care_upload_download_token_ttl_seconds: int = 300  # 5 minutes
+
+    # Optional malware scan hook (best-effort)
+    malware_scan_webhook_url: str = ""
+    malware_scan_timeout_seconds: int = 6
+    malware_scan_require_clean: bool = False
 
     @field_validator("calibration_activation_min_auc", mode="before")
     @classmethod

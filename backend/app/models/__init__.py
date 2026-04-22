@@ -27,6 +27,15 @@ from app.models.calibration import CalibrationArtifact
 from app.models.model_kpi import ModelKpiSnapshot
 from app.models.job_run import JobRun
 from app.models.idempotency_key import IdempotencyKey
+from app.models.tenant_extended import (
+    TenantSubscription,
+    TenantUsageMetrics,
+    TenantWebhookLog,
+    TenantNotificationConfig,
+    TenantCompliancePolicy,
+    TenantFeatureFlag,
+    TenantSLAConfig,
+)
 
 __all__ = [
     "TenantBank",
@@ -62,4 +71,11 @@ __all__ = [
     "ModelKpiSnapshot",
     "JobRun",
     "IdempotencyKey",
+    "TenantSubscription",
+    "TenantUsageMetrics",
+    "TenantWebhookLog",
+    "TenantNotificationConfig",
+    "TenantCompliancePolicy",
+    "TenantFeatureFlag",
+    "TenantSLAConfig",
 ]

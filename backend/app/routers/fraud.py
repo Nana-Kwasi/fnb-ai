@@ -1,9 +1,11 @@
 import time
 from datetime import datetime
 from decimal import Decimal
+from pathlib import Path
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import BaseModel
 from sqlalchemy import select, func, and_
 
@@ -26,9 +28,17 @@ from app.models.calibration import CalibrationArtifact
 from app.models.model_registry import InferenceTrace, TenantMapper
 from app.services.calibration import apply_calibration
 from app.services.feature_engine import build_feature_vector
-from app.services.fraud_engine import score_and_explain, recommended_action, MODEL_VERSION, _get_models_path
+from app.services.fraud_engine import (
+    score_and_explain,
+    recommended_action,
+    MODEL_VERSION,
+    _get_models_path,
+    resolve_fraud_artifact_bundle_dir,
+    resolve_fraud_feature_importances_json_path,
+)
 from app.services.mapper_validation import validate_and_dry_run
 from app.services.model_routing import resolve_model_route, resolve_shadow_candidate
+from app.services.tenant_registry_gate import tenant_has_registered_model
 from app.services.fraud_ring import (
     update_entity_maps,
     get_tenant_graph_data,
@@ -39,8 +49,14 @@ from app.services.transaction_fingerprint import (
     compute_transaction_fingerprint,
     store_fingerprint,
 )
+from app.observability import (
+    FraudScoringTimer,
+    record_fraud_decision,
+    get_logger as _obs_logger,
+)
 
 router = APIRouter()
+_logger = _obs_logger(__name__)
 
 DECISION_NORMALIZATION = {
     "REQUEST_OT": "REQUEST_OTP",
@@ -55,13 +71,14 @@ class TransactionIn(BaseModel):
     amount: float
     currency: str
     merchant_category: str | None = None
-    # Stable merchant entity key (MID). If not provided, we fall back to merchant_category.
     merchant_id: str | None = None
     location: str | None = None
     device_id: str | None = None
     ip_address: str | None = None
     channel: str | None = None
     timestamp: str
+    # Optional behavioral biometrics from mobile SDK
+    biometrics: dict | None = None
 
 
 class FraudScoreOut(BaseModel):
@@ -231,6 +248,21 @@ class MetricsSummaryOut(BaseModel):
 class FeatureImportanceOut(BaseModel):
     feature: str
     importance_gain: float
+
+
+class FeatureImportancesMeta(BaseModel):
+    """How /api/v1/fraud/feature-importances resolved the JSON file."""
+
+    route_source: str | None = None
+    model_version: str | None = None
+    artifact_uri: str | None = None
+    resolved_from: str
+    reason: str | None = None
+
+
+class FeatureImportancesResponse(BaseModel):
+    features: list[FeatureImportanceOut]
+    meta: FeatureImportancesMeta
 
 
 def _location_country(payload: TransactionIn) -> str | None:
@@ -527,6 +559,7 @@ async def predict(
         payload.device_id, "api", tx_ts, float(customer.risk_score),
         location_country=loc_country,
         ip_address=ip_hash,
+        biometrics=getattr(payload, "biometrics", None),
     )
     lgbm, iso_sc, rule_sc, network_risk, ensemble, decision, confidence, shap, reason_codes, rule_reasons, _graph_risk, policy_snapshot = await score_and_explain(
         db,
@@ -717,6 +750,7 @@ async def score_transaction(
         payload.device_id, payload.channel, tx_ts, float(customer.risk_score),
         location_country=loc_country,
         ip_address=ip_hash,
+        biometrics=getattr(payload, "biometrics", None),
     )
 
     lgbm_score, iso_score, rule_score_val, network_risk_score, ensemble_score, decision, confidence, shap_values, reason_codes, rule_reasons, graph_risk_score, policy_snapshot = await score_and_explain(
@@ -861,6 +895,18 @@ async def score_transaction(
     await db.flush()
     processing_ms = int((time.perf_counter() - t0) * 1000)
 
+    # Emit Prometheus metrics
+    record_fraud_decision(str(bank.id), effective_decision, float(ensemble_score))
+    _logger.info(
+        "fraud_scored",
+        tenant_id=str(bank.id),
+        decision=effective_decision,
+        ensemble_score=float(ensemble_score),
+        processing_ms=processing_ms,
+        impossible_travel=float(fv.get("impossible_travel", 0.0)),
+        biometric_confidence=float(fv.get("biometric_confidence", 0.5)),
+    )
+
     return FraudScoreOut(
         transaction_id=payload.transaction_id,
         decision=effective_decision,
@@ -933,6 +979,7 @@ async def score_transaction_detail(
         payload.device_id, payload.channel, tx_ts, float(customer.risk_score),
         location_country=loc_country,
         ip_address=ip_hash,
+        biometrics=getattr(payload, "biometrics", None),
     )
     lgbm_score, iso_score, rule_score_val, network_risk_score, ensemble_score, decision, confidence, shap_values, reason_codes, rule_reasons, graph_risk_score, policy_snapshot = await score_and_explain(
         db,
@@ -1582,24 +1629,107 @@ async def fraud_metrics_summary(
     return MetricsSummaryOut(total=total, by_decision=by_decision, avg_ensemble_score=avg)
 
 
-@router.get("/feature-importances", response_model=list[FeatureImportanceOut])
-async def get_feature_importances(
-    bank: TenantBank = Depends(resolve_tenant),  # kept for symmetry / auth, even though models are global
-):
-    """
-    Return the latest LightGBM feature importances (by gain), as written by app.ml.train.
-    """
+def _load_sorted_feature_importances(path: Path | str) -> list[FeatureImportanceOut]:
     import json
-    base = _get_models_path()
-    path = base / "feature_importances.json"
-    if not path.exists():
+
+    p = Path(path)
+    if not p.is_file():
         return []
-    with open(path, encoding="utf-8") as f:
+    with open(p, encoding="utf-8") as f:
         data = json.load(f)
-    # Normalise and sort by importance_gain desc
+    if not isinstance(data, list):
+        return []
     fi = [
-        FeatureImportanceOut(feature=str(item.get("feature")), importance_gain=float(item.get("importance_gain", 0.0)))
+        FeatureImportanceOut(
+            feature=str(item.get("feature")),
+            importance_gain=float(item.get("importance_gain", 0.0)),
+        )
         for item in data
+        if isinstance(item, dict)
     ]
     fi.sort(key=lambda x: x.importance_gain, reverse=True)
     return fi[:50]
+
+
+@router.get("/feature-importances", response_model=FeatureImportancesResponse)
+async def get_feature_importances(
+    bank: TenantBank = Depends(resolve_tenant),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    LightGBM gain importances from ``feature_importances.json`` (as written by ``app.ml.train``),
+    preferring the **fraud artifact directory** returned by the same registry routing as live scoring
+    (tenant active → global active → engine fallback without URI).
+
+    If the routed bundle has no JSON beside ``lgb_fraud.txt``, falls back to the bundled default
+    ``models/fraud`` (or ``MODEL_PATH``) directory so dashboards still show a baseline.
+
+    Requires at least one **fraud** ``ModelRegistry`` row for this tenant.
+    """
+    if not await tenant_has_registered_model(db, tenant_id=bank.id, model_type="fraud"):
+        raise HTTPException(
+            status_code=403,
+            detail="Register a fraud model for this tenant in Model registry before viewing feature importances.",
+        )
+    route = None
+    try:
+        route = await resolve_model_route(db, tenant_id=bank.id, model_type="fraud", strict_mapper=False)
+    except HTTPException:
+        route = None
+
+    meta_base = FeatureImportancesMeta(
+        route_source=route.source if route else None,
+        model_version=route.model_version if route else None,
+        artifact_uri=route.artifact_uri if route else None,
+        resolved_from="none",
+        reason=None,
+    )
+
+    if route and route.artifact_uri:
+        routed_json = resolve_fraud_feature_importances_json_path(route.artifact_uri)
+        if routed_json is not None:
+            feats = _load_sorted_feature_importances(routed_json)
+            return FeatureImportancesResponse(
+                features=feats,
+                meta=FeatureImportancesMeta(
+                    route_source=route.source,
+                    model_version=route.model_version,
+                    artifact_uri=route.artifact_uri,
+                    resolved_from="routed_artifact",
+                    reason=None,
+                ),
+            )
+        bdir = resolve_fraud_artifact_bundle_dir(route.artifact_uri)
+        reason = "artifact_path_unresolved" if bdir is None else "missing_feature_importances_json"
+        meta_base = FeatureImportancesMeta(
+            route_source=route.source,
+            model_version=route.model_version,
+            artifact_uri=route.artifact_uri,
+            resolved_from="global_default",
+            reason=reason,
+        )
+
+    global_path = _get_models_path() / "feature_importances.json"
+    feats = _load_sorted_feature_importances(global_path)
+    if feats:
+        return FeatureImportancesResponse(
+            features=feats,
+            meta=FeatureImportancesMeta(
+                route_source=meta_base.route_source,
+                model_version=meta_base.model_version,
+                artifact_uri=meta_base.artifact_uri,
+                resolved_from="global_default",
+                reason=meta_base.reason,
+            ),
+        )
+
+    return FeatureImportancesResponse(
+        features=[],
+        meta=FeatureImportancesMeta(
+            route_source=meta_base.route_source,
+            model_version=meta_base.model_version,
+            artifact_uri=meta_base.artifact_uri,
+            resolved_from="none",
+            reason=meta_base.reason or "no_feature_importances_json_anywhere",
+        ),
+    )

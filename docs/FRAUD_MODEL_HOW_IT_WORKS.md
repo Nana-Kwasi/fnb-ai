@@ -151,7 +151,7 @@ The final dict includes all **FEATURE_NAMES** used by the LGB/ISO models, plus `
 | GET | /api/v1/fraud/network/analytics | Accounts per device, shared IP, fraud clusters, high-risk merchants. |
 | POST | /api/v1/fraud/outcome | Submit analyst/chargeback outcome (for training labels). |
 | GET | /api/v1/fraud/metrics/summary | Metrics summary. |
-| GET | /api/v1/fraud/feature-importances | Feature importances from trained model. |
+| GET | /api/v1/fraud/feature-importances | LightGBM gain importances (`feature_importances.json`). Response: `{ "features": [...], "meta": { "route_source", "model_version", "artifact_uri", "resolved_from", "reason" } }`. Prefer the fraud **artifact directory** from the same registry routing as scoring (tenant → global); if that bundle has no JSON, falls back to the default bundled `models/fraud` tree. |
 
 All fraud endpoints require **X-API-Key** (tenant-scoped). Dashboard shows “Viewing data for key: ***xxxx” when a key is set.
 

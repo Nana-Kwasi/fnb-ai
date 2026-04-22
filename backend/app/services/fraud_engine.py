@@ -40,6 +40,13 @@ REASON_MAP = {
     "customer_risk_score": {"high": "Account has elevated risk history", "low": "Account risk within normal range"},
     "merchant_cat_risk": {"high": "Higher-risk merchant category", "low": "Standard merchant category"},
     "days_since_last_txn": {"high": "First transaction after a long period", "low": "Consistent with recent activity"},
+    "impossible_travel": {"high": "Transaction location is physically inconsistent with recent activity", "low": "Location consistent with travel history"},
+    "travel_speed_kmh": {"high": "Implausibly fast movement between transaction locations", "low": "Normal travel speed"},
+    "velocity_ewma_1h": {"high": "Unusual burst of transactions in the last hour", "low": "Normal recent transaction rate"},
+    "biometric_confidence": {"high": "Behavior matches account holder profile", "low": "Behavior does not match account holder profile"},
+    "gnn_account_risk_score": {"high": "Account connected to high-risk transaction network", "low": "Account not connected to high-risk nodes"},
+    "device_reuse_ratio": {"high": "Device shared across multiple accounts", "low": "Device used by single account"},
+    "fraud_cluster_size": {"high": "Account linked to a known fraud cluster", "low": "No cluster association detected"},
 }
 
 _lgb_model = None
@@ -268,6 +275,23 @@ def _resolve_artifact_dir(artifact_uri: str | None) -> Path | None:
     if p.is_file():
         return p.parent
     return p
+
+
+def resolve_fraud_feature_importances_json_path(artifact_uri: str | None) -> Path | None:
+    """
+    Path to feature_importances.json co-located with lgb_fraud.txt for this artifact bundle, if present.
+    Used by the fraud API so ops see importances for the same routed bundle scoring uses.
+    """
+    d = _resolve_artifact_dir(artifact_uri)
+    if d is None or not d.is_dir():
+        return None
+    p = d / "feature_importances.json"
+    return p if p.is_file() else None
+
+
+def resolve_fraud_artifact_bundle_dir(artifact_uri: str | None) -> Path | None:
+    """Directory that would hold lgb_fraud.txt for this artifact_uri, if resolvable."""
+    return _resolve_artifact_dir(artifact_uri)
 
 
 def _load_artifact_bundle(artifact_uri: str) -> dict[str, Any]:
@@ -745,6 +769,28 @@ async def score_and_explain(
         bayes_cut = fp_cost / (fp_cost + fn_cost)
         otp_threshold = min(otp_threshold, max(0.2, min(0.9, bayes_cut)))
         block_threshold = min(block_threshold, max(otp_threshold + 0.05, min(0.98, bayes_cut + 0.15)))
+
+    # ── Cost-sensitive threshold: high-value transactions block at lower score ──
+    # A transaction worth 100× the average is 100× more costly to miss.
+    # Tighten block_threshold by up to 0.15 for very large amounts.
+    amount = float(feature_vector.get("amount", 0.0) or 0.0)
+    amount_log = float(feature_vector.get("amount_log_scaled", 0.0) or 0.0)
+    if amount > 0 and amount_log > 0:
+        # amount_log_scaled: 0=zero, ~0.48 at 1000, ~0.65 at 10000, ~1.0 at 100000
+        amount_tightening = amount_log * 0.15  # max -0.15 on block threshold
+        block_threshold = max(0.45, block_threshold - amount_tightening)
+        otp_threshold = max(0.25, otp_threshold - amount_tightening * 0.5)
+
+    # ── Impossible travel override: always REQUEST_OTP at minimum ─────────────
+    impossible_travel = float(feature_vector.get("impossible_travel", 0.0) or 0.0)
+    if impossible_travel >= 1.0:
+        otp_threshold = min(otp_threshold, ensemble_score - 0.001)  # force at least OTP
+
+    # ── Low biometric confidence: tighten OTP threshold ───────────────────────
+    bio_confidence = float(feature_vector.get("biometric_confidence", 0.5) or 0.5)
+    if bio_confidence < 0.3:
+        otp_threshold = max(0.2, otp_threshold - 0.08)
+        block_threshold = max(otp_threshold + 0.1, block_threshold - 0.05)
 
     if ensemble_score >= block_threshold:
         decision = "BLOCK"

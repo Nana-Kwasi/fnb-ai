@@ -12,10 +12,8 @@ from app.services.fraud_drift import compute_tenant_drift
 SYSTEM_TENANT_ID = "00000000-0000-0000-0000-000000000000"
 
 
-def run_fraud_drift_checks() -> None:
-    import asyncio
-
-    asyncio.run(_run())
+async def run_fraud_drift_checks() -> None:
+    await _run()
 
 
 async def _run() -> None:

@@ -94,7 +94,10 @@ def _download_s3_uri(uri: str) -> Path | None:
     except ImportError:
         return None
     bucket, key = _s3_parts(uri)
-    s3 = boto3.client("s3")
+    # Support S3-compatible backends (Cloudflare R2, MinIO, etc.).
+    # boto3 does NOT automatically read AWS_ENDPOINT_URL, so we plumb it through.
+    endpoint_url = os.getenv("AWS_ENDPOINT_URL") or None
+    s3 = boto3.client("s3", endpoint_url=endpoint_url)
     safe_key = _safe_rel_path(key)
 
     def _with_retry(fn):
