@@ -3,10 +3,10 @@ from __future__ import annotations
 import json
 import os
 from dataclasses import dataclass
-from pathlib import Path
 from typing import Any, Literal
 
 from app.config import settings
+from app.model_paths import resolve_llama_gguf_path
 
 
 Intent = Literal[
@@ -35,8 +35,8 @@ _llm = None
 
 
 def _model_available() -> bool:
-    p = Path(os.getenv("MODEL_PATH", settings.model_path)).expanduser()
-    return p.exists() and p.is_file()
+    p = resolve_llama_gguf_path(os.getenv("MODEL_PATH") or settings.model_path)
+    return bool(p and p.is_file())
 
 
 def _get_llm():
@@ -45,7 +45,8 @@ def _get_llm():
         return _llm
     from llama_cpp import Llama
 
-    model_path = os.getenv("MODEL_PATH", settings.model_path)
+    resolved = resolve_llama_gguf_path(os.getenv("MODEL_PATH") or settings.model_path)
+    model_path = str(resolved) if resolved else os.getenv("MODEL_PATH", settings.model_path)
     _llm = Llama(
         model_path=model_path,
         n_ctx=2048,

@@ -1,0 +1,1 @@
+care_intent_model.joblib — intent classifier trained from backend/app/ml/data/care_intent_rules.json via backend/scripts/bootstrap_care_intent_model.py (same bytes as backend/app/ml/models/care_intent_model.joblib).

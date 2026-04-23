@@ -66,6 +66,7 @@ from app.tasks.warehouse_isolation_verify import run_warehouse_isolation_verific
 from app.services.model_kpis import compute_care_kpis, compute_fraud_kpis
 from app.services.production_hardening import collect_production_violations
 from app.services.training_governance import assert_global_pooled_uploads, assert_training_upload_allowed
+from app.model_paths import packaged_fraud_models_dir
 from app.services.job_runs import run_tracked_job
 from app.services.report_jobs import run_tenant_export_job
 from app.observability import get_request_id
@@ -4733,11 +4734,7 @@ async def fraud_train_status(
 
     Reads models/fraud/train_status.json if present; otherwise reports idle.
     """
-    model_path_env = os.getenv("MODEL_PATH", "")
-    if model_path_env and model_path_env != "/models":
-        out_dir = Path(model_path_env).parent / "fraud"
-    else:
-        out_dir = Path(__file__).resolve().parents[3] / "models" / "fraud"
+    out_dir = packaged_fraud_models_dir()
     status_path = out_dir / "train_status.json"
     if not status_path.exists():
         return FraudTrainStatusOut(state="idle")

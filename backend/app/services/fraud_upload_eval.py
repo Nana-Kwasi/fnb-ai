@@ -18,13 +18,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models import Customer, FraudOutcome, Transaction
 from app.models.training_data import TrainingUpload, TrainingUploadRow
 from app.services.feature_engine import FEATURE_NAMES, build_feature_vector
+from app.model_paths import packaged_fraud_models_dir
 
 
 def _fraud_model_dir() -> Path:
-    model_path_env = os.getenv("MODEL_PATH", "")
-    if model_path_env and model_path_env != "/models":
-        return Path(model_path_env).parent / "fraud"
-    return Path(__file__).resolve().parents[3] / "models" / "fraud"
+    return packaged_fraud_models_dir()
 
 
 def _load_fraud_predictor():

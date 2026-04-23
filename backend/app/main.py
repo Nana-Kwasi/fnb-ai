@@ -22,6 +22,21 @@ from app.services.platform_bootstrap import ensure_bootstrap_platform_owner
 from app.services.production_hardening import assert_production_hardening
 
 
+def _production_warnings() -> None:
+    import logging
+
+    log = logging.getLogger("app.bootstrap")
+    env = (settings.environment or "").strip().lower()
+    if env != "production":
+        return
+    raw = __import__("os").environ.get("CORS_ALLOWED_ORIGINS", "").strip()
+    if not raw or "YOUR_FRONTEND" in raw.upper():
+        log.warning(
+            "CORS_ALLOWED_ORIGINS is empty or still contains YOUR_FRONTEND — "
+            "set it to your real frontend origin(s) before going live."
+        )
+
+
 def _build_cors_origins() -> list[str]:
     """
     CORS origin allowlist resolution order:
@@ -52,9 +67,10 @@ async def lifespan(_app: FastAPI):
         log_level=settings.log_level,
         sentry_dsn=settings.sentry_dsn,
         environment=settings.environment,
-        app_version="1.0.2",
+        app_version=settings.release_version,
     )
     assert_production_hardening(settings)
+    _production_warnings()
     if "sqlite" in settings.database_url:
         async with engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
@@ -152,13 +168,16 @@ async def lifespan(_app: FastAPI):
         scheduler.shutdown(wait=False)
 
 
+_app_docs = "/docs" if settings.expose_openapi else None
+_app_redoc = "/redoc" if settings.expose_openapi else None
+
 app = FastAPI(
     title=settings.app_name,
     description="White-label Fraud Detection + Customer Care API",
-    version="1.0.4",
+    version=settings.release_version,
     lifespan=lifespan,
-    docs_url="/docs",
-    redoc_url="/redoc",
+    docs_url=_app_docs,
+    redoc_url=_app_redoc,
 )
 
 app.add_middleware(
@@ -168,6 +187,18 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["Content-Type", "Authorization", "X-API-Key", "X-Tenant-ID", "X-Request-ID"],
 )
+
+
+@app.middleware("http")
+async def production_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    if (settings.environment or "").strip().lower() == "production":
+        response.headers.setdefault("X-Content-Type-Options", "nosniff")
+        response.headers.setdefault("X-Frame-Options", "DENY")
+        response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
+        response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
+        response.headers.setdefault("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
+    return response
 
 
 @app.middleware("http")

@@ -11,6 +11,7 @@ from sklearn.metrics import precision_recall_fscore_support
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.model_paths import resolve_default_care_intent_joblib_path
 from app.models.training_data import TrainingUpload, TrainingUploadRow
 
 
@@ -117,9 +118,8 @@ def _classification_breakdown(y_true: list[str], y_pred: list[str]) -> tuple[lis
 
 def _load_care_model():
     import joblib
-    from pathlib import Path
 
-    model_path = Path(__file__).resolve().parents[1] / "ml" / "models" / "care_intent_model.joblib"
+    model_path = resolve_default_care_intent_joblib_path()
     if not model_path.exists():
         raise RuntimeError("Care model not found. Train care model first.")
     model = joblib.load(model_path)

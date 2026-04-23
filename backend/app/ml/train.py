@@ -32,6 +32,7 @@ from app.models import Transaction, Customer, FraudOutcome
 from app.services.feature_engine import FEATURE_NAMES, build_feature_vector
 from app.ml.model_card import generate_model_card
 from app.ml.bias_audit import run_bias_audit
+from app.model_paths import packaged_fraud_models_dir
 
 from datetime import datetime, timezone
 
@@ -540,11 +541,7 @@ async def _load_reject_inference_samples_if_enabled(limit: int = 5000) -> Tuple[
 def main():
     training_start = time.time()
 
-    model_path_env = os.getenv("MODEL_PATH", "")
-    if model_path_env and model_path_env != "/models":
-        out_dir = Path(model_path_env).parent / "fraud"
-    else:
-        out_dir = Path(__file__).resolve().parents[3] / "models" / "fraud"
+    out_dir = packaged_fraud_models_dir()
     out_dir.mkdir(parents=True, exist_ok=True)
     status_path = out_dir / "train_status.json"
 

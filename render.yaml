@@ -1,0 +1,23 @@
+# Render Blueprint (optional): adjust names/repo and paste env vars in the dashboard.
+# Docs: https://render.com/docs/blueprint-spec
+version: "1"
+services:
+  - type: web
+    name: bankai-backend
+    runtime: python
+    region: oregon
+    plan: starter
+    rootDir: ""
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.6
+      - key: ENVIRONMENT
+        value: production
+      - key: EXPOSE_OPENAPI
+        value: "false"
+      - key: RELEASE_VERSION
+        value: "1.0.5"
+      # Add DATABASE_URL, REDIS_URL, SECRET_KEY, etc. in the Render UI or sync from a secret store.

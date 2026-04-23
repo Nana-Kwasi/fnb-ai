@@ -25,6 +25,7 @@ from app.models import (
     ChatMessage,
     KnowledgeChunk,
 )
+from app.model_paths import resolve_default_care_intent_joblib_path
 from app.services.care_transactions import (
     customer_transaction_stats,
     fetch_customer_transaction_detail,
@@ -1404,7 +1405,7 @@ def _resolve_care_artifact_model_path(model_artifact_uri: str | None) -> Path:
         if p.is_dir():
             return p / "care_intent_model.joblib"
         return p
-    return Path(__file__).resolve().parent.parent / "ml" / "models" / "care_intent_model.joblib"
+    return resolve_default_care_intent_joblib_path()
 
 
 def _load_care_intent_model(model_artifact_uri: str | None = None) -> Any:

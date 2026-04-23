@@ -208,7 +208,7 @@ def init_sentry(dsn: str, environment: str = "production", release: str | None =
         sentry_sdk.init(
             dsn=dsn,
             environment=environment,
-            release=release or "fnb-ai@1.0.0",
+            release=release or "fnb-ai@1.0.5",
             traces_sample_rate=0.1,  # 10% of transactions for performance monitoring
             profiles_sample_rate=0.05,
             integrations=[
@@ -285,7 +285,7 @@ def init_observability(
     log_level: str = "INFO",
     sentry_dsn: str = "",
     environment: str = "development",
-    app_version: str = "1.0.0",
+    app_version: str = "1.0.5",
 ) -> None:
     """Call once at app startup to initialise all observability components."""
     init_logging(level=log_level)

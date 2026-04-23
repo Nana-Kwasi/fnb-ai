@@ -25,6 +25,7 @@ _ENV_FILE = _pick_env_file()
 
 class Settings(BaseSettings):
     app_name: str = "BankAI Platform"
+    release_version: str = "1.0.5"
     debug: bool = False
     # Set to "production" in deployed environments; used with enforce_production_hardening.
     environment: str = "development"
@@ -125,6 +126,9 @@ class Settings(BaseSettings):
     # Phase 3: periodic job logs eligible tenants (audit + optional alert); does not train automatically.
     auto_tenant_finetune_scout_enabled: bool = False
     auto_tenant_finetune_scout_min_rows: int = 800
+
+    # When false, OpenAPI /docs and /redoc are disabled (recommended for public production APIs).
+    expose_openapi: bool = True
 
     # ── Observability ──────────────────────────────────────────────────────────
     sentry_dsn: str = ""

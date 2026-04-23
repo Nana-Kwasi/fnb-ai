@@ -4,7 +4,10 @@
 backend/.env
 backend/.env.production
 backend/.env.production.local
+backend/.env.render.local
 .venv
+backend/.venv-bootstrap
+backend/.venv-care
 venv
 __pycache__
 *.pyc

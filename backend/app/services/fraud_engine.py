@@ -12,6 +12,7 @@ from sqlalchemy import select
 
 from app.config import settings
 from app.services.artifact_store import fetch_artifact_uri_to_local_path
+from app.model_paths import packaged_fraud_models_dir
 from app.services.feature_engine import FEATURE_NAMES
 from app.services.fraud_ring import compute_network_risk_score
 from app.services.adaptive_risk_engine import get_adaptive_state_and_modifier
@@ -71,10 +72,7 @@ def _env_bool(name: str, default: bool) -> bool:
 
 
 def _get_models_path() -> Path:
-    env_path = os.getenv("MODEL_PATH", "").strip()
-    if env_path and env_path != "/models":
-        return Path(env_path).parent / "fraud"
-    return Path(__file__).resolve().parents[3] / "models" / "fraud"
+    return packaged_fraud_models_dir()
 
 
 def _ensure_models():
