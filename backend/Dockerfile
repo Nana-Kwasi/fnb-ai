@@ -16,5 +16,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --retries 5 --timeout 120 -r requirements.txt
 COPY . .
+# Bundle trained ML model artifacts at /models so fraud_engine (which resolves
+# repo_root()/models/fraud -> /models/fraud inside the image) can load them.
+COPY models /models
 EXPOSE 8000
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
