@@ -1,0 +1,1 @@
+Optional Phi / llama.cpp GGUF for care LLM routing. Put the same filename as MODEL_PATH here (e.g. Phi-3-mini-4k-instruct-q4.gguf). The router checks MODEL_PATH first, then this folder. Large files are often gitignored — upload to R2 or bake into your image instead of committing.

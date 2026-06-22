@@ -1,7 +1,57 @@
+{"text": "hi", "intent": "BRANCH_ATM"}
+{"text": "Find branch/ATM in app", "intent": "PIN_RESET"}
+{"text": "what is my balanc", "intent": "BALANCE_INQUIRY"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "how arr you", "intent": "GENERAL_SUPPORT"}
+{"text": "i am confusd", "intent": "COMPLAINT"}
+{"text": "Hi", "intent": "BRANCH_ATM"}
+{"text": "Find branch/ATM in app", "intent": "PIN_RESET"}
+{"text": "Yes", "intent": "HUMAN_ESCALATION"}
+{"text": "Stay on channel", "intent": "HUMAN_ESCALATION"}
+{"text": "Contact support", "intent": "CONTACT_SUPPORT"}
+{"text": "missing money", "intent": "TRANSACTION_HISTORY"}
+{"text": "hi", "intent": "BRANCH_ATM"}
+{"text": "View transactions", "intent": "TRANSACTION_HISTORY"}
+{"text": "How about last week", "intent": "TRANSACTION_HISTORY"}
+{"text": "Tell us which transaction", "intent": "TRANSACTION_HISTORY"}
+{"text": "Good morning", "intent": "GENERAL_SUPPORT"}
+{"text": "View transactions", "intent": "TRANSACTION_HISTORY"}
+{"text": "How do I check\tmy balance?", "intent": "BALANCE_INQUIRY"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "hey", "intent": "GENERAL_SUPPORT"}
+{"text": "I want bok", "intent": "HUMAN_ESCALATION"}
+{"text": "Can I get chq book", "intent": "HUMAN_ESCALATION"}
+{"text": "How do I order a chqu book", "intent": "HUMAN_ESCALATION"}
+{"text": "I want bok", "intent": "GENERAL_SUPPORT"}
+{"text": "Hi", "intent": "BRANCH_ATM"}
 {"text": "Hi", "intent": "GENERAL_SUPPORT"}
 {"text": "What is Ghanaian.", "intent": "GENERAL_SUPPORT"}
 {"text": "What is my balance", "intent": "BALANCE_INQUIRY"}
 {"text": "what is Ghanaian", "intent": "GENERAL_SUPPORT"}
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "How are you", "intent": "GENERAL_SUPPORT"}
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "View transactions", "intent": "TRANSACTION_HISTORY"}
+{"text": "Tell us which transaction", "intent": "TRANSACTION_HISTORY"}
+{"text": "Someone used my card without permission", "intent": "FRAUD_DISPUTE"}
+{"text": "Temporarily\tlocked account", "intent": "ACCOUNT_LOCKED"}
+{"text": "Contact support", "intent": "CONTACT_SUPPORT"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "Ok", "intent": "HUMAN_ESCALATION"}
+{"text": "what's my balance", "intent": "BALANCE_INQUIRY"}
+{"text": "Thank you", "intent": "GENERAL_SUPPORT"}
+{"text": "Thank you", "intent": "GENERAL_SUPPORT"}
+{"text": "No", "intent": "GENERAL_SUPPORT"}
+{"text": "cancel card", "intent": "CARD_BLOCK"}
+{"text": "Block card in app", "intent": "CARD_BLOCK"}
+{"text": "no that's all", "intent": "GENERAL_SUPPORT"}
+{"text": "no thanks", "intent": "GENERAL_SUPPORT"}
+{"text": "No thank you", "intent": "GENERAL_SUPPORT"}
+{"text": "No", "intent": "GENERAL_SUPPORT"}
+{"text": "I want to file a fraud\tclaim", "intent": "FRAUD_DISPUTE"}
+{"text": "Freeze card", "intent": "CARD_BLOCK"}
+{"text": "Contact support", "intent": "CONTACT_SUPPORT"}
+{"text": "Hi", "intent": "BRANCH_ATM"}
 {"text": "What is my balance?", "intent": "GENERAL_SUPPORT"}
 {"text": "What is my balance?", "intent": "GENERAL_SUPPORT"}
 {"text": "Hi", "intent": "GENERAL_SUPPORT"}
@@ -14,23 +64,88 @@
 {"text": "Yes", "intent": "HUMAN_ESCALATION"}
 {"text": "How are you", "intent": "GENERAL_SUPPORT"}
 {"text": "Thank you", "intent": "GENERAL_SUPPORT"}
-{"text": "What is Ghanaian", "intent": "GENERAL_SUPPORT"}
+{"text": "yes", "intent": "HUMAN_ESCALATION"}
+{"text": "I want to create a new PIN", "intent": "PIN_RESET"}
+{"text": "I want to cancel my card", "intent": "CARD_BLOCK"}
+{"text": "Contact support", "intent": "CONTACT_SUPPORT"}
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "View transactions", "intent": "TRANSACTION_HISTORY"}
+{"text": "Tell us which transaction", "intent": "TRANSACTION_HISTORY"}
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "Raise dispute", "intent": "FRAUD_DISPUTE"}
+{"text": "Call support", "intent": "CONTACT_SUPPORT"}
+{"text": "Talk to agent", "intent": "BALANCE_INQUIRY"}
+{"text": "Call support", "intent": "CONTACT_SUPPORT"}
+{"text": "Call support", "intent": "CONTACT_SUPPORT"}
+{"text": "Email support", "intent": "CONTACT_SUPPORT"}
+{"text": "Call support", "intent": "CONTACT_SUPPORT"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "yes", "intent": "HUMAN_ESCALATION"}
+{"text": "Stay on channel", "intent": "HUMAN_ESCALATION"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "Thank you", "intent": "GENERAL_SUPPORT"}
+{"text": "No", "intent": "GENERAL_SUPPORT"}
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "View transactions", "intent": "TRANSACTION_HISTORY"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "yes", "intent": "HUMAN_ESCALATION"}
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "yes", "intent": "HUMAN_ESCALATION"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "yes", "intent": "HUMAN_ESCALATION"}
+{"text": "I want to report fraud on my account", "intent": "FRAUD_DISPUTE"}
+{"text": "Hello", "intent": "GENERAL_SUPPORT"}
+{"text": "How are you", "intent": "GENERAL_SUPPORT"}
+{"text": "What is my balance", "intent": "BALANCE_INQUIRY"}
+{"text": "What is my total account balance", "intent": "BALANCE_INQUIRY"}
+{"text": "What is my balanc", "intent": "BALANCE_INQUIRY"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "Yes", "intent": "HUMAN_ESCALATION"}
+{"text": "Hi", "intent": "BRANCH_ATM"}
+{"text": "I got an sms asking for otp", "intent": "SECURITY_GUIDANCE"}
+{"text": "unauthorised payment", "intent": "FRAUD_DISPUTE"}
+{"text": "I see a suspicious transaction", "intent": "BALANCE_INQUIRY"}
+{"text": "View transactions", "intent": "TRANSACTION_HISTORY"}
+{"text": "got an sms asking for otp", "intent": "SECURITY_GUIDANCE"}
+{"text": "I got an sms asking for otp", "intent": "SECURITY_GUIDANCE"}
+{"text": "I got an sms asking for otp", "intent": "SECURITY_GUIDANCE"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "Yes", "intent": "HUMAN_ESCALATION"}
+{"text": "Stay on channel", "intent": "HUMAN_ESCALATION"}
+{"text": "Help me protect my passwor", "intent": "BALANCE_INQUIRY"}
+{"text": "What is my balanc", "intent": "BALANCE_INQUIRY"}
+{"text": "View balance in app", "intent": "BALANCE_INQUIRY"}
+{"text": "I want to file a compalint", "intent": "COMPLAINT"}
+{"text": "phishng scam", "intent": "SECURITY_GUIDANCE"}
+{"text": "set new piin", "intent": "PIN_RESET"}
+{"text": "set new pin", "intent": "PIN_RESET"}
+{"text": "Reset PIN in app", "intent": "PIN_RESET"}
+{"text": "Yes", "intent": "HUMAN_ESCALATION"}
+{"text": "Stay on channel", "intent": "HUMAN_ESCALATION"}
+{"text": "unauthorised payment", "intent": "FRAUD_DISPUTE"}
+{"text": "unauthorised payment", "intent": "FRAUD_DISPUTE"}
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "How do I secure\tmy account", "intent": "BALANCE_INQUIRY"}
+{"text": "unauthorised payment", "intent": "FRAUD_DISPUTE"}
+{"text": "Do it again", "intent": "ACCOUNT_LOCKED"}
+{"text": "I don’t like this, do it properly", "intent": "BALANCE_INQUIRY"}
+{"text": "Hi", "intent": "BRANCH_ATM"}
+{"text": "How are you", "intent": "BRANCH_ATM"}
 {"text": "Balance inquiry", "intent": "BALANCE_INQUIRY"}
 {"text": "View balance in app", "intent": "BALANCE_INQUIRY"}
 {"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
-{"text": "Stay on channel", "intent": "GENERAL_SUPPORT"}
 {"text": "Branch or ATM locations", "intent": "BRANCH_ATM"}
-{"text": "Call contact centre", "intent": "GENERAL_SUPPORT"}
 {"text": "Complaints", "intent": "COMPLAINT"}
 {"text": "Submit complaint in app", "intent": "COMPLAINT"}
 {"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
 {"text": "What is him", "intent": "GENERAL_SUPPORT"}
-{"text": "I am mad", "intent": "GENERAL_SUPPORT"}
 {"text": "Locked account help", "intent": "ACCOUNT_LOCKED"}
-{"text": "Contact support", "intent": "GENERAL_SUPPORT"}
 {"text": "Branch or ATM locations", "intent": "BRANCH_ATM"}
 {"text": "Find branch/ATM in app", "intent": "BRANCH_ATM"}
-{"text": "Call contact centre", "intent": "GENERAL_SUPPORT"}
 {"text": "need to ask something", "intent": "GENERAL_SUPPORT"}
 {"text": "Hi", "intent": "GENERAL_SUPPORT"}
 {"text": "View transactions", "intent": "TRANSACTION_HISTORY"}
@@ -41,10 +156,35 @@
 {"text": "Thank you", "intent": "GENERAL_SUPPORT"}
 {"text": "Raise dispute", "intent": "FRAUD_DISPUTE"}
 {"text": "Raise dispute", "intent": "FRAUD_DISPUTE"}
-{"text": "Freeze card", "intent": "GENERAL_SUPPORT"}
 {"text": "Block card", "intent": "CARD_BLOCK"}
 {"text": "Contact support", "intent": "CONTACT_SUPPORT"}
 {"text": "Email support", "intent": "CONTACT_SUPPORT"}
 {"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
-{"text": "Stay on channel", "intent": "GENERAL_SUPPORT"}
 {"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "I got an sms asking for otp", "intent": "SECURITY_GUIDANCE"}
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "How are you", "intent": "GENERAL_SUPPORT"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "Yes", "intent": "HUMAN_ESCALATION"}
+{"text": "What is my balanc", "intent": "BALANCE_INQUIRY"}
+{"text": "Hi", "intent": "GENERAL_SUPPORT"}
+{"text": "How are you", "intent": "GENERAL_SUPPORT"}
+{"text": "Hi", "intent": "BRANCH_ATM"}
+{"text": "Find branch/ATM in app", "intent": "PIN_RESET"}
+{"text": "Visit branch", "intent": "BRANCH_ATM"}
+{"text": "Call contact centre", "intent": "CONTACT_SUPPORT"}
+{"text": "Call support", "intent": "CONTACT_SUPPORT"}
+{"text": "Email support", "intent": "CONTACT_SUPPORT"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "Yes", "intent": "HUMAN_ESCALATION"}
+{"text": "Thank you", "intent": "BRANCH_ATM"}
+{"text": "No", "intent": "GENERAL_SUPPORT"}
+{"text": "hi", "intent": "BRANCH_ATM"}
+{"text": "How are you", "intent": "BRANCH_ATM"}
+{"text": "Hi", "intent": "BRANCH_ATM"}
+{"text": "Find branch/ATM in app", "intent": "PIN_RESET"}
+{"text": "Visit branch", "intent": "BRANCH_ATM"}
+{"text": "Call contact centre", "intent": "CONTACT_SUPPORT"}
+{"text": "Talk to agent", "intent": "HUMAN_ESCALATION"}
+{"text": "Yes", "intent": "HUMAN_ESCALATION"}
+{"text": "Hi", "intent": "BRANCH_ATM"}

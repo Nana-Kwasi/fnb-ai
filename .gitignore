@@ -1,5 +1,18 @@
 .env
+.env.production
+.env.production.local
+backend/.env
+backend/.env.production
+backend/.env.production.local
+backend/.env.render.local
+.env.render
+backend/.env.render
+# Catch any local secret env files (keep *.example templates tracked)
+.env.*.local
+backend/.env.*.local
 .venv
+backend/.venv-bootstrap
+backend/.venv-care
 venv
 __pycache__
 *.pyc

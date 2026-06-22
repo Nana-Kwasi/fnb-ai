@@ -1,0 +1,1600 @@
+{"text": "Two days ago my account was accessed from a different device without my knowledge", "intent": "FRAUD_DISPUTE"}
+{"text": "I have a question but need to gather my thoughts", "intent": "OTHER"}
+{"text": "i paid for sumthn online and the card was declined but i was charged", "intent": "CARD_ISSUE"}
+{"text": "My transfer has been pending for 3 hours omg", "intent": "TRANSFER_PROBLEM"}
+{"text": "My account was debited for a service I never subscribed to", "intent": "BILLING_CHARGE"}
+{"text": "I was billed for a service I cancelled last month wtf", "intent": "BILLING_CHARGE"}
+{"text": "hw mch cn i brrw bsd on my incme?", "intent": "LOAN_QUERY"}
+{"text": "I received an OTP I never requested — account may be compromised", "intent": "FRAUD_DISPUTE"}
+{"text": "I am disputing a charge that appeared on my account after a data breach notification omg", "intent": "FRAUD_DISPUTE"}
+{"text": "i rceivd a nw crd bt it shws an errr whn i try to actvte", "intent": "CARD_ISSUE"}
+{"text": "I was charged for a transaction that was reversed — fee should be refunded!!", "intent": "BILLING_CHARGE"}
+{"text": "i rceivd an otp i nvr rquestd — account my be cmprmsd", "intent": "FRAUD_DISPUTE"}
+{"text": "Please reverse an unauthorized transfer from yesterday!!", "intent": "FRAUD_DISPUTE"}
+{"text": "IMPS transfer not credited after 6 hours", "intent": "TRANSFER_PROBLEM"}
+{"text": "i can see my account on web but nor on mobile app", "intent": "ACCOUNT_ACCESS"}
+{"text": "I need help disputing a transfer that was rejected but fee was still deducted", "intent": "TRANSFER_PROBLEM"}
+{"text": "i jst need cnfrmtion you rceivd my mssge", "intent": "OTHER"}
+{"text": "My transfer has been pending for 3 hours smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "I was referred here by a friend smh", "intent": "OTHER"}
+{"text": "I think my account was used by someone in a different country smh", "intent": "FRAUD_DISPUTE"}
+{"text": "Loan disbursed but amount is short by 10%!!", "intent": "LOAN_QUERY"}
+{"text": "i was charged for a swift transfr that didn't go through", "intent": "BILLING_CHARGE"}
+{"text": "hw do i rcvr my account if i cn't accss my old phne?", "intent": "ACCOUNT_ACCESS"}
+{"text": "There's a debit from an international merchant I don't know!!!", "intent": "FRAUD_DISPUTE"}
+{"text": "hello wtf", "intent": "OTHER"}
+{"text": "My ATM card was used somewhere I've never been omg", "intent": "FRAUD_DISPUTE"}
+{"text": "I entered the wrong PIN three times at an ATM and now I'm stuck???", "intent": "CARD_ISSUE"}
+{"text": "There's a debit from an international merchant I don't know???", "intent": "FRAUD_DISPUTE"}
+{"text": "I received a loan offer, how do I accept it? wtf", "intent": "LOAN_QUERY"}
+{"text": "I need your physical address", "intent": "OTHER"}
+{"text": "i was chargd a fee for a bounced direct debit that wasn't my fault", "intent": "BILLING_CHARGE"}
+{"text": "Transfer reversed automatically — why did that happen?", "intent": "TRANSFER_PROBLEM"}
+{"text": "crd keeps gttng dclnd on intrntionl wbsts only", "intent": "CARD_ISSUE"}
+{"text": "Card expired but replacement not received omg", "intent": "CARD_ISSUE"}
+{"text": "What is your bank's SWIFT code?!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "There's a processing fee on my statement I don't understand", "intent": "BILLING_CHARGE"}
+{"text": "Can I get a physical card if I only have a virtual one? omg", "intent": "CARD_ISSUE"}
+{"text": "my trnsfr is mssng and i'm afraid of fraud", "intent": "FRAUD_DISPUTE"}
+{"text": "my accnt is locked after too many login attempts", "intent": "ACCOUNT_ACCESS"}
+{"text": "My card is damaged and not reading at terminals???", "intent": "CARD_ISSUE"}
+{"text": "fraudlnt chrge shws on mble app rght nw, i'm seeing it lve", "intent": "FRAUD_DISPUTE"}
+{"text": "I got a fraud warning from my bank but don't know what transaction triggered it", "intent": "FRAUD_DISPUTE"}
+{"text": "My app session keeps expiring too quickly", "intent": "ACCOUNT_ACCESS"}
+{"text": "I want a reversal of an erroneous service charge omg", "intent": "BILLING_CHARGE"}
+{"text": "Where is the nearest branch to me? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "Can I use a loan to pay off another loan with you? wtf", "intent": "LOAN_QUERY"}
+{"text": "my transfer disappeared and i'm nor sure if it was fraud or a tech issue", "intent": "TRANSFER_PROBLEM"}
+{"text": "i think my acct was used by someone in a different country", "intent": "FRAUD_DISPUTE"}
+{"text": "I want to apply for a personal loan", "intent": "LOAN_QUERY"}
+{"text": "i sent money to an expired account number, abeg recall", "intent": "TRANSFER_PROBLEM"}
+{"text": "I want to activate my account again smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "where am I?", "intent": "OTHER"}
+{"text": "Why does my card keep getting declined at supermarkets?!!!", "intent": "CARD_ISSUE"}
+{"text": "i wnt to dspte an unauthrzd chrge", "intent": "FRAUD_DISPUTE"}
+{"text": "thre's a dbt tht hppnd aftr i rquestd account clsre", "intent": "FRAUD_DISPUTE"}
+{"text": "Transfer limit exceeded error even though I'm within my daily limit???", "intent": "TRANSFER_PROBLEM"}
+{"text": "my account shws unknwn dbts frm the atm", "intent": "FRAUD_DISPUTE"}
+{"text": "My card arrived but I can't activate it through the app!!", "intent": "CARD_ISSUE"}
+{"text": "I got two alerts for one purchase but only made one smh", "intent": "FRAUD_DISPUTE"}
+{"text": "funds transferred out and nor reached beneficiary — fraud or error?", "intent": "TRANSFER_PROBLEM"}
+{"text": "I'm on a new SIM and can't receive OTP for my old number???", "intent": "ACCOUNT_ACCESS"}
+{"text": "My card started declining after I reported an issue last week wtf", "intent": "CARD_ISSUE"}
+{"text": "nvr mnd", "intent": "OTHER"}
+{"text": "I got phished and money left my account!!!", "intent": "FRAUD_DISPUTE"}
+{"text": "I need help registering for online banking for the first time wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "What is your process for handling complaints?", "intent": "GENERAL_SUPPORT"}
+{"text": "My business account had a large unauthorized debit this morning smh", "intent": "FRAUD_DISPUTE"}
+{"text": "I'm using this chatbot for the first time omg", "intent": "OTHER"}
+{"text": "i think someone else is logged into my accnt right now", "intent": "ACCOUNT_ACCESS"}
+{"text": "Can I change my loan repayment date?!!", "intent": "LOAN_QUERY"}
+{"text": "I transferred to myself across two of my own accounts and it didn't credit???", "intent": "TRANSFER_PROBLEM"}
+{"text": "i want to split my acct into different sub-accts", "intent": "GENERAL_SUPPORT"}
+{"text": "I want to talk to someone???", "intent": "OTHER"}
+{"text": "Is there a waiting period before I can apply for another loan?", "intent": "LOAN_QUERY"}
+{"text": "I love your bank! omg", "intent": "OTHER"}
+{"text": "Can I change my salary account to this bank?!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "I don't understand this service charge on my statement!!!", "intent": "BILLING_CHARGE"}
+{"text": "I want to add a beneficiary for transfers???", "intent": "GENERAL_SUPPORT"}
+{"text": "I already have a loan, can I top it up? omg", "intent": "LOAN_QUERY"}
+{"text": "I was charged a fee for downloading my own bank statement!!", "intent": "BILLING_CHARGE"}
+{"text": "My card is damaged and not reading at terminals", "intent": "CARD_ISSUE"}
+{"text": "lgn is failng wth 'usr nt found' errr", "intent": "ACCOUNT_ACCESS"}
+{"text": "Someone is making transfers from my account without my consent???", "intent": "FRAUD_DISPUTE"}
+{"text": "hello smh", "intent": "OTHER"}
+{"text": "can i talk to a real human pls?", "intent": "OTHER"}
+{"text": "Can a minor have their own account? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "How do I set up a fixed deposit?!!", "intent": "GENERAL_SUPPORT"}
+{"text": "Does my savings history affect loan eligibility?", "intent": "LOAN_QUERY"}
+{"text": "the scrty question rst isn't wrkng", "intent": "ACCOUNT_ACCESS"}
+{"text": "i ws lggd out autmtclly and cn't gt bck in", "intent": "ACCOUNT_ACCESS"}
+{"text": "How do I check my account opening date?!!", "intent": "GENERAL_SUPPORT"}
+{"text": "I was approved but the loan amount was lower than requested", "intent": "LOAN_QUERY"}
+{"text": "Can I get a loan against my salary? smh", "intent": "LOAN_QUERY"}
+{"text": "I'm being charged a COT fee, can you explain what that is? wtf", "intent": "BILLING_CHARGE"}
+{"text": "I want to upgrade my account tier", "intent": "GENERAL_SUPPORT"}
+{"text": "Is there a way to make payments without data? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "Why did I get charged a fee on a zero-balance account????", "intent": "BILLING_CHARGE"}
+{"text": "Why was money taken from my account without any transaction I made?", "intent": "BILLING_CHARGE"}
+{"text": "How do I recall a wrongly sent transfer?!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "why is there a dormancy fee on my accnt?", "intent": "BILLING_CHARGE"}
+{"text": "How do I register my card for secure online payments?", "intent": "CARD_ISSUE"}
+{"text": "cool", "intent": "OTHER"}
+{"text": "My wallet balance dropped overnight with no transactions made by me wtf", "intent": "FRAUD_DISPUTE"}
+{"text": "ok ok ok wtf", "intent": "OTHER"}
+{"text": "wrong pin locked both my card and my acct", "intent": "ACCOUNT_ACCESS"}
+{"text": "USSD deducted me and no transfer happened — could be fraud!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "i accdntlly trnsfrrd to a clsd account", "intent": "TRANSFER_PROBLEM"}
+{"text": "I transferred to myself across two of my own accounts and it didn't credit!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "i dd nt authrze ths pymnt to an unknwn mrchnt", "intent": "FRAUD_DISPUTE"}
+{"text": "Strange recurring charge I don't recognize, might be fraud!!", "intent": "FRAUD_DISPUTE"}
+{"text": "The SMS verification code never comes when I request it", "intent": "ACCOUNT_ACCESS"}
+{"text": "I can't access my account on the web since yesterday", "intent": "ACCOUNT_ACCESS"}
+{"text": "what's the process for adding a co-signatory to my acct?", "intent": "GENERAL_SUPPORT"}
+{"text": "i need a lttr cnfrmng my loan hs been flly rpaid", "intent": "LOAN_QUERY"}
+{"text": "i wnt to upgrde frm a dbt crd to a crdt crd", "intent": "CARD_ISSUE"}
+{"text": "I was charged twice for the same ATM withdrawal!!!", "intent": "BILLING_CHARGE"}
+{"text": "I need to dispute a late payment fee applied to my account", "intent": "BILLING_CHARGE"}
+{"text": "why is a new charge appearing on my acct every two weeks?", "intent": "BILLING_CHARGE"}
+{"text": "I just need confirmation you received my message!!", "intent": "OTHER"}
+{"text": "Bulk transfer partially completed — some recipients not credited wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "What is your bank's SWIFT code? omg", "intent": "GENERAL_SUPPORT"}
+{"text": "I need to report something not related to my account", "intent": "OTHER"}
+{"text": "How do I get a bank verification number?!!", "intent": "GENERAL_SUPPORT"}
+{"text": "trnsfr rvrsl nt prcssd aftr 48 hours", "intent": "TRANSFER_PROBLEM"}
+{"text": "I need an emergency loan today!!!", "intent": "LOAN_QUERY"}
+{"text": "Wrong loan amount was deducted from my account", "intent": "LOAN_QUERY"}
+{"text": "cn i opn a joint account?", "intent": "GENERAL_SUPPORT"}
+{"text": "What is the minimum balance for a savings account?!!", "intent": "GENERAL_SUPPORT"}
+{"text": "My account was suspended for suspicious activity but it was me omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "I was billed for paper statements even though I'm on e-statements", "intent": "BILLING_CHARGE"}
+{"text": "my crd arrvd bt i cn't actvte it through the app", "intent": "CARD_ISSUE"}
+{"text": "i mssd a loan rpymnt, wht hppns nw?", "intent": "LOAN_QUERY"}
+{"text": "cn i py off my loan early?", "intent": "LOAN_QUERY"}
+{"text": "is this the right place to ask my question????", "intent": "OTHER"}
+{"text": "I need two cards for my account — is that possible? wtf", "intent": "CARD_ISSUE"}
+{"text": "Transfer took 2 days to arrive — I want to know why omg", "intent": "TRANSFER_PROBLEM"}
+{"text": "plz connect me to customer care", "intent": "OTHER"}
+{"text": "Security alert says my password was used on another device", "intent": "ACCOUNT_ACCESS"}
+{"text": "I got an alert for a transaction I did not do!!", "intent": "FRAUD_DISPUTE"}
+{"text": "do you wrk on pblc hldys?", "intent": "OTHER"}
+{"text": "Please investigate suspicious transactions on my account", "intent": "FRAUD_DISPUTE"}
+{"text": "whn does the bnk opn tmrrw?", "intent": "OTHER"}
+{"text": "can i receive international transfers to my acnt?", "intent": "GENERAL_SUPPORT"}
+{"text": "My loan offer expired before I could accept it!!!", "intent": "LOAN_QUERY"}
+{"text": "I want to dispute a duplicate transfer charge!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "I want to change my login PIN!!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "I want to trace a missing transfer from 2 days ago", "intent": "TRANSFER_PROBLEM"}
+{"text": "Money deducted at ATM but I wasn't near any ATM at that time!!!", "intent": "FRAUD_DISPUTE"}
+{"text": "How do I unlock my account? omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "Wrong account number used and money is gone", "intent": "TRANSFER_PROBLEM"}
+{"text": "i wnt to dspte a loan-rltd chrge on my account", "intent": "LOAN_QUERY"}
+{"text": "Login page keeps timing out on the web wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "Transfer fee was charged but transfer failed — want fee refunded", "intent": "TRANSFER_PROBLEM"}
+{"text": "ur bank is nice wtf", "intent": "OTHER"}
+{"text": "ok thanks???", "intent": "OTHER"}
+{"text": "i wnt to chnge my lgn pn", "intent": "ACCOUNT_ACCESS"}
+{"text": "My loan statement doesn't match my expectations", "intent": "LOAN_QUERY"}
+{"text": "I have a general question with no specific urgency", "intent": "OTHER"}
+{"text": "I want to add a trusted device for login", "intent": "ACCOUNT_ACCESS"}
+{"text": "I've been charged an inactivity fee even though I transact monthly???", "intent": "BILLING_CHARGE"}
+{"text": "Login is failing with 'user not found' error wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "my card was cloned i think, abeg block and reissue", "intent": "CARD_ISSUE"}
+{"text": "How do I register my card for secure online payments?!!", "intent": "CARD_ISSUE"}
+{"text": "money was transferred out of my accnt from an old device i no longer use", "intent": "FRAUD_DISPUTE"}
+{"text": "card declined then an unknown charge appeared on my accnt", "intent": "CARD_ISSUE"}
+{"text": "Can a minor have their own account?", "intent": "GENERAL_SUPPORT"}
+{"text": "i need two cards for my acnt — is that possible?", "intent": "CARD_ISSUE"}
+{"text": "My wallet balance dropped overnight with no transactions made by me", "intent": "FRAUD_DISPUTE"}
+{"text": "I accidentally transferred to a closed account smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "Loan disbursed but amount is short by 10% wtf", "intent": "LOAN_QUERY"}
+{"text": "I've been trying to log in for 2 days — nothing works", "intent": "ACCOUNT_ACCESS"}
+{"text": "i'm locked out of my accnt, please help", "intent": "ACCOUNT_ACCESS"}
+{"text": "asdfghjkl smh", "intent": "OTHER"}
+{"text": "I came to say hi to support", "intent": "OTHER"}
+{"text": "Sent money to wrong name, please help reverse", "intent": "TRANSFER_PROBLEM"}
+{"text": "hw do i gnrte a mni sttmnt via ussd?", "intent": "GENERAL_SUPPORT"}
+{"text": "My account shows unknown debits from the ATM", "intent": "FRAUD_DISPUTE"}
+{"text": "I received a loan offer, how do I accept it? smh", "intent": "LOAN_QUERY"}
+{"text": "i wnt a rvrsl of an errneous srvce chrge", "intent": "BILLING_CHARGE"}
+{"text": "I joined a free tier but still got billed smh", "intent": "BILLING_CHARGE"}
+{"text": "International wire sent 5 days ago but not received overseas omg", "intent": "TRANSFER_PROBLEM"}
+{"text": "my accnt was hacked and money is missing", "intent": "FRAUD_DISPUTE"}
+{"text": "i'm being chrgd a ct fee, cn you explain wht tht is?", "intent": "BILLING_CHARGE"}
+{"text": "I never authorized any payment to this company yet they charged me", "intent": "FRAUD_DISPUTE"}
+{"text": "how do i increase my daily transfr limit?", "intent": "TRANSFER_PROBLEM"}
+{"text": "i wnt to increase my loan amount md-trm — is tht pssble?", "intent": "LOAN_QUERY"}
+{"text": "I want to make a suggestion to the bank", "intent": "OTHER"}
+{"text": "i dn't hve my account dtails hndy", "intent": "OTHER"}
+{"text": "frgt my intrnt bnkng psswrd", "intent": "ACCOUNT_ACCESS"}
+{"text": "is thre prkng at your brnch?", "intent": "OTHER"}
+{"text": "what is the daily txn limit for my acct type?", "intent": "GENERAL_SUPPORT"}
+{"text": "Card transaction limit is too low, how do I increase it?", "intent": "CARD_ISSUE"}
+{"text": "Tell me about your loan products", "intent": "LOAN_QUERY"}
+{"text": "My contactless card was used without me tapping it wtf", "intent": "FRAUD_DISPUTE"}
+{"text": "How do I increase my daily transfer limit?", "intent": "TRANSFER_PROBLEM"}
+{"text": "I sent money and the recipient hasn't received it", "intent": "TRANSFER_PROBLEM"}
+{"text": "just checking", "intent": "OTHER"}
+{"text": "Why can't I use my card for subscriptions? wtf", "intent": "CARD_ISSUE"}
+{"text": "What documents do I need to apply for a loan?!!", "intent": "LOAN_QUERY"}
+{"text": "How do I set up mobile banking? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "Can I schedule a future-dated transfer?", "intent": "TRANSFER_PROBLEM"}
+{"text": "The security question reset isn't working", "intent": "ACCOUNT_ACCESS"}
+{"text": "can you help mi understand a suspicious entry on my last statement?", "intent": "FRAUD_DISPUTE"}
+{"text": "Large transfer to myself between accounts not showing on the other side!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "I was charged a currency conversion fee I didn't expect smh", "intent": "BILLING_CHARGE"}
+{"text": "can you help mi with an unauthorized mobile banking transaction?", "intent": "FRAUD_DISPUTE"}
+{"text": "How do I report a complaint formally? wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "Card rejected twice at the ATM just now wtf", "intent": "CARD_ISSUE"}
+{"text": "unexpected monthly deduction on my accnt", "intent": "BILLING_CHARGE"}
+{"text": "I keep getting OTPs for transactions I'm not making", "intent": "FRAUD_DISPUTE"}
+{"text": "I want to remove a device from my authorized login list!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "ntn in particular", "intent": "OTHER"}
+{"text": "i wnt to chck my loan blnce", "intent": "LOAN_QUERY"}
+{"text": "crd blckd aftr a sspcious trnsction — fraud or crd issue?", "intent": "CARD_ISSUE"}
+{"text": "can I talk to a real human please?", "intent": "OTHER"}
+{"text": "Account restricted due to card dispute smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "i snt mny to the rght nmbr bt wrng bnk — cn i rcvr it?", "intent": "TRANSFER_PROBLEM"}
+{"text": "my loan app was rejected, why?", "intent": "LOAN_QUERY"}
+{"text": "When will my loan application be reviewed?", "intent": "LOAN_QUERY"}
+{"text": "I want to reset my security questions", "intent": "ACCOUNT_ACCESS"}
+{"text": "Can I view all my transactions from the last year?", "intent": "GENERAL_SUPPORT"}
+{"text": "I want to understand your digital wallet features", "intent": "GENERAL_SUPPORT"}
+{"text": "how do i set a spending limit on my acnt?", "intent": "GENERAL_SUPPORT"}
+{"text": "Why is a new charge appearing on my account every two weeks????", "intent": "BILLING_CHARGE"}
+{"text": "I applied for a payday loan and want to know when it will be processed", "intent": "LOAN_QUERY"}
+{"text": "I need to speak to a relationship manager???", "intent": "GENERAL_SUPPORT"}
+{"text": "cn i rvrse a trnsfr i mde by mstke?", "intent": "TRANSFER_PROBLEM"}
+{"text": "How do I access my transaction history on USSD?", "intent": "GENERAL_SUPPORT"}
+{"text": "I got a fraud warning from my bank but don't know what transaction triggered it wtf", "intent": "FRAUD_DISPUTE"}
+{"text": "Can I have a zero-balance account?!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "my card pin is blokd after 3 wrong attempts", "intent": "CARD_ISSUE"}
+{"text": "crd trnsction lmt is too lw, hw do i increase it?", "intent": "CARD_ISSUE"}
+{"text": "NEFT payment sent yesterday hasn't credited beneficiary", "intent": "TRANSFER_PROBLEM"}
+{"text": "My card hasn't arrived yet — it's been 2 weeks!!", "intent": "CARD_ISSUE"}
+{"text": "i ws apprvd bt the loan amount ws lwr thn rquestd", "intent": "LOAN_QUERY"}
+{"text": "The account maintenance fee seems higher than what I agreed to!!!", "intent": "BILLING_CHARGE"}
+{"text": "I was charged for a transaction that was reversed — fee should be refunded wtf", "intent": "BILLING_CHARGE"}
+{"text": "I want to switch from a variable to a fixed interest rate loan", "intent": "LOAN_QUERY"}
+{"text": "My contactless card was used without me tapping it", "intent": "FRAUD_DISPUTE"}
+{"text": "I think my account was used by someone in a different country", "intent": "FRAUD_DISPUTE"}
+{"text": "someone did a remote access transaction on my accnt", "intent": "FRAUD_DISPUTE"}
+{"text": "wht is the mxmm csh dpst lmt pr dy?", "intent": "GENERAL_SUPPORT"}
+{"text": "Card stopped working right after a software update wtf", "intent": "CARD_ISSUE"}
+{"text": "I'm being billed for insurance I never signed up for smh", "intent": "BILLING_CHARGE"}
+{"text": "card declined then an unknown charg appeared on my account", "intent": "CARD_ISSUE"}
+{"text": "Someone got my card details and used them online without my approval omg", "intent": "FRAUD_DISPUTE"}
+{"text": "I want to know about your foreign currency accounts!!", "intent": "GENERAL_SUPPORT"}
+{"text": "My loan agreement says one rate but I'm being charged a different rate wtf", "intent": "LOAN_QUERY"}
+{"text": "I'll call back later wtf", "intent": "OTHER"}
+{"text": "Can a minor have their own account? omg", "intent": "GENERAL_SUPPORT"}
+{"text": "How do I make a transfer to another bank????", "intent": "GENERAL_SUPPORT"}
+{"text": "I was charged more than the advertised rate for transfers", "intent": "BILLING_CHARGE"}
+{"text": "I want a reversal of an erroneous service charge wtf", "intent": "BILLING_CHARGE"}
+{"text": "someone transfrred money out of my account this morning", "intent": "FRAUD_DISPUTE"}
+{"text": "my account ws auto-enrlld in a fee-bsd srvce wthout my knwldge", "intent": "BILLING_CHARGE"}
+{"text": "who do I talk to about everything?", "intent": "OTHER"}
+{"text": "Transfer fee was charged but transfer failed — want fee refunded omg", "intent": "TRANSFER_PROBLEM"}
+{"text": "pls jst hlp me", "intent": "OTHER"}
+{"text": "What's the difference between a current and savings account?!!", "intent": "GENERAL_SUPPORT"}
+{"text": "I applied for a car loan, what's the status? omg", "intent": "LOAN_QUERY"}
+{"text": "Can I pay off my loan early?", "intent": "LOAN_QUERY"}
+{"text": "thre's a chrge lbld 'account upgrde' bt i ddn't upgrde", "intent": "BILLING_CHARGE"}
+{"text": "hw do i accss my trnsction hstry on ussd?", "intent": "GENERAL_SUPPORT"}
+{"text": "two-fctr authntction cde is nt arrvng", "intent": "ACCOUNT_ACCESS"}
+{"text": "How do I enable transaction notifications?!!", "intent": "GENERAL_SUPPORT"}
+{"text": "How do I get a bank verification number?", "intent": "GENERAL_SUPPORT"}
+{"text": "My partner's supplementary card is not working!!", "intent": "CARD_ISSUE"}
+{"text": "I need a statement of my pending transfers", "intent": "TRANSFER_PROBLEM"}
+{"text": "My card was flagged and now I can't use it", "intent": "CARD_ISSUE"}
+{"text": "thank you very much", "intent": "OTHER"}
+{"text": "I want to make a loan repayment", "intent": "LOAN_QUERY"}
+{"text": "when does the bank open tomorrow?!!!", "intent": "OTHER"}
+{"text": "Card blocked but a charge still went through", "intent": "FRAUD_DISPUTE"}
+{"text": "Money was transferred out of my account from an old device I no longer use!!", "intent": "FRAUD_DISPUTE"}
+{"text": "lol ok smh", "intent": "OTHER"}
+{"text": "I need to file a fraud complaint smh", "intent": "FRAUD_DISPUTE"}
+{"text": "Tell me more about the accounts and services you offer???", "intent": "GENERAL_SUPPORT"}
+{"text": "I sent money and the recipient hasn't received it wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "i paid fr smthng onlne and the crd ws dclnd bt i ws chrgd", "intent": "CARD_ISSUE"}
+{"text": "is there a way to reduce or waive my monthly acct fees?", "intent": "BILLING_CHARGE"}
+{"text": "international wire sent 5 days ago but not recieved overseas", "intent": "TRANSFER_PROBLEM"}
+{"text": "This company charged me but I cancelled the order weeks ago omg", "intent": "FRAUD_DISPUTE"}
+{"text": "is there a waiting period before i can apply for anorher loan?", "intent": "LOAN_QUERY"}
+{"text": "I lost my phone with the banking app — how do I revoke access?", "intent": "ACCOUNT_ACCESS"}
+{"text": "How do I download my account statement?", "intent": "GENERAL_SUPPORT"}
+{"text": "What is the maximum cash deposit limit per day? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "I need an emergency loan today urgently", "intent": "LOAN_QUERY"}
+{"text": "My card was used at a merchant I don't usually shop at — blocked now!!", "intent": "CARD_ISSUE"}
+{"text": "My bank card payment keeps timing out at online checkout!!!", "intent": "CARD_ISSUE"}
+{"text": "I'm trying to do a real-time payment but it keeps failing!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "I'm having a terrible day", "intent": "OTHER"}
+{"text": "i need to report something not related to my accnt", "intent": "OTHER"}
+{"text": "How do I check my account opening date? wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "My loan deduction is more than the agreed monthly payment wtf", "intent": "LOAN_QUERY"}
+{"text": "i wnt to apply fr a stdnt loan", "intent": "LOAN_QUERY"}
+{"text": "I want to update my contact details on the account wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "i need to report sumthn not related to my account", "intent": "OTHER"}
+{"text": "nt sre if ths is the rght chnnl", "intent": "OTHER"}
+{"text": "Transfer completed on my end but reversal happened", "intent": "TRANSFER_PROBLEM"}
+{"text": "i wnt to rfnnce my crrnt loan", "intent": "LOAN_QUERY"}
+{"text": "Please reverse an unauthorized transfer from yesterday", "intent": "FRAUD_DISPUTE"}
+{"text": "the chp on my crd is dmgd, i need a nw one", "intent": "CARD_ISSUE"}
+{"text": "I'm getting a 'session expired' error before I can even log in???", "intent": "ACCOUNT_ACCESS"}
+{"text": "the account maintnnce fee seems hghr thn wht i agreed to", "intent": "BILLING_CHARGE"}
+{"text": "I sent money via USSD and it debited me but didn't arrive???", "intent": "TRANSFER_PROBLEM"}
+{"text": "Someone got my card details and used them online without my approval", "intent": "FRAUD_DISPUTE"}
+{"text": "Got debited for a subscription I never activated — is it fraud? omg", "intent": "FRAUD_DISPUTE"}
+{"text": "wht is nn lnkng and hw do i do it?", "intent": "GENERAL_SUPPORT"}
+{"text": "my cntctlss crd ws usd wthout me tppng it", "intent": "FRAUD_DISPUTE"}
+{"text": "Someone is making transfers from my account without my consent", "intent": "FRAUD_DISPUTE"}
+{"text": "What is the daily transaction limit for my account type?!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "my psswrd ws chngd wthout my knwldge", "intent": "ACCOUNT_ACCESS"}
+{"text": "cn i rceive intrntionl trnsfrs to my account?", "intent": "GENERAL_SUPPORT"}
+{"text": "I'm using this chatbot for the first time!!!", "intent": "OTHER"}
+{"text": "my accnt reactivation request has been pending for 2 weeks", "intent": "ACCOUNT_ACCESS"}
+{"text": "Monthly deduction appeared that I never agreed to", "intent": "BILLING_CHARGE"}
+{"text": "i need to actvte my nw crd", "intent": "CARD_ISSUE"}
+{"text": "My mobile app keeps crashing when I try to log in smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "How do I set up auto-debit for bills?", "intent": "GENERAL_SUPPORT"}
+{"text": "I'm having a terrible day!!!", "intent": "OTHER"}
+{"text": "How do I recall a wrongly sent transfer?", "intent": "TRANSFER_PROBLEM"}
+{"text": "A merchant charged me twice and I think one charge is fraudulent", "intent": "FRAUD_DISPUTE"}
+{"text": "how do i access my txn history on ussd?", "intent": "GENERAL_SUPPORT"}
+{"text": "Are there charges for using USSD?", "intent": "BILLING_CHARGE"}
+{"text": "I think someone else is logged into my account right now", "intent": "ACCOUNT_ACCESS"}
+{"text": "cn i rstrctre my loan pymnts?", "intent": "LOAN_QUERY"}
+{"text": "Money deducted for transfer but status still shows processing???", "intent": "TRANSFER_PROBLEM"}
+{"text": "My card was rejected at the fuel station today", "intent": "CARD_ISSUE"}
+{"text": "Mobile transfer deducted twice, want one reversed", "intent": "TRANSFER_PROBLEM"}
+{"text": "thre's a dbt frm an intrntionl mrchnt i dn't knw", "intent": "FRAUD_DISPUTE"}
+{"text": "I need to track down where my failed transfer funds went smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "i ws chrgd a fee fr dwnloadng my own bnk sttmnt", "intent": "BILLING_CHARGE"}
+{"text": "i don't have my acct details handy", "intent": "OTHER"}
+{"text": "How do I report a complaint formally????", "intent": "GENERAL_SUPPORT"}
+{"text": "What's the process for adding a co-signatory to my account????", "intent": "GENERAL_SUPPORT"}
+{"text": "I keep getting charged for a service I already cancelled via the app", "intent": "BILLING_CHARGE"}
+{"text": "i recieved a new card but it shows an error when i try to activate", "intent": "CARD_ISSUE"}
+{"text": "I want to know if my transfer of last Thursday went through", "intent": "TRANSFER_PROBLEM"}
+{"text": "How do I calculate my monthly loan installment?!!!", "intent": "LOAN_QUERY"}
+{"text": "I paid for something online and the card was declined but I was charged wtf", "intent": "CARD_ISSUE"}
+{"text": "can you book a ticket for me?", "intent": "OTHER"}
+{"text": "My current account has a fee I didn't know about when I opened it", "intent": "BILLING_CHARGE"}
+{"text": "I see a 'management charge' on my account — I didn't agree to this!!!", "intent": "BILLING_CHARGE"}
+{"text": "Why can't I use my card for subscriptions? smh", "intent": "CARD_ISSUE"}
+{"text": "I saw an ad about instant loans, how does it work?!!", "intent": "LOAN_QUERY"}
+{"text": "A loan repayment was deducted twice this month", "intent": "LOAN_QUERY"}
+{"text": "IMPS transfer not credited after 6 hours wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "What's the process for adding a co-signatory to my account? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "lgn pge keeps tmng out on the wb", "intent": "ACCOUNT_ACCESS"}
+{"text": "not sure if this is the right channel smh", "intent": "OTHER"}
+{"text": "My account is locked after too many login attempts wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "i need to fle a fraud cmplaint", "intent": "FRAUD_DISPUTE"}
+{"text": "i'm being charged for a premium acct i downgraded from", "intent": "BILLING_CHARGE"}
+{"text": "My card started declining after I reported an issue last week", "intent": "CARD_ISSUE"}
+{"text": "Card was used after I reported it lost — that's fraud right?", "intent": "FRAUD_DISPUTE"}
+{"text": "cn't sgn in on mble or wb — bth failng", "intent": "ACCOUNT_ACCESS"}
+{"text": "thanks bye", "intent": "OTHER"}
+{"text": "I want to report suspicious activity before more money disappears", "intent": "FRAUD_DISPUTE"}
+{"text": "The app is asking me to do KYC again but I completed it already omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "There's a recurring small deduction I didn't authorize — fee or fraud? smh", "intent": "BILLING_CHARGE"}
+{"text": "What is the daily transaction limit for my account type?", "intent": "GENERAL_SUPPORT"}
+{"text": "Card rejected twice at the ATM just now", "intent": "CARD_ISSUE"}
+{"text": "How much can I borrow based on my income?!!!", "intent": "LOAN_QUERY"}
+{"text": "nthng in prtclr", "intent": "OTHER"}
+{"text": "How do I link my account to a payment app?", "intent": "GENERAL_SUPPORT"}
+{"text": "My ATM card was used somewhere I've never been", "intent": "FRAUD_DISPUTE"}
+{"text": "I want to print my account statement for the last 3 months", "intent": "GENERAL_SUPPORT"}
+{"text": "please ignore this", "intent": "OTHER"}
+{"text": "cn i gt a loan if i already hve one wth anthr bnk?", "intent": "LOAN_QUERY"}
+{"text": "i wnt to chck the stts of my loan applction", "intent": "LOAN_QUERY"}
+{"text": "my loan applction ws rjctd, why?", "intent": "LOAN_QUERY"}
+{"text": "an unknown device logged into my acct and made transfers", "intent": "FRAUD_DISPUTE"}
+{"text": "please freeze my account, i thnk it's been cmprmsd", "intent": "FRAUD_DISPUTE"}
+{"text": "Two-factor authentication code is not arriving!!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "Login fails and card declined at the same time omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "There's a subscription fee deducted that I want to dispute!!!", "intent": "BILLING_CHARGE"}
+{"text": "let me get back to you on this!!", "intent": "OTHER"}
+{"text": "jst chckng", "intent": "OTHER"}
+{"text": "Is there a penalty for early loan repayment?", "intent": "LOAN_QUERY"}
+{"text": "mny lft my account bt the rcpient sys thy gt nthng", "intent": "FRAUD_DISPUTE"}
+{"text": "accnt access restricted after failed login attempts", "intent": "ACCOUNT_ACCESS"}
+{"text": "I need to report something not related to my account smh", "intent": "OTHER"}
+{"text": "Can I pay off my loan early? omg", "intent": "LOAN_QUERY"}
+{"text": "My virtual card stopped working after the app update???", "intent": "CARD_ISSUE"}
+{"text": "I need a reference number for a transaction I did last week smh", "intent": "GENERAL_SUPPORT"}
+{"text": "My account is fine but the app won't let me in — server error?", "intent": "ACCOUNT_ACCESS"}
+{"text": "I am disputing a charge that appeared on my account after a data breach notification", "intent": "FRAUD_DISPUTE"}
+{"text": "How does the salary-deduction loan repayment work? smh", "intent": "LOAN_QUERY"}
+{"text": "I'm disputing a service charge I don't recognize on my statement!!", "intent": "BILLING_CHARGE"}
+{"text": "Can I have a zero-balance account? omg", "intent": "GENERAL_SUPPORT"}
+{"text": "I need two cards for my account — is that possible?", "intent": "CARD_ISSUE"}
+{"text": "How do I register my card for secure online payments? smh", "intent": "CARD_ISSUE"}
+{"text": "Tap to pay not working on my card!!!", "intent": "CARD_ISSUE"}
+{"text": "Transaction fee was applied incorrectly on my account!!", "intent": "BILLING_CHARGE"}
+{"text": "someone did a remote access transaction on my acct", "intent": "FRAUD_DISPUTE"}
+{"text": "the app keeps syng invld crdntials evn wth crrct psswrd", "intent": "ACCOUNT_ACCESS"}
+{"text": "I made a transfer to the wrong account!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "My account shows as inactive — I haven't used it in a while!!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "What is the difference between a term loan and a revolving facility????", "intent": "LOAN_QUERY"}
+{"text": "how do i dispute a txn on the app?", "intent": "GENERAL_SUPPORT"}
+{"text": "is thre a wy to rdce or waive my mnthly account fees?", "intent": "BILLING_CHARGE"}
+{"text": "Transfer took 2 days to arrive — I want to know why", "intent": "TRANSFER_PROBLEM"}
+{"text": "What is NIN linking and how do I do it?!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "the interest rate on my current accnt deductions is too high", "intent": "BILLING_CHARGE"}
+{"text": "i wnt a breakdwn of all chrgs on my account ths mnth", "intent": "BILLING_CHARGE"}
+{"text": "My card was rejected at POS even though I have balance!!!", "intent": "CARD_ISSUE"}
+{"text": "Wrong PIN locked both my card and my account", "intent": "ACCOUNT_ACCESS"}
+{"text": "I entered the wrong PIN three times at an ATM and now I'm stuck!!!", "intent": "CARD_ISSUE"}
+{"text": "I have a complaint about a customer service interaction", "intent": "GENERAL_SUPPORT"}
+{"text": "A merchant charged me twice and I think one charge is fraudulent!!!", "intent": "FRAUD_DISPUTE"}
+{"text": "I need to report that someone is using my identity to access my account omg", "intent": "FRAUD_DISPUTE"}
+{"text": "my old crd exprd and the nw one doesn't arrve fr anthr week", "intent": "CARD_ISSUE"}
+{"text": "How do I recall a wrongly sent transfer? wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "hllo", "intent": "OTHER"}
+{"text": "I want to reactivate a dormant account", "intent": "ACCOUNT_ACCESS"}
+{"text": "trnsfr wnt out bt no one on the othr end rceivd it — smlls lke fraud", "intent": "FRAUD_DISPUTE"}
+{"text": "I was double-billed for the same service smh", "intent": "BILLING_CHARGE"}
+{"text": "my crd ws rjctd at ps evn though i hve blnce", "intent": "CARD_ISSUE"}
+{"text": "My biometric login stopped working after the update!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "OTP not received on my phone omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "I want to make a suggestion to the bank smh", "intent": "OTHER"}
+{"text": "i snt mny via ussd and it dbtd me bt ddn't arrve", "intent": "TRANSFER_PROBLEM"}
+{"text": "Sent money via the app and it said 'under review' — what does that mean? smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "How do I set up a savings goal on the app?", "intent": "GENERAL_SUPPORT"}
+{"text": "👍???", "intent": "OTHER"}
+{"text": "I'm locked out of my account, please help!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "Card transaction limit is too low, how do I increase it?!!", "intent": "CARD_ISSUE"}
+{"text": "Why is there a deduction every first of the month? omg", "intent": "BILLING_CHARGE"}
+{"text": "My loan offer expired before I could accept it", "intent": "LOAN_QUERY"}
+{"text": "I was double-billed for the same service???", "intent": "BILLING_CHARGE"}
+{"text": "I see a debit that looks like a transfer I didn't initiate!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "OTP not received on my phone smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "can i open a joint accnt?", "intent": "GENERAL_SUPPORT"}
+{"text": "I received a new card but it shows an error when I try to activate smh", "intent": "CARD_ISSUE"}
+{"text": "I need emergency cash but my card is blocked — what do I do? omg", "intent": "CARD_ISSUE"}
+{"text": "please cnnct me to cstmr cre", "intent": "OTHER"}
+{"text": "Do you have any zero-interest loan promotions?!!", "intent": "LOAN_QUERY"}
+{"text": "How do I set a spending limit on my account? wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "please call me", "intent": "OTHER"}
+{"text": "i ws dbtd fr a faild trnsction — why am i being chrgd?", "intent": "BILLING_CHARGE"}
+{"text": "Unauthorized debit on my account last night", "intent": "FRAUD_DISPUTE"}
+{"text": "i see a 'mngmnt chrge' on my account — i ddn't agree to ths", "intent": "BILLING_CHARGE"}
+{"text": "not an issue just want to chat!!", "intent": "OTHER"}
+{"text": "everything is fine actually!!", "intent": "OTHER"}
+{"text": "The fee structure on my account changed without any communication wtf", "intent": "BILLING_CHARGE"}
+{"text": "Forgot my card PIN, how do I reset it?", "intent": "CARD_ISSUE"}
+{"text": "i wnt to knw wht the 'othr chrgs' lne itm is on my sttmnt", "intent": "BILLING_CHARGE"}
+{"text": "My account is showing a debit I cannot account for smh", "intent": "FRAUD_DISPUTE"}
+{"text": "My bank card payment keeps timing out at online checkout", "intent": "CARD_ISSUE"}
+{"text": "morning boss", "intent": "OTHER"}
+{"text": "Login page keeps timing out on the web omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "cn i opn an account wthout vstng a brnch?", "intent": "GENERAL_SUPPORT"}
+{"text": "What are your customer service hours? wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "I need to activate my new card", "intent": "CARD_ISSUE"}
+{"text": "Transfer is stuck in pending since yesterday", "intent": "TRANSFER_PROBLEM"}
+{"text": "i need to dispute a late payment fee applied to my acnt", "intent": "BILLING_CHARGE"}
+{"text": "Extra loan fee was charged that I didn't expect wtf", "intent": "LOAN_QUERY"}
+{"text": "I want to trace a missing transfer from 2 days ago smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "How do I set up auto-debit for bills?!!", "intent": "GENERAL_SUPPORT"}
+{"text": "I'm being charged for a premium account I downgraded from", "intent": "BILLING_CHARGE"}
+{"text": "Fingerprint login not working on mobile app smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "i ws blld fr a srvce i cnclld lst mnth", "intent": "BILLING_CHARGE"}
+{"text": "When will my loan application be reviewed? smh", "intent": "LOAN_QUERY"}
+{"text": "Device authorization is not going through omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "there's a debit that happen after i requested account closure", "intent": "FRAUD_DISPUTE"}
+{"text": "NEFT payment sent yesterday hasn't credited beneficiary!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "i want to dispute a loan-related charge on my acnt", "intent": "LOAN_QUERY"}
+{"text": "I need to cancel a pending transfer!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "i need a rfrnce lttr frm my bnk", "intent": "GENERAL_SUPPORT"}
+{"text": "what else can you help me with?", "intent": "OTHER"}
+{"text": "I want to update my contact details on the account", "intent": "GENERAL_SUPPORT"}
+{"text": "i've been trying to log in for 2 days — ntn works", "intent": "ACCOUNT_ACCESS"}
+{"text": "I travel next week, how do I unlock international card use????", "intent": "CARD_ISSUE"}
+{"text": "The 'forgot password' link on the web doesn't work!!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "How do I get an account confirmation letter? wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "When will my loan application be reviewed? wtf", "intent": "LOAN_QUERY"}
+{"text": "A loan repayment was deducted twice this month wtf", "intent": "LOAN_QUERY"}
+{"text": "After changing my password my card stopped working too", "intent": "CARD_ISSUE"}
+{"text": "I don't understand why I'm paying two different service fees", "intent": "BILLING_CHARGE"}
+{"text": "NEFT payment sent yesterday hasn't credited beneficiary???", "intent": "TRANSFER_PROBLEM"}
+{"text": "i ws chrgd a fee fr an intrntionl crd trnsction i dclnd", "intent": "BILLING_CHARGE"}
+{"text": "When will my loan application be reviewed?!!!", "intent": "LOAN_QUERY"}
+{"text": "can you help me find a restaurant?!!", "intent": "OTHER"}
+{"text": "how do i update my bvn on my acnt?", "intent": "GENERAL_SUPPORT"}
+{"text": "I want to learn about your investment products omg", "intent": "GENERAL_SUPPORT"}
+{"text": "Can I open a joint account?", "intent": "GENERAL_SUPPORT"}
+{"text": "i can see my acct on web but not on mobile app", "intent": "ACCOUNT_ACCESS"}
+{"text": "hw do i gt a bnk vrfction nmbr?", "intent": "GENERAL_SUPPORT"}
+{"text": "I can see my account on web but not on mobile app smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "The SMS verification code never comes when I request it wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "cn i gt a physcl crd if i only hve a vrtual one?", "intent": "CARD_ISSUE"}
+{"text": "my bnk sttmnt shws an entry lbld 'mscllneous fee' — wht is it?", "intent": "BILLING_CHARGE"}
+{"text": "I need an emergency loan today urgently omg", "intent": "LOAN_QUERY"}
+{"text": "I sent money to an expired account number, please recall", "intent": "TRANSFER_PROBLEM"}
+{"text": "Unrecognized payment from my account via POS", "intent": "FRAUD_DISPUTE"}
+{"text": "I think someone stole my banking details???", "intent": "FRAUD_DISPUTE"}
+{"text": "I want to enable my card for foreign transactions smh", "intent": "CARD_ISSUE"}
+{"text": "I'll sort it out at the branch tomorrow smh", "intent": "OTHER"}
+{"text": "how do i link my nin to my bank acct?", "intent": "GENERAL_SUPPORT"}
+{"text": "i want to print my acct statement for the last 3 months", "intent": "GENERAL_SUPPORT"}
+{"text": "My account was debited an admin fee on the day I closed it omg", "intent": "BILLING_CHARGE"}
+{"text": "Someone initiated a loan using my details — that's fraud", "intent": "FRAUD_DISPUTE"}
+{"text": "i was chargd for a swift transfer that didn't go through", "intent": "BILLING_CHARGE"}
+{"text": "I want to use my property as collateral for a loan smh", "intent": "LOAN_QUERY"}
+{"text": "my accnt verification email never arrived", "intent": "ACCOUNT_ACCESS"}
+{"text": "Unrecognized payment from my account via POS omg", "intent": "FRAUD_DISPUTE"}
+{"text": "How do I switch my account to paperless statements?!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "Card blocked after a suspicious transaction — fraud or card issue? smh", "intent": "CARD_ISSUE"}
+{"text": "I think the transaction charges on my account are wrong", "intent": "BILLING_CHARGE"}
+{"text": "my account reactivation request has been pendin for 2 weeks", "intent": "ACCOUNT_ACCESS"}
+{"text": "aftr chngng my psswrd my crd stppd wrkng too", "intent": "CARD_ISSUE"}
+{"text": "my loan ddction is mre thn the agreed mnthly pymnt", "intent": "LOAN_QUERY"}
+{"text": "Transfer deducted twice for one payment!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "my crd trnsction keeps prmptng fr pn evn fr smll amounts", "intent": "CARD_ISSUE"}
+{"text": "bnfciary account clsd bt i stll snt mny thre", "intent": "TRANSFER_PROBLEM"}
+{"text": "I have a general question with no specific urgency!!", "intent": "OTHER"}
+{"text": "My card is showing as invalid when I try to pay online wtf", "intent": "CARD_ISSUE"}
+{"text": "trnsfr ws queued bt nvr exctd", "intent": "TRANSFER_PROBLEM"}
+{"text": "Card declined for international transactions wtf", "intent": "CARD_ISSUE"}
+{"text": "My card limit was reduced without notice!!", "intent": "CARD_ISSUE"}
+{"text": "i received no prior notice before fees were deducted from my acct", "intent": "BILLING_CHARGE"}
+{"text": "My card was cloned I think, please block and reissue smh", "intent": "CARD_ISSUE"}
+{"text": "There's a subscription fee deducted that I want to dispute!!", "intent": "BILLING_CHARGE"}
+{"text": "My recurring automatic transfer failed this week wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "I want to speak to a human agent!!", "intent": "OTHER"}
+{"text": "can I talk to a real human please? wtf", "intent": "OTHER"}
+{"text": "I was referred here by a friend", "intent": "OTHER"}
+{"text": "Transfer reversal not processed after 48 hours!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "I want to speak with the manager omg", "intent": "OTHER"}
+{"text": "My card was cloned I think, please block and reissue!!", "intent": "CARD_ISSUE"}
+{"text": "The loan app on your platform keeps giving an error when I apply wtf", "intent": "LOAN_QUERY"}
+{"text": "The app keeps saying invalid credentials even with correct password wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "crd dclnd thn an unknwn chrge appeard on my account", "intent": "CARD_ISSUE"}
+{"text": "I want to know my outstanding loan amount!!!", "intent": "LOAN_QUERY"}
+{"text": "My account was deactivated after inactivity", "intent": "ACCOUNT_ACCESS"}
+{"text": "I recently moved and the card was delivered to my old address omg", "intent": "CARD_ISSUE"}
+{"text": "OTP not received on my phone???", "intent": "ACCOUNT_ACCESS"}
+{"text": "I don't understand this service charge on my statement", "intent": "BILLING_CHARGE"}
+{"text": "My mobile app keeps crashing when I try to log in", "intent": "ACCOUNT_ACCESS"}
+{"text": "I can't use my card for online payments wtf", "intent": "CARD_ISSUE"}
+{"text": "How do I generate a mini statement via USSD? wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "I don't know what the problem is yet omg", "intent": "OTHER"}
+{"text": "My account was hacked and money is missing!!", "intent": "FRAUD_DISPUTE"}
+{"text": "wht knds of loans do you offr?", "intent": "LOAN_QUERY"}
+{"text": "i sw an ad about instnt loans, hw does it wrk?", "intent": "LOAN_QUERY"}
+{"text": "I applied for a small business loan 2 weeks ago with no feedback", "intent": "LOAN_QUERY"}
+{"text": "I want to make a suggestion to the bank???", "intent": "OTHER"}
+{"text": "I'm questioning the interest calculation on my account deductions", "intent": "BILLING_CHARGE"}
+{"text": "my account is fne bt the app wn't lt me in — srvr errr?", "intent": "ACCOUNT_ACCESS"}
+{"text": "i wnt a rfnd fr a srvce chrge tht ws applied in errr", "intent": "BILLING_CHARGE"}
+{"text": "I transferred to myself across two of my own accounts and it didn't credit", "intent": "TRANSFER_PROBLEM"}
+{"text": "What's the interest rate on your personal loans?", "intent": "LOAN_QUERY"}
+{"text": "how do i download my accnt statement?", "intent": "GENERAL_SUPPORT"}
+{"text": "I have multiple issues, not sure where to start", "intent": "OTHER"}
+{"text": "How do I add a co-borrower to my existing loan?", "intent": "LOAN_QUERY"}
+{"text": "my account is shwng trnsctions i ddn't do ovr the pst week", "intent": "FRAUD_DISPUTE"}
+{"text": "I subscribed but was billed the wrong amount???", "intent": "BILLING_CHARGE"}
+{"text": "good morning wtf", "intent": "OTHER"}
+{"text": "My banking app was uninstalled by mistake — how to reinstall and regain access?", "intent": "ACCOUNT_ACCESS"}
+{"text": "otp nt rceivd on my phne", "intent": "ACCOUNT_ACCESS"}
+{"text": "The transfer receipt shows successful but bank denies credit smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "how do i recover my acct if i can't access my old phone?", "intent": "ACCOUNT_ACCESS"}
+{"text": "smeone usd my crd wthout my prmssion", "intent": "FRAUD_DISPUTE"}
+{"text": "hw do i rcll a wrngly snt trnsfr?", "intent": "TRANSFER_PROBLEM"}
+{"text": "I've repaid the loan in full, when will my account be updated?", "intent": "LOAN_QUERY"}
+{"text": "I think there's an error in how my service charges are computed", "intent": "BILLING_CHARGE"}
+{"text": "The mobile app update broke my login — it won't accept my password omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "i ws chrgd mre thn the advrtsd rte fr trnsfrs", "intent": "BILLING_CHARGE"}
+{"text": "I was approved but the loan amount was lower than requested smh", "intent": "LOAN_QUERY"}
+{"text": "I changed my phone number and now I can't get OTP???", "intent": "ACCOUNT_ACCESS"}
+{"text": "My account was hacked and money is missing", "intent": "FRAUD_DISPUTE"}
+{"text": "i wnt to tmprrly sspnd my crd whle trvlng", "intent": "CARD_ISSUE"}
+{"text": "My account was debited an admin fee on the day I closed it", "intent": "BILLING_CHARGE"}
+{"text": "I want to apply for a student loan wtf", "intent": "LOAN_QUERY"}
+{"text": "I want to update my contact details on the account!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "i'm nw to the app, hw do i do a trnsfr?", "intent": "GENERAL_SUPPORT"}
+{"text": "I sent the exact amount but recipient says they got less — possible fee deduction?", "intent": "TRANSFER_PROBLEM"}
+{"text": "account accssd frm a nw lction i dn't rcgnze", "intent": "ACCOUNT_ACCESS"}
+{"text": "Account suspended, how do I get it back? wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "I already have a loan, can I top it up? wtf", "intent": "LOAN_QUERY"}
+{"text": "confirmation sms said successful but beneficiary has ntn", "intent": "TRANSFER_PROBLEM"}
+{"text": "I received no prior notice before fees were deducted from my account omg", "intent": "BILLING_CHARGE"}
+{"text": "I want to refinance my current loan wtf", "intent": "LOAN_QUERY"}
+{"text": "My transfer disappeared and I'm not sure if it was fraud or a tech issue", "intent": "TRANSFER_PROBLEM"}
+{"text": "My login history shows a successful sign-in I don't recognize", "intent": "ACCOUNT_ACCESS"}
+{"text": "I can't access my account and my card is also blocked smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "This company charged me but I cancelled the order weeks ago", "intent": "FRAUD_DISPUTE"}
+{"text": "How do I access my transaction history on USSD?!!", "intent": "GENERAL_SUPPORT"}
+{"text": "What is the daily transaction limit for my account type? wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "i wnt to vrfy my account fr ussd bnkng", "intent": "GENERAL_SUPPORT"}
+{"text": "My loan statement doesn't match my expectations!!", "intent": "LOAN_QUERY"}
+{"text": "hw does intrbnk trnsfr wrk?", "intent": "TRANSFER_PROBLEM"}
+{"text": "Transfer deducted twice for one payment", "intent": "TRANSFER_PROBLEM"}
+{"text": "What is your bank's SWIFT code?!!", "intent": "GENERAL_SUPPORT"}
+{"text": "How do I apply for services on your platform?!!", "intent": "GENERAL_SUPPORT"}
+{"text": "Are there charges for using USSD? wtf", "intent": "BILLING_CHARGE"}
+{"text": "What is the interest rate on savings accounts?", "intent": "GENERAL_SUPPORT"}
+{"text": "my vrtual crd stppd wrkng aftr the app updte", "intent": "CARD_ISSUE"}
+{"text": "I want to increase my loan amount mid-term — is that possible?!!", "intent": "LOAN_QUERY"}
+{"text": "I need a new PIN for my card", "intent": "CARD_ISSUE"}
+{"text": "I'm locked out of my account, please help omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "i'm locked out of my account, plz help", "intent": "ACCOUNT_ACCESS"}
+{"text": "account lckd aftr wrng pn, nw crd is rjctd", "intent": "CARD_ISSUE"}
+{"text": "i wnt to sttle my loan in a lmp sm — is thre a dscount?", "intent": "LOAN_QUERY"}
+{"text": "My card hasn't arrived yet — it's been 2 weeks???", "intent": "CARD_ISSUE"}
+{"text": "My loan application was rejected, why?", "intent": "LOAN_QUERY"}
+{"text": "I need a statement of my loan repayment history!!", "intent": "LOAN_QUERY"}
+{"text": "What are your available banking products?", "intent": "GENERAL_SUPPORT"}
+{"text": "I missed a loan repayment, what happens now? omg", "intent": "LOAN_QUERY"}
+{"text": "how do i link my acct to a payment app?", "intent": "GENERAL_SUPPORT"}
+{"text": "I want to dispute a transaction from a vendor I've never dealt with???", "intent": "FRAUD_DISPUTE"}
+{"text": "Unauthorized debit on my account last night smh", "intent": "FRAUD_DISPUTE"}
+{"text": "I've been on hold for 30 minutes!!", "intent": "OTHER"}
+{"text": "What happens to my account if I pass away?!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "Transfer limit exceeded error even though I'm within my daily limit wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "i need my account sttmnt fr vsa prpss", "intent": "GENERAL_SUPPORT"}
+{"text": "can you book a ticket for me????", "intent": "OTHER"}
+{"text": "What are the limits for USSD transfers?!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "I want to enable my card for foreign transactions!!", "intent": "CARD_ISSUE"}
+{"text": "I'm new to the app, how do I do a transfer?", "intent": "GENERAL_SUPPORT"}
+{"text": "I want to know about your foreign currency accounts smh", "intent": "GENERAL_SUPPORT"}
+{"text": "How do I set up a savings goal on the app????", "intent": "GENERAL_SUPPORT"}
+{"text": "are you a robot?!!", "intent": "OTHER"}
+{"text": "helo hw r u", "intent": "OTHER"}
+{"text": "i ws rfrrd hre by a friend", "intent": "OTHER"}
+{"text": "unxpctd dbt on my account — could be fraud or bllng errr", "intent": "FRAUD_DISPUTE"}
+{"text": "Can I get a loan if I already have one with another bank?", "intent": "LOAN_QUERY"}
+{"text": "my slry account is shwng ddctions i ddn't agree to", "intent": "BILLING_CHARGE"}
+{"text": "Account locked after wrong PIN, now card is rejected omg", "intent": "CARD_ISSUE"}
+{"text": "I need to verify my identity to unlock my account???", "intent": "ACCOUNT_ACCESS"}
+{"text": "I want to reset my security questions wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "i already hve a loan, cn i tp it up?", "intent": "LOAN_QUERY"}
+{"text": "i need to vrfy my idntty to unlck my account", "intent": "ACCOUNT_ACCESS"}
+{"text": "i need to report that someone is using my identity to access my acnt", "intent": "FRAUD_DISPUTE"}
+{"text": "Sent money at midnight and still processing this morning wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "hw do i rprt a cmplaint frmlly?", "intent": "GENERAL_SUPPORT"}
+{"text": "Transfer deducted twice for one payment omg", "intent": "TRANSFER_PROBLEM"}
+{"text": "i'm questioning the interest calculation on my acnt deductions", "intent": "BILLING_CHARGE"}
+{"text": "I want to split my account into different sub-accounts", "intent": "GENERAL_SUPPORT"}
+{"text": "I need to flag a transaction as fraudulent", "intent": "FRAUD_DISPUTE"}
+{"text": "Fraud on my account please help urgently omg", "intent": "FRAUD_DISPUTE"}
+{"text": "Can I have a zero-balance account?", "intent": "GENERAL_SUPPORT"}
+{"text": "nvm forget it", "intent": "OTHER"}
+{"text": "card blocked after a suspicous trasaction — fraud or card issue?", "intent": "CARD_ISSUE"}
+{"text": "Card getting declined since yesterday morning omg", "intent": "CARD_ISSUE"}
+{"text": "Transfer deducted in stages for one single payment omg", "intent": "TRANSFER_PROBLEM"}
+{"text": "A debit alert came through at 3am — I was asleep and didn't do it!!!", "intent": "FRAUD_DISPUTE"}
+{"text": "crd stppd wrkng rght aftr a sftwre updte", "intent": "CARD_ISSUE"}
+{"text": "My card started declining after I reported an issue last week???", "intent": "CARD_ISSUE"}
+{"text": "I never got an OTP but my card was used online!!", "intent": "CARD_ISSUE"}
+{"text": "Someone initiated a loan using my details — that's fraud!!!", "intent": "FRAUD_DISPUTE"}
+{"text": "i thnk my account ws usd by smeone in a dffrnt country", "intent": "FRAUD_DISPUTE"}
+{"text": "Card blocked after a suspicious transaction — fraud or card issue?", "intent": "CARD_ISSUE"}
+{"text": "hw does the slry-ddction loan rpymnt wrk?", "intent": "LOAN_QUERY"}
+{"text": "my acnt reactivation request has been pending for 2 weeks", "intent": "ACCOUNT_ACCESS"}
+{"text": "i need to report something not related to my acnt", "intent": "OTHER"}
+{"text": "I can't access my account and my card is also not working???", "intent": "CARD_ISSUE"}
+{"text": "i want to upgrade my acct tier", "intent": "GENERAL_SUPPORT"}
+{"text": "My token device isn't generating codes anymore", "intent": "ACCOUNT_ACCESS"}
+{"text": "the chrge fr csh dpsts seems hghr thn bfre", "intent": "BILLING_CHARGE"}
+{"text": "I paid for something online and the card was declined but I was charged", "intent": "CARD_ISSUE"}
+{"text": "i need a nw pn fr my crd", "intent": "CARD_ISSUE"}
+{"text": "fingerprint login nor working on mobile app", "intent": "ACCOUNT_ACCESS"}
+{"text": "A merchant charged me twice and I think one charge is fraudulent???", "intent": "FRAUD_DISPUTE"}
+{"text": "i need a loan fr bsnss prpss", "intent": "LOAN_QUERY"}
+{"text": "wht are your cstmr srvce hours?", "intent": "GENERAL_SUPPORT"}
+{"text": "I want to split my account into different sub-accounts!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "I saw an ad about instant loans, how does it work?!!!", "intent": "LOAN_QUERY"}
+{"text": "i wnt to knw about your cshbck prgrm", "intent": "GENERAL_SUPPORT"}
+{"text": "do you have an app for iOS?", "intent": "OTHER"}
+{"text": "I need a statement of my loan repayment history", "intent": "LOAN_QUERY"}
+{"text": "My business account had a large unauthorized debit this morning", "intent": "FRAUD_DISPUTE"}
+{"text": "i ws chrgd a stmp dty i wnt to undrstnd", "intent": "BILLING_CHARGE"}
+{"text": "How does interbank transfer work? wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "can I rate my experience? wtf", "intent": "OTHER"}
+{"text": "My card transaction keeps prompting for PIN even for small amounts omg", "intent": "CARD_ISSUE"}
+{"text": "chrgs on my bsnss account are nt mtchng the agreed trff", "intent": "BILLING_CHARGE"}
+{"text": "Card rejected twice at the ATM just now omg", "intent": "CARD_ISSUE"}
+{"text": "i want to report suspicious activity b4 more money disappears", "intent": "FRAUD_DISPUTE"}
+{"text": "Unauthorized debit on my account last night???", "intent": "FRAUD_DISPUTE"}
+{"text": "I was charged something and want to know if it's a fee or fraudulent", "intent": "BILLING_CHARGE"}
+{"text": "i lst my phne wth the bnkng app — hw do i rvke accss?", "intent": "ACCOUNT_ACCESS"}
+{"text": "A debit alert came through at 3am — I was asleep and didn't do it", "intent": "FRAUD_DISPUTE"}
+{"text": "Can I get a loan against my salary? omg", "intent": "LOAN_QUERY"}
+{"text": "i see a debit that looks like a transfr i didn't initiate", "intent": "TRANSFER_PROBLEM"}
+{"text": "My account profile doesn't load after I sign in wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "I need to cancel a pending transfer", "intent": "TRANSFER_PROBLEM"}
+{"text": "I'm not sure what I want", "intent": "OTHER"}
+{"text": "My card PIN is blocked after 3 wrong attempts smh", "intent": "CARD_ISSUE"}
+{"text": "snt mny to wrng nme, please hlp rvrse", "intent": "TRANSFER_PROBLEM"}
+{"text": "I need a statement of my pending transfers omg", "intent": "TRANSFER_PROBLEM"}
+{"text": "my fnds wre stln frm my account", "intent": "FRAUD_DISPUTE"}
+{"text": "i'm disputing a service charg i don't recognize on my statement", "intent": "BILLING_CHARGE"}
+{"text": "I want to upgrade from a debit card to a credit card???", "intent": "CARD_ISSUE"}
+{"text": "my stndng ordr trnsfr dd nt excte ths mnth", "intent": "TRANSFER_PROBLEM"}
+{"text": "the mobile app shows transfer successful but money not rcvd", "intent": "TRANSFER_PROBLEM"}
+{"text": "Transfer deducted in stages for one single payment???", "intent": "TRANSFER_PROBLEM"}
+{"text": "my transfr has been pending for 3 hours", "intent": "TRANSFER_PROBLEM"}
+{"text": "this is urgent!!!!", "intent": "OTHER"}
+{"text": "i ws double-blld fr the sme srvce", "intent": "BILLING_CHARGE"}
+{"text": "I ordered a new card last month but haven't received it!!", "intent": "CARD_ISSUE"}
+{"text": "do you chrge fr intrntionl trnsfrs?", "intent": "BILLING_CHARGE"}
+{"text": "my crd is dmgd and nt readng at trmnls", "intent": "CARD_ISSUE"}
+{"text": "Login page keeps timing out on the web???", "intent": "ACCOUNT_ACCESS"}
+{"text": "hlp me", "intent": "OTHER"}
+{"text": "I think someone stole my banking details smh", "intent": "FRAUD_DISPUTE"}
+{"text": "I need a statement of my loan repayment history smh", "intent": "LOAN_QUERY"}
+{"text": "International wire sent 5 days ago but not received overseas", "intent": "TRANSFER_PROBLEM"}
+{"text": "My card was rejected at the fuel station today!!!", "intent": "CARD_ISSUE"}
+{"text": "I want to request a replacement card wtf", "intent": "CARD_ISSUE"}
+{"text": "I'm being billed for insurance I never signed up for", "intent": "BILLING_CHARGE"}
+{"text": "My bank statement shows an entry labeled 'miscellaneous fee' — what is it?!!!", "intent": "BILLING_CHARGE"}
+{"text": "There's a suspicious withdrawal I didn't authorize omg", "intent": "FRAUD_DISPUTE"}
+{"text": "sorry wrong window wtf", "intent": "OTHER"}
+{"text": "a mrchnt chrgd me twce and i thnk one chrge is fraudlnt", "intent": "FRAUD_DISPUTE"}
+{"text": "i need hlp rgstrng fr onlne bnkng fr the frst tme", "intent": "ACCOUNT_ACCESS"}
+{"text": "I have multiple issues, not sure where to start smh", "intent": "OTHER"}
+{"text": "my loan accnt shows negative balance — what does that mean?", "intent": "LOAN_QUERY"}
+{"text": "my loan was approved but funds haven't hit my acct after 3 days", "intent": "LOAN_QUERY"}
+{"text": "i ws chrgd a fee fr a bouncd drct dbt tht wsn't my fault", "intent": "BILLING_CHARGE"}
+{"text": "Tap to pay not working on my card", "intent": "CARD_ISSUE"}
+{"text": "i want to know abt your foreign currency accounts", "intent": "GENERAL_SUPPORT"}
+{"text": "i ws blld fr ppr sttmnts evn though i'm on e-sttmnts", "intent": "BILLING_CHARGE"}
+{"text": "How do I generate a mini statement via USSD? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "otp not recieved on my phone", "intent": "ACCOUNT_ACCESS"}
+{"text": "i want to learn abt your investment products", "intent": "GENERAL_SUPPORT"}
+{"text": "thanks bye???", "intent": "OTHER"}
+{"text": "My account is disabled, how do I reactivate it?", "intent": "ACCOUNT_ACCESS"}
+{"text": "My current account has a fee I didn't know about when I opened it wtf", "intent": "BILLING_CHARGE"}
+{"text": "I want to print my account statement for the last 3 months smh", "intent": "GENERAL_SUPPORT"}
+{"text": "Recipient's bank says they didn't receive the funds I sent omg", "intent": "TRANSFER_PROBLEM"}
+{"text": "Sent money to wrong name, please help reverse wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "What's the difference between a current and savings account?!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "I want to order a premium card, how do I do that?!!", "intent": "CARD_ISSUE"}
+{"text": "My account profile doesn't load after I sign in smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "I need to report that someone is using my identity to access my account", "intent": "FRAUD_DISPUTE"}
+{"text": "why is a nw chrge appearng on my account evry two weeks?", "intent": "BILLING_CHARGE"}
+{"text": "I have proof of transfer but recipient hasn't been credited wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "I did not initiate this USSD transfer wtf", "intent": "FRAUD_DISPUTE"}
+{"text": "International wire sent 5 days ago but not received overseas smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "Why am I being charged a quarterly fee?", "intent": "BILLING_CHARGE"}
+{"text": "Account restricted due to card dispute", "intent": "ACCOUNT_ACCESS"}
+{"text": "my crd shws exprd bt the dte hsn't pssd", "intent": "CARD_ISSUE"}
+{"text": "account sspndd, hw do i gt it bck?", "intent": "ACCOUNT_ACCESS"}
+{"text": "👍 wtf", "intent": "OTHER"}
+{"text": "My account verification email never arrived", "intent": "ACCOUNT_ACCESS"}
+{"text": "My card hasn't arrived yet — it's been 2 weeks smh", "intent": "CARD_ISSUE"}
+{"text": "I entered the correct OTP but the login still fails", "intent": "ACCOUNT_ACCESS"}
+{"text": "trnsfr via ussd faild md-prcss", "intent": "TRANSFER_PROBLEM"}
+{"text": "My loan agreement says one rate but I'm being charged a different rate!!!", "intent": "LOAN_QUERY"}
+{"text": "thank you very much???", "intent": "OTHER"}
+{"text": "I entered the wrong PIN three times at an ATM and now I'm stuck wtf", "intent": "CARD_ISSUE"}
+{"text": "I'm locked out of my account, please help", "intent": "ACCOUNT_ACCESS"}
+{"text": "I want to apply for an overdraft facility omg", "intent": "LOAN_QUERY"}
+{"text": "I have proof of transfer but recipient hasn't been credited!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "crd dclnd fr intrntionl trnsctions", "intent": "CARD_ISSUE"}
+{"text": "send me your email address", "intent": "OTHER"}
+{"text": "I set up a new password but now it says 'incorrect password'", "intent": "ACCOUNT_ACCESS"}
+{"text": "The spending limit on my card resets at midnight but it's not working tonight", "intent": "CARD_ISSUE"}
+{"text": "my current account has a fee i didn't know abt when i opened it", "intent": "BILLING_CHARGE"}
+{"text": "My account was suspended for suspicious activity but it was me!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "Wire transfer pending for too long", "intent": "TRANSFER_PROBLEM"}
+{"text": "My loan was supposed to be disbursed but hasn't arrived!!!", "intent": "LOAN_QUERY"}
+{"text": "What are the steps to send money via USSD????", "intent": "GENERAL_SUPPORT"}
+{"text": "this is a test message???", "intent": "OTHER"}
+{"text": "i can't access my accnt and my card is also not working", "intent": "CARD_ISSUE"}
+{"text": "i see a dbt tht looks lke a trnsfr i ddn't intiate", "intent": "TRANSFER_PROBLEM"}
+{"text": "My old card expired and the new one doesn't arrive for another week", "intent": "CARD_ISSUE"}
+{"text": "i need to rprt tht smeone is usng my idntty to accss my account", "intent": "FRAUD_DISPUTE"}
+{"text": "the app looks dffrnt tdy", "intent": "OTHER"}
+{"text": "i need help disputing a transfr that was rejected but fee was still deducted", "intent": "TRANSFER_PROBLEM"}
+{"text": "IMPS transfer not credited after 6 hours!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "How do I port my salary payment to your bank?!!", "intent": "GENERAL_SUPPORT"}
+{"text": "My transfer disappeared and I'm not sure if it was fraud or a tech issue???", "intent": "TRANSFER_PROBLEM"}
+{"text": "Fingerprint login not working on mobile app", "intent": "ACCOUNT_ACCESS"}
+{"text": "Are there charges for using USSD? omg", "intent": "BILLING_CHARGE"}
+{"text": "I want to use my property as collateral for a loan wtf", "intent": "LOAN_QUERY"}
+{"text": "i want to upgrade my accnt tier", "intent": "GENERAL_SUPPORT"}
+{"text": "i sw an unsual trnsction on ussd mni sttmnt", "intent": "FRAUD_DISPUTE"}
+{"text": "fngrprnt lgn nt wrkng on mble app", "intent": "ACCOUNT_ACCESS"}
+{"text": "I want to know my loan repayment schedule omg", "intent": "LOAN_QUERY"}
+{"text": "Confirmation SMS said successful but beneficiary has nothing!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "I recently moved and the card was delivered to my old address!!", "intent": "CARD_ISSUE"}
+{"text": "How do I get a mortgage from your bank?", "intent": "LOAN_QUERY"}
+{"text": "How do I set up a fixed deposit?", "intent": "GENERAL_SUPPORT"}
+{"text": "How much can I borrow based on my income? smh", "intent": "LOAN_QUERY"}
+{"text": "illgl actvty on my account snce ystrdy", "intent": "FRAUD_DISPUTE"}
+{"text": "what happens to my acct if i pass away?", "intent": "GENERAL_SUPPORT"}
+{"text": "My account was debited while I was on vacation — I made no transactions", "intent": "FRAUD_DISPUTE"}
+{"text": "How does interbank transfer work????", "intent": "TRANSFER_PROBLEM"}
+{"text": "Extra loan fee was charged that I didn't expect", "intent": "LOAN_QUERY"}
+{"text": "you're really helpful!!!", "intent": "OTHER"}
+{"text": "is this the right place to ask my question? smh", "intent": "OTHER"}
+{"text": "I received a loan offer, how do I accept it?!!!", "intent": "LOAN_QUERY"}
+{"text": "i dd nt intiate ths ussd trnsfr", "intent": "FRAUD_DISPUTE"}
+{"text": "Why can't I use my card for subscriptions????", "intent": "CARD_ISSUE"}
+{"text": "wht dcmnts do i need to opn an account?", "intent": "GENERAL_SUPPORT"}
+{"text": "A loan repayment was deducted twice this month smh", "intent": "LOAN_QUERY"}
+{"text": "My salary account is showing deductions I didn't agree to!!", "intent": "BILLING_CHARGE"}
+{"text": "ussd ddctd me and no trnsfr hppnd — could be fraud", "intent": "TRANSFER_PROBLEM"}
+{"text": "i need hlp dsptng a trnsfr tht ws rjctd bt fee ws stll ddctd", "intent": "TRANSFER_PROBLEM"}
+{"text": "There's a charge labeled 'account upgrade' but I didn't upgrade!!!", "intent": "BILLING_CHARGE"}
+{"text": "My card was cloned I think, please block and reissue", "intent": "CARD_ISSUE"}
+{"text": "My card is not working at the POS smh", "intent": "CARD_ISSUE"}
+{"text": "My card was used at a merchant I don't usually shop at — blocked now", "intent": "CARD_ISSUE"}
+{"text": "I applied for a card upgrade 3 weeks ago with no update!!", "intent": "CARD_ISSUE"}
+{"text": "the atm said crd exprd bt the nw one isn't hre yt", "intent": "CARD_ISSUE"}
+{"text": "I saw an unusual transaction on USSD mini statement", "intent": "FRAUD_DISPUTE"}
+{"text": "I want a refund for a service charge that was applied in error", "intent": "BILLING_CHARGE"}
+{"text": "I want to talk to someone", "intent": "OTHER"}
+{"text": "I accidentally transferred to a closed account", "intent": "TRANSFER_PROBLEM"}
+{"text": "I'm trying to do a real-time payment but it keeps failing???", "intent": "TRANSFER_PROBLEM"}
+{"text": "I'd like to send feedback about the app design", "intent": "OTHER"}
+{"text": "I set up a new password but now it says 'incorrect password'!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "i wnt to prvde feedbck about my exprience", "intent": "GENERAL_SUPPORT"}
+{"text": "I want to know what the 'other charges' line item is on my statement smh", "intent": "BILLING_CHARGE"}
+{"text": "How much can I borrow based on my income? omg", "intent": "LOAN_QUERY"}
+{"text": "A debit alert came through at 3am — I was asleep and didn't do it???", "intent": "FRAUD_DISPUTE"}
+{"text": "hello", "intent": "OTHER"}
+{"text": "smeone trnsfrrd mny out of my account ths mrnng", "intent": "FRAUD_DISPUTE"}
+{"text": "i saw an unusual txn on ussd mini statement", "intent": "FRAUD_DISPUTE"}
+{"text": "i gt an alrt fr a trnsction i dd nt do", "intent": "FRAUD_DISPUTE"}
+{"text": "I need an emergency loan today urgently???", "intent": "LOAN_QUERY"}
+{"text": "lol ok", "intent": "OTHER"}
+{"text": "I want to activate SMS banking", "intent": "GENERAL_SUPPORT"}
+{"text": "i applied fr a pydy loan and wnt to knw whn it wll be prcssd", "intent": "LOAN_QUERY"}
+{"text": "whn is my nxt loan rpymnt due?", "intent": "LOAN_QUERY"}
+{"text": "i need to report something not related to my acct", "intent": "OTHER"}
+{"text": "My card was declined and then I got a fraud alert right after!!!", "intent": "CARD_ISSUE"}
+{"text": "I got an alert for a transaction I did not do smh", "intent": "FRAUD_DISPUTE"}
+{"text": "dis app is fine sha", "intent": "OTHER"}
+{"text": "My contactless card was used without me tapping it smh", "intent": "FRAUD_DISPUTE"}
+{"text": "wht is the intrst rte on svngs accounts?", "intent": "GENERAL_SUPPORT"}
+{"text": "I need an emergency loan today", "intent": "LOAN_QUERY"}
+{"text": "I was charged a maintenance fee I didn't expect", "intent": "BILLING_CHARGE"}
+{"text": "Charges on my business account are not matching the agreed tariff", "intent": "BILLING_CHARGE"}
+{"text": "I'm trying to do a real-time payment but it keeps failing smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "I want to activate SMS banking!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "it's not a big deal actually", "intent": "OTHER"}
+{"text": "I see a debit that looks like a transfer I didn't initiate wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "i want to activate my acnt again", "intent": "ACCOUNT_ACCESS"}
+{"text": "my acnt is disabled, how do i reactivate it?", "intent": "ACCOUNT_ACCESS"}
+{"text": "My loan was supposed to be disbursed but hasn't arrived smh", "intent": "LOAN_QUERY"}
+{"text": "I need a taxi", "intent": "OTHER"}
+{"text": "i'd like to send feedback abt the app design", "intent": "OTHER"}
+{"text": "transfer to anorher bank failed, money nor returned", "intent": "TRANSFER_PROBLEM"}
+{"text": "I was referred here by a friend omg", "intent": "OTHER"}
+{"text": "I see a transaction I never made omg", "intent": "FRAUD_DISPUTE"}
+{"text": "I applied for a car loan, what's the status?", "intent": "LOAN_QUERY"}
+{"text": "There's a login from an unknown device on my account???", "intent": "ACCOUNT_ACCESS"}
+{"text": "i want to activate my acct again", "intent": "ACCOUNT_ACCESS"}
+{"text": "cn i hve mltple accounts?", "intent": "GENERAL_SUPPORT"}
+{"text": "hw mch is the mnthly maintnnce fee fr my account?", "intent": "BILLING_CHARGE"}
+{"text": "My transfer disappeared and I'm not sure if it was fraud or a tech issue smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "I need help but not sure with what", "intent": "OTHER"}
+{"text": "i want to enable my card for foreign trasactions", "intent": "CARD_ISSUE"}
+{"text": "Are there charges for using USSD?!!", "intent": "BILLING_CHARGE"}
+{"text": "are you a robot? smh", "intent": "OTHER"}
+{"text": "My statement shows a VAT charge I wasn't informed about", "intent": "BILLING_CHARGE"}
+{"text": "does my svngs hstry affct loan elgblty?", "intent": "LOAN_QUERY"}
+{"text": "the mble app updte brke my lgn — it wn't accpt my psswrd", "intent": "ACCOUNT_ACCESS"}
+{"text": "??", "intent": "OTHER"}
+{"text": "The mobile app update broke my login — it won't accept my password", "intent": "ACCOUNT_ACCESS"}
+{"text": "I want to make a suggestion to the bank!!", "intent": "OTHER"}
+{"text": "what is the process for changing my acnt name after marriage?", "intent": "GENERAL_SUPPORT"}
+{"text": "My card was rejected at the fuel station today???", "intent": "CARD_ISSUE"}
+{"text": "forget it I'll figure it out", "intent": "OTHER"}
+{"text": "I need to update my phone number for OTP???", "intent": "ACCOUNT_ACCESS"}
+{"text": "my biomtrc lgn stppd wrkng aftr the updte", "intent": "ACCOUNT_ACCESS"}
+{"text": "My salary transfer to staff failed today", "intent": "TRANSFER_PROBLEM"}
+{"text": "ok nah", "intent": "OTHER"}
+{"text": "What is the difference between a term loan and a revolving facility?!!", "intent": "LOAN_QUERY"}
+{"text": "snt mny via the app and it said 'undr rview' — wht does tht mean?", "intent": "TRANSFER_PROBLEM"}
+{"text": "please freeze my acct, i think it's been compromised", "intent": "FRAUD_DISPUTE"}
+{"text": "I want to know about your cashback program omg", "intent": "GENERAL_SUPPORT"}
+{"text": "My account was suspended for suspicious activity but it was me", "intent": "ACCOUNT_ACCESS"}
+{"text": "I see a 'management charge' on my account — I didn't agree to this wtf", "intent": "BILLING_CHARGE"}
+{"text": "my loan rpymnt faild to ddct ths mnth", "intent": "LOAN_QUERY"}
+{"text": "I'll sort it out at the branch tomorrow", "intent": "OTHER"}
+{"text": "How many wrong PIN attempts before the account locks?!!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "My account reactivation request has been pending for 2 weeks omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "i accidentally transfrred to a closed account", "intent": "TRANSFER_PROBLEM"}
+{"text": "Fraud on my account please help urgently", "intent": "FRAUD_DISPUTE"}
+{"text": "I can't access my account and my card is also not working omg", "intent": "CARD_ISSUE"}
+{"text": "My facial recognition keeps failing on the app", "intent": "ACCOUNT_ACCESS"}
+{"text": "Card blocked but a charge still went through wtf", "intent": "FRAUD_DISPUTE"}
+{"text": "I need immediate help — I think I have been a victim of a banking scam", "intent": "FRAUD_DISPUTE"}
+{"text": "Why was a penalty fee applied to my account?", "intent": "BILLING_CHARGE"}
+{"text": "The account maintenance fee seems higher than what I agreed to", "intent": "BILLING_CHARGE"}
+{"text": "Tell me more about the accounts and services you offer", "intent": "GENERAL_SUPPORT"}
+{"text": "i can log in on my laptop but nor on my phone", "intent": "ACCOUNT_ACCESS"}
+{"text": "cntctlss pymnt nt wrkng on my crd", "intent": "CARD_ISSUE"}
+{"text": "I want to apply for a student loan???", "intent": "LOAN_QUERY"}
+{"text": "Can my spouse be a guarantor on my loan?", "intent": "LOAN_QUERY"}
+{"text": "How does interbank transfer work?!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "I want to order a premium card, how do I do that?", "intent": "CARD_ISSUE"}
+{"text": "How do I set up a savings goal on the app? wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "How do I make a transfer to another bank? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "i'm usng ths chtbt fr the frst tme", "intent": "OTHER"}
+{"text": "I updated my number at the branch but OTP still goes to old number", "intent": "ACCOUNT_ACCESS"}
+{"text": "i dn't undrstnd ths srvce chrge on my sttmnt", "intent": "BILLING_CHARGE"}
+{"text": "unrecognized payment from my acct via pos", "intent": "FRAUD_DISPUTE"}
+{"text": "wt do u do?", "intent": "OTHER"}
+{"text": "Do you have any zero-interest loan promotions? wtf", "intent": "LOAN_QUERY"}
+{"text": "is there parking at your branch?!!", "intent": "OTHER"}
+{"text": "What is the difference between a term loan and a revolving facility? smh", "intent": "LOAN_QUERY"}
+{"text": "i cn't accss my account and my crd is also blckd", "intent": "ACCOUNT_ACCESS"}
+{"text": "My current account has a fee I didn't know about when I opened it???", "intent": "BILLING_CHARGE"}
+{"text": "what happens to my accnt if i pass away?", "intent": "GENERAL_SUPPORT"}
+{"text": "Why is there a dormancy fee on my account????", "intent": "BILLING_CHARGE"}
+{"text": "My funds were stolen from my account", "intent": "FRAUD_DISPUTE"}
+{"text": "I was charged a fee for an international card transaction I declined!!!", "intent": "BILLING_CHARGE"}
+{"text": "I need to verify my identity to unlock my account", "intent": "ACCOUNT_ACCESS"}
+{"text": "morning boss wtf", "intent": "OTHER"}
+{"text": "How much can I borrow based on my income?!!", "intent": "LOAN_QUERY"}
+{"text": "What are your available banking products? wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "I got a new phone and can't set up the banking app smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "I need to speak to a relationship manager", "intent": "GENERAL_SUPPORT"}
+{"text": "Can I schedule a future-dated transfer????", "intent": "TRANSFER_PROBLEM"}
+{"text": "I just want to say I'm satisfied with your service", "intent": "OTHER"}
+{"text": "I want to talk to someone!!!", "intent": "OTHER"}
+{"text": "a loan rpymnt ws ddctd twce ths mnth", "intent": "LOAN_QUERY"}
+{"text": "cn i schdle a ftre-dtd trnsfr?", "intent": "TRANSFER_PROBLEM"}
+{"text": "trnsfr lmt exceedd errr evn though i'm wthn my daily lmt", "intent": "TRANSFER_PROBLEM"}
+{"text": "are you a rbt?", "intent": "OTHER"}
+{"text": "How much can I borrow based on my income? wtf", "intent": "LOAN_QUERY"}
+{"text": "can i view all my trasactions from the last year?", "intent": "GENERAL_SUPPORT"}
+{"text": "Money moved from my account without my knowledge???", "intent": "FRAUD_DISPUTE"}
+{"text": "How do I dispute a transaction on the app? omg", "intent": "GENERAL_SUPPORT"}
+{"text": "My transfer didn't go through, am I being charged a fee anyway????", "intent": "TRANSFER_PROBLEM"}
+{"text": "I have multiple issues, not sure where to start???", "intent": "OTHER"}
+{"text": "the acct maintenance fee seems higher than what i agreed to", "intent": "BILLING_CHARGE"}
+{"text": "i need a sttmnt of my pndng trnsfrs", "intent": "TRANSFER_PROBLEM"}
+{"text": "My beneficiary was deleted and a transfer went to a wrong person", "intent": "TRANSFER_PROBLEM"}
+{"text": "Someone transferred money out of my account this morning", "intent": "FRAUD_DISPUTE"}
+{"text": "How do I check my account opening date?", "intent": "GENERAL_SUPPORT"}
+{"text": "please reverse an unauthorized transfr from yesterday", "intent": "FRAUD_DISPUTE"}
+{"text": "crd blckd bt a chrge stll wnt through", "intent": "FRAUD_DISPUTE"}
+{"text": "nvm forget it omg", "intent": "OTHER"}
+{"text": "I need a statement of my pending transfers!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "I sent money to an expired account number, please recall wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "Is there a way to log in without OTP when abroad?", "intent": "ACCOUNT_ACCESS"}
+{"text": "My standing order transfer did not execute this month omg", "intent": "TRANSFER_PROBLEM"}
+{"text": "I was debited for an SMS I opted out of", "intent": "BILLING_CHARGE"}
+{"text": "An unknown device logged into my account and made transfers???", "intent": "FRAUD_DISPUTE"}
+{"text": "wht fees apply to my svngs account?", "intent": "BILLING_CHARGE"}
+{"text": "Transfer was queued but never executed", "intent": "TRANSFER_PROBLEM"}
+{"text": "I've been charged an inactivity fee even though I transact monthly!!", "intent": "BILLING_CHARGE"}
+{"text": "I see a debit that looks like a transfer I didn't initiate", "intent": "TRANSFER_PROBLEM"}
+{"text": "my interbank transfer has nor completed after 24 hours", "intent": "TRANSFER_PROBLEM"}
+{"text": "Can I view all my transactions from the last year?!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "extra loan fee was chargd that i didn't expect", "intent": "LOAN_QUERY"}
+{"text": "I want to know about your foreign currency accounts", "intent": "GENERAL_SUPPORT"}
+{"text": "i wnt to apply fr an ovrdrft fclty", "intent": "LOAN_QUERY"}
+{"text": "i wnt to swtch frm a vriable to a fxd intrst rte loan", "intent": "LOAN_QUERY"}
+{"text": "My loan statement doesn't match my expectations!!!", "intent": "LOAN_QUERY"}
+{"text": "i can see my acnt on web but not on mobile app", "intent": "ACCOUNT_ACCESS"}
+{"text": "I want a reversal of an erroneous service charge", "intent": "BILLING_CHARGE"}
+{"text": "please freeze my acnt, i think it's been compromised", "intent": "FRAUD_DISPUTE"}
+{"text": "do i need a guarntr fr a smll loan?", "intent": "LOAN_QUERY"}
+{"text": "I want to check my loan balance", "intent": "LOAN_QUERY"}
+{"text": "I want to request a replacement card!!", "intent": "CARD_ISSUE"}
+{"text": "Bank charged me for a returned cheque that wasn't my fault", "intent": "BILLING_CHARGE"}
+{"text": "I sent money and the recipient hasn't received it omg", "intent": "TRANSFER_PROBLEM"}
+{"text": "my crrnt account hs a fee i ddn't knw about whn i opnd it", "intent": "BILLING_CHARGE"}
+{"text": "an unknown device logged into my acnt and made transfers", "intent": "FRAUD_DISPUTE"}
+{"text": "I want to know my loan repayment schedule???", "intent": "LOAN_QUERY"}
+{"text": "I want to activate SMS banking???", "intent": "GENERAL_SUPPORT"}
+{"text": "the charg for cash deposits seems higher than before", "intent": "BILLING_CHARGE"}
+{"text": "What's the difference between a current and savings account? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "I'm using this chatbot for the first time smh", "intent": "OTHER"}
+{"text": "My card got declined then money still left somehow wtf", "intent": "FRAUD_DISPUTE"}
+{"text": "Login fails and card declined at the same time", "intent": "ACCOUNT_ACCESS"}
+{"text": "I want to update my contact details on the account???", "intent": "GENERAL_SUPPORT"}
+{"text": "My card PIN is blocked after 3 wrong attempts!!", "intent": "CARD_ISSUE"}
+{"text": "My transfer has been pending for 3 hours!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "Device authorization is not going through smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "fraudulent transaction detected on my acnt", "intent": "FRAUD_DISPUTE"}
+{"text": "Transfer via USSD failed mid-process", "intent": "TRANSFER_PROBLEM"}
+{"text": "I believe my account details were compromised in a data breach", "intent": "FRAUD_DISPUTE"}
+{"text": "Please freeze my account, I think it's been compromised!!!", "intent": "FRAUD_DISPUTE"}
+{"text": "Recipient's bank says they didn't receive the funds I sent wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "forget it I'll figure it out wtf", "intent": "OTHER"}
+{"text": "I got a new number but haven't updated it yet and now I'm locked out???", "intent": "ACCOUNT_ACCESS"}
+{"text": "crd rjctd twce at the atm jst nw", "intent": "CARD_ISSUE"}
+{"text": "My card was swallowed by the ATM wtf", "intent": "CARD_ISSUE"}
+{"text": "i dn't undrstnd why i'm pyng two dffrnt srvce fees", "intent": "BILLING_CHARGE"}
+{"text": "Is there a moratorium option on loans due to financial difficulty? smh", "intent": "LOAN_QUERY"}
+{"text": "do you work on public holidays?", "intent": "OTHER"}
+{"text": "i just need confirmation you recieved my message", "intent": "OTHER"}
+{"text": "App asks for face ID but I disabled it — how to reconfigure?!!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "Strange debit of 50k showed on my app just now", "intent": "FRAUD_DISPUTE"}
+{"text": "Bulk transfer partially completed — some recipients not credited smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "I was billed for paper statements even though I'm on e-statements!!", "intent": "BILLING_CHARGE"}
+{"text": "My beneficiary was deleted and a transfer went to a wrong person!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "Where is the nearest branch to me?", "intent": "GENERAL_SUPPORT"}
+{"text": "the charge for cash deposits seems higher than b4", "intent": "BILLING_CHARGE"}
+{"text": "sorry wrong window", "intent": "OTHER"}
+{"text": "I want to remove a device from my authorized login list", "intent": "ACCOUNT_ACCESS"}
+{"text": "Transfer deducted in stages for one single payment wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "How long does loan approval take?", "intent": "LOAN_QUERY"}
+{"text": "a dbt of 200 dllrs appeard tht i dn't rcgnze", "intent": "FRAUD_DISPUTE"}
+{"text": "Account restricted due to card dispute omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "Why does my card keep declining after midnight?!!!", "intent": "CARD_ISSUE"}
+{"text": "hey there", "intent": "OTHER"}
+{"text": "Why does my card keep getting declined at supermarkets?", "intent": "CARD_ISSUE"}
+{"text": "ths annual fee ws sppsd to be waivd", "intent": "BILLING_CHARGE"}
+{"text": "Transfer via USSD failed mid-process wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "this is a test message", "intent": "OTHER"}
+{"text": "hw lng do intrbnk trnsfrs nrmlly tke?", "intent": "GENERAL_SUPPORT"}
+{"text": "am i elgble fr a loan?", "intent": "LOAN_QUERY"}
+{"text": "Transfer reversed automatically — why did that happen?!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "Why is there a deduction every first of the month?!!", "intent": "BILLING_CHARGE"}
+{"text": "i'm lckd out of my account, please hlp", "intent": "ACCOUNT_ACCESS"}
+{"text": "i ws chrgd fr a trnsction tht ws rvrsd — fee should be rfndd", "intent": "BILLING_CHARGE"}
+{"text": "The loan app on your platform keeps giving an error when I apply!!", "intent": "LOAN_QUERY"}
+{"text": "I've been on hold for 30 minutes", "intent": "OTHER"}
+{"text": "hw do i prt my slry pymnt to your bnk?", "intent": "GENERAL_SUPPORT"}
+{"text": "I don't have my account details handy", "intent": "OTHER"}
+{"text": "My account is showing a debit I cannot account for", "intent": "FRAUD_DISPUTE"}
+{"text": "Account access restricted after failed login attempts", "intent": "ACCOUNT_ACCESS"}
+{"text": "imps transfer nor credited after 6 hours", "intent": "TRANSFER_PROBLEM"}
+{"text": "Someone transferred money out of my account this morning smh", "intent": "FRAUD_DISPUTE"}
+{"text": "Transfer to another bank failed, money not returned", "intent": "TRANSFER_PROBLEM"}
+{"text": "i updtd my nmbr at the brnch bt otp stll goes to old nmbr", "intent": "ACCOUNT_ACCESS"}
+{"text": "Can I receive PayPal funds into your account? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "greetings from Lagos", "intent": "OTHER"}
+{"text": "abc wtf", "intent": "OTHER"}
+{"text": "i think the txn charges on my account are wrong", "intent": "BILLING_CHARGE"}
+{"text": "not sure if this is the right channel???", "intent": "OTHER"}
+{"text": "good mrnng", "intent": "OTHER"}
+{"text": "my bsnss account hd a lrge unauthrzd dbt ths mrnng", "intent": "FRAUD_DISPUTE"}
+{"text": "There's a suspicious withdrawal I didn't authorize", "intent": "FRAUD_DISPUTE"}
+{"text": "tap to pay nor working on my card", "intent": "CARD_ISSUE"}
+{"text": "How do I port my salary payment to your bank????", "intent": "GENERAL_SUPPORT"}
+{"text": "How do I make a transfer to another bank?!!", "intent": "GENERAL_SUPPORT"}
+{"text": "My card is showing as invalid when I try to pay online", "intent": "CARD_ISSUE"}
+{"text": "got an otp i didn't request — someone may be trying to access my acct", "intent": "ACCOUNT_ACCESS"}
+{"text": "What kinds of loans do you offer?!!!", "intent": "LOAN_QUERY"}
+{"text": "How do I change my card PIN?!!!", "intent": "CARD_ISSUE"}
+{"text": "My card started declining after I reported an issue last week!!", "intent": "CARD_ISSUE"}
+{"text": "How do I reset my banking app password? omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "Account accessed from a new location I don't recognize smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "i cn't use my crd fr onlne pymnts", "intent": "CARD_ISSUE"}
+{"text": "money moved from my acct without my knowledge", "intent": "FRAUD_DISPUTE"}
+{"text": "My card transaction keeps prompting for PIN even for small amounts!!!", "intent": "CARD_ISSUE"}
+{"text": "Loan disbursed but amount is short by 10%!!!", "intent": "LOAN_QUERY"}
+{"text": "My loan repayment failed to deduct this month omg", "intent": "LOAN_QUERY"}
+{"text": "Bank charged me for a returned cheque that wasn't my fault???", "intent": "BILLING_CHARGE"}
+{"text": "Where is the nearest branch to me?!!", "intent": "GENERAL_SUPPORT"}
+{"text": "My account is showing transactions I didn't do over the past week", "intent": "FRAUD_DISPUTE"}
+{"text": "My account shows a 'custody fee' I never authorized!!", "intent": "BILLING_CHARGE"}
+{"text": "oh wait I found the answer myself omg", "intent": "OTHER"}
+{"text": "How do I change my card PIN? omg", "intent": "CARD_ISSUE"}
+{"text": "OTP not received on my phone wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "I received an OTP I never requested — account may be compromised omg", "intent": "FRAUD_DISPUTE"}
+{"text": "My interbank transfer has not completed after 24 hours", "intent": "TRANSFER_PROBLEM"}
+{"text": "Can't sign in on mobile or web — both failing???", "intent": "ACCOUNT_ACCESS"}
+{"text": "How many wrong PIN attempts before the account locks? wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "How do I set a spending limit on my account?", "intent": "GENERAL_SUPPORT"}
+{"text": "i wnt to dspte a trnsction frm a vndr i've nvr dealt wth", "intent": "FRAUD_DISPUTE"}
+{"text": "Large transfer to myself between accounts not showing on the other side smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "who do I talk to about everything?!!!", "intent": "OTHER"}
+{"text": "ok thanks smh", "intent": "OTHER"}
+{"text": "What are the benefits of upgrading my account? omg", "intent": "GENERAL_SUPPORT"}
+{"text": "How do I calculate my monthly loan installment? smh", "intent": "LOAN_QUERY"}
+{"text": "I just need confirmation you received my message", "intent": "OTHER"}
+{"text": "I want to apply for a personal loan???", "intent": "LOAN_QUERY"}
+{"text": "My card was disabled after I updated the app smh", "intent": "CARD_ISSUE"}
+{"text": "A loan repayment was deducted twice this month!!!", "intent": "LOAN_QUERY"}
+{"text": "i ws nt infrmd of any fee chngs yt i see hghr chrgs", "intent": "BILLING_CHARGE"}
+{"text": "Money was transferred out of my account from an old device I no longer use", "intent": "FRAUD_DISPUTE"}
+{"text": "My business account had a large unauthorized debit this morning???", "intent": "FRAUD_DISPUTE"}
+{"text": "I can't access my account on the web since yesterday omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "What is your bank's SWIFT code????", "intent": "GENERAL_SUPPORT"}
+{"text": "I see a 'management charge' on my account — I didn't agree to this!!", "intent": "BILLING_CHARGE"}
+{"text": "I paid for something online and the card was declined but I was charged!!", "intent": "CARD_ISSUE"}
+{"text": "wht is your bnk's swft cde?", "intent": "GENERAL_SUPPORT"}
+{"text": "unauthorized debit on my acnt last night", "intent": "FRAUD_DISPUTE"}
+{"text": "the fee strctre on my account chngd wthout any cmmnction", "intent": "BILLING_CHARGE"}
+{"text": "I travel next week, how do I unlock international card use?!!", "intent": "CARD_ISSUE"}
+{"text": "How do I set up a savings goal on the app?!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "my loan ws sppsd to be dsbrsd bt hsn't arrvd", "intent": "LOAN_QUERY"}
+{"text": "dis app is fine sha wtf", "intent": "OTHER"}
+{"text": "i wnt to splt my account into dffrnt sb-accounts", "intent": "GENERAL_SUPPORT"}
+{"text": "wht is the dffrnce btween a trm loan and a rvlvng fclty?", "intent": "LOAN_QUERY"}
+{"text": "My savings account shows withdrawals I never made", "intent": "FRAUD_DISPUTE"}
+{"text": "Loan disbursed but amount is short by 10%", "intent": "LOAN_QUERY"}
+{"text": "can i recieve international transfers to my account?", "intent": "GENERAL_SUPPORT"}
+{"text": "i lst my phne and my crd and my id", "intent": "OTHER"}
+{"text": "I lost my phone with the banking app — how do I revoke access? omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "hw do i enble trnsction ntfctions?", "intent": "GENERAL_SUPPORT"}
+{"text": "Where is the nearest branch to me?!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "login is failing with 'user nor found' error", "intent": "ACCOUNT_ACCESS"}
+{"text": "My fee was supposed to be pro-rated but I was charged in full", "intent": "BILLING_CHARGE"}
+{"text": "My account shows as inactive — I haven't used it in a while", "intent": "ACCOUNT_ACCESS"}
+{"text": "I never received the goods but was charged — possibly fraud", "intent": "FRAUD_DISPUTE"}
+{"text": "my acct was suspended for suspicious activity but it was me", "intent": "ACCOUNT_ACCESS"}
+{"text": "cn a mnr hve their own account?", "intent": "GENERAL_SUPPORT"}
+{"text": "my transfr disappeared and i'm not sure if it was fraud or a tech issue", "intent": "TRANSFER_PROBLEM"}
+{"text": "my crd is nt wrkng at the ps", "intent": "CARD_ISSUE"}
+{"text": "Card transaction limit is too low, how do I increase it? omg", "intent": "CARD_ISSUE"}
+{"text": "My standing order transfer did not execute this month!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "How does the salary-deduction loan repayment work? omg", "intent": "LOAN_QUERY"}
+{"text": "i applied fr a smll bsnss loan 2 weeks ago wth no feedbck", "intent": "LOAN_QUERY"}
+{"text": "I need a loan for home renovation — what are my options? omg", "intent": "LOAN_QUERY"}
+{"text": "i need to report something nor related to my account", "intent": "OTHER"}
+{"text": "USSD deducted me and no transfer happened — could be fraud wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "What fees apply to my savings account? wtf", "intent": "BILLING_CHARGE"}
+{"text": "I want to block my card temporarily???", "intent": "CARD_ISSUE"}
+{"text": "Transfer via USSD failed mid-process???", "intent": "TRANSFER_PROBLEM"}
+{"text": "My login history shows a successful sign-in I don't recognize!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "my funds were stolen from my acnt", "intent": "FRAUD_DISPUTE"}
+{"text": "acct access restricted after failed login attempts", "intent": "ACCOUNT_ACCESS"}
+{"text": "The verification email went to spam and the link is expired now!!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "hw do i swtch my account to pprlss sttmnts?", "intent": "GENERAL_SUPPORT"}
+{"text": "My card arrived but I can't activate it through the app smh", "intent": "CARD_ISSUE"}
+{"text": "My account balance is lower than expected with no transactions to explain it???", "intent": "FRAUD_DISPUTE"}
+{"text": "i gt a nw phne and cn't st up the bnkng app", "intent": "ACCOUNT_ACCESS"}
+{"text": "I want to apply for a student loan!!!", "intent": "LOAN_QUERY"}
+{"text": "Is there a way to reduce or waive my monthly account fees?!!!", "intent": "BILLING_CHARGE"}
+{"text": "I saw an ad about instant loans, how does it work?", "intent": "LOAN_QUERY"}
+{"text": "i need an emrgncy loan tdy urgntly", "intent": "LOAN_QUERY"}
+{"text": "Can I restructure my loan payments?", "intent": "LOAN_QUERY"}
+{"text": "Bulk transfer partially completed — some recipients not credited omg", "intent": "TRANSFER_PROBLEM"}
+{"text": "I want to change my login PIN wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "The fee structure on my account changed without any communication???", "intent": "BILLING_CHARGE"}
+{"text": "can i have multiple accnts?", "intent": "GENERAL_SUPPORT"}
+{"text": "two days ago my accnt was accessed from a different device without my knowledge", "intent": "FRAUD_DISPUTE"}
+{"text": "Got an OTP I didn't request — someone may be trying to access my account smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "I need to stop a transfer that I just initiated omg", "intent": "TRANSFER_PROBLEM"}
+{"text": "mny ddctd at atm bt i wsn't near any atm at tht tme", "intent": "FRAUD_DISPUTE"}
+{"text": "hw do i dwnload my account sttmnt?", "intent": "GENERAL_SUPPORT"}
+{"text": "trnsction fee ws applied incrrctly on my account", "intent": "BILLING_CHARGE"}
+{"text": "I did not authorize this payment to an unknown merchant", "intent": "FRAUD_DISPUTE"}
+{"text": "I'm trying to do a real-time payment but it keeps failing", "intent": "TRANSFER_PROBLEM"}
+{"text": "Card keeps getting declined on international websites only!!", "intent": "CARD_ISSUE"}
+{"text": "I applied for a payday loan and want to know when it will be processed smh", "intent": "LOAN_QUERY"}
+{"text": "I need a loan for business purposes", "intent": "LOAN_QUERY"}
+{"text": "the txn at 11:45pm last night was not done by me", "intent": "FRAUD_DISPUTE"}
+{"text": "wht is your prcss fr hndlng cmplaints?", "intent": "GENERAL_SUPPORT"}
+{"text": "Am I eligible for a loan?", "intent": "LOAN_QUERY"}
+{"text": "I set up a future transfer last week but it didn't run on the date smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "An unknown device logged into my account and made transfers", "intent": "FRAUD_DISPUTE"}
+{"text": "cntctlss lmt on my crd is too lw, cn it be raisd?", "intent": "CARD_ISSUE"}
+{"text": "This annual fee was supposed to be waived!!!", "intent": "BILLING_CHARGE"}
+{"text": "Money moved from my account without my knowledge!!!", "intent": "FRAUD_DISPUTE"}
+{"text": "my acct reactivation request has been pending for 2 weeks", "intent": "ACCOUNT_ACCESS"}
+{"text": "I want to apply for an overdraft facility!!!", "intent": "LOAN_QUERY"}
+{"text": "I sent money via USSD and it debited me but didn't arrive", "intent": "TRANSFER_PROBLEM"}
+{"text": "Do you have any zero-interest loan promotions? omg", "intent": "LOAN_QUERY"}
+{"text": "After app update, neither card nor login works", "intent": "ACCOUNT_ACCESS"}
+{"text": "can you help me understand a suspicous entry on my last statement?", "intent": "FRAUD_DISPUTE"}
+{"text": "USSD deducted me and no transfer happened — could be fraud???", "intent": "TRANSFER_PROBLEM"}
+{"text": "The loan app on your platform keeps giving an error when I apply", "intent": "LOAN_QUERY"}
+{"text": "I need my account statement for visa purposes???", "intent": "GENERAL_SUPPORT"}
+{"text": "Can I reverse a transfer I made by mistake?!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "i trnsfrrd to myslf acrss two of my own accounts and it ddn't crdt", "intent": "TRANSFER_PROBLEM"}
+{"text": "can you help me with something personal?!!", "intent": "OTHER"}
+{"text": "i ws dbtd fr an sms i optd out of", "intent": "BILLING_CHARGE"}
+{"text": "The loan app on your platform keeps giving an error when I apply smh", "intent": "LOAN_QUERY"}
+{"text": "thx omg", "intent": "OTHER"}
+{"text": "I was billed for paper statements even though I'm on e-statements!!!", "intent": "BILLING_CHARGE"}
+{"text": "are you a robot????", "intent": "OTHER"}
+{"text": "please ignre ths", "intent": "OTHER"}
+{"text": "Someone used my card without my permission!!", "intent": "FRAUD_DISPUTE"}
+{"text": "sent money to wrong name, pls help reverse", "intent": "TRANSFER_PROBLEM"}
+{"text": "my account reactvtion rquest hs been pndng fr 2 weeks", "intent": "ACCOUNT_ACCESS"}
+{"text": "is customer service available 24/7?", "intent": "OTHER"}
+{"text": "snd me your email addrss", "intent": "OTHER"}
+{"text": "I want to activate my account again", "intent": "ACCOUNT_ACCESS"}
+{"text": "I need to stop a transfer that I just initiated", "intent": "TRANSFER_PROBLEM"}
+{"text": "How long does a replacement card take to arrive?!!!", "intent": "CARD_ISSUE"}
+{"text": "extra loan fee ws chrgd tht i ddn't expct", "intent": "LOAN_QUERY"}
+{"text": "When is my next loan repayment due? omg", "intent": "LOAN_QUERY"}
+{"text": "can you give me my acnt number?", "intent": "GENERAL_SUPPORT"}
+{"text": "how do i unlock my accnt?", "intent": "ACCOUNT_ACCESS"}
+{"text": "How do I link my account to a payment app? omg", "intent": "GENERAL_SUPPORT"}
+{"text": "Transaction fee was applied incorrectly on my account", "intent": "BILLING_CHARGE"}
+{"text": "call me back when available wtf", "intent": "OTHER"}
+{"text": "nothing in particular", "intent": "OTHER"}
+{"text": "My loan was approved but funds haven't hit my account after 3 days", "intent": "LOAN_QUERY"}
+{"text": "helo hw r u???", "intent": "OTHER"}
+{"text": "i was tricked into approving a txn — want to dispute it", "intent": "FRAUD_DISPUTE"}
+{"text": "call me back when available!!", "intent": "OTHER"}
+{"text": "i ws chrgd twce fr the sme atm wthdrwl", "intent": "BILLING_CHARGE"}
+{"text": "trnsfr is stck in pndng snce ystrdy", "intent": "TRANSFER_PROBLEM"}
+{"text": "I received a call asking for OTP and gave it — now money is gone", "intent": "FRAUD_DISPUTE"}
+{"text": "I need an emergency loan today wtf", "intent": "LOAN_QUERY"}
+{"text": "is cstmr srvce availble 24/7?", "intent": "OTHER"}
+{"text": "I want to dispute a duplicate transfer charge", "intent": "TRANSFER_PROBLEM"}
+{"text": "My account is locked after too many login attempts", "intent": "ACCOUNT_ACCESS"}
+{"text": "i wnt to actvte my account again", "intent": "ACCOUNT_ACCESS"}
+{"text": "hey there wtf", "intent": "OTHER"}
+{"text": "i hve proof of trnsfr bt rcpient hsn't been crdtd", "intent": "TRANSFER_PROBLEM"}
+{"text": "I want to check the status of my loan application", "intent": "LOAN_QUERY"}
+{"text": "i hve a gnrl question wth no spcfc urgncy", "intent": "OTHER"}
+{"text": "My partner's supplementary card is not working", "intent": "CARD_ISSUE"}
+{"text": "I want to block my card temporarily", "intent": "CARD_ISSUE"}
+{"text": "What is the process for changing my account name after marriage?", "intent": "GENERAL_SUPPORT"}
+{"text": "Can you give me my account number?", "intent": "GENERAL_SUPPORT"}
+{"text": "Unexpected debit on my account — could be fraud or billing error smh", "intent": "FRAUD_DISPUTE"}
+{"text": "I want a longer repayment period for my loan???", "intent": "LOAN_QUERY"}
+{"text": "Account locked after wrong PIN, now card is rejected!!!", "intent": "CARD_ISSUE"}
+{"text": "What are the benefits of upgrading my account?", "intent": "GENERAL_SUPPORT"}
+{"text": "My payroll transfer didn't go through today!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "my account ws dbtd fr a srvce i nvr sbscrbd to", "intent": "BILLING_CHARGE"}
+{"text": "There's a charge labeled 'account upgrade' but I didn't upgrade omg", "intent": "BILLING_CHARGE"}
+{"text": "I can see my account on web but not on mobile app???", "intent": "ACCOUNT_ACCESS"}
+{"text": "Forgot my card PIN, how do I reset it?!!", "intent": "CARD_ISSUE"}
+{"text": "I accidentally transferred to a closed account!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "the loan app on your pltfrm keeps gvng an errr whn i apply", "intent": "LOAN_QUERY"}
+{"text": "my crd ws dclnd and thn i gt a fraud alrt rght aftr", "intent": "CARD_ISSUE"}
+{"text": "trnsfr fee ws chrgd bt trnsfr faild — wnt fee rfndd", "intent": "TRANSFER_PROBLEM"}
+{"text": "i see a 'management charge' on my acct — i didn't agree to this", "intent": "BILLING_CHARGE"}
+{"text": "fraud on my account please hlp urgntly", "intent": "FRAUD_DISPUTE"}
+{"text": "I want a refund for a service charge that was applied in error omg", "intent": "BILLING_CHARGE"}
+{"text": "How do I enable transaction notifications?", "intent": "GENERAL_SUPPORT"}
+{"text": "I'm questioning the interest calculation on my account deductions smh", "intent": "BILLING_CHARGE"}
+{"text": "Login fails and card declined at the same time wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "NIP transfer failed but I was debited smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "I want to block all transactions until fraud investigation is done!!", "intent": "FRAUD_DISPUTE"}
+{"text": "I was charged more than the advertised rate for transfers smh", "intent": "BILLING_CHARGE"}
+{"text": "I applied for a payday loan and want to know when it will be processed wtf", "intent": "LOAN_QUERY"}
+{"text": "how do i get an accnt confirmation letter?", "intent": "GENERAL_SUPPORT"}
+{"text": "thnks bye", "intent": "OTHER"}
+{"text": "How long does a replacement card take to arrive?!!", "intent": "CARD_ISSUE"}
+{"text": "I need flight information wtf", "intent": "OTHER"}
+{"text": "i got an alert for a transaction i did nor do", "intent": "FRAUD_DISPUTE"}
+{"text": "My loan deduction is more than the agreed monthly payment smh", "intent": "LOAN_QUERY"}
+{"text": "i've repaid the loan in full, when will my acnt be updated?", "intent": "LOAN_QUERY"}
+{"text": "Confirmation SMS said successful but beneficiary has nothing smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "How do I update my BVN on my account?", "intent": "GENERAL_SUPPORT"}
+{"text": "I want to know if my transfer of last Thursday went through???", "intent": "TRANSFER_PROBLEM"}
+{"text": "I need my account statement for visa purposes wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "I received a letter about loan default, but I've been paying wtf", "intent": "LOAN_QUERY"}
+{"text": "I can't access my account on the web since yesterday!!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "My card shows expired but the date hasn't passed!!", "intent": "CARD_ISSUE"}
+{"text": "I was charged a currency conversion fee I didn't expect!!!", "intent": "BILLING_CHARGE"}
+{"text": "Is there a waiting period before I can apply for another loan? smh", "intent": "LOAN_QUERY"}
+{"text": "There's a login from an unknown device on my account omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "Contactless limit on my card is too low, can it be raised?!!!", "intent": "CARD_ISSUE"}
+{"text": "can you book a ticket for me?!!!", "intent": "OTHER"}
+{"text": "wht are your availble bnkng prdcts?", "intent": "GENERAL_SUPPORT"}
+{"text": "I never received the goods but was charged — possibly fraud smh", "intent": "FRAUD_DISPUTE"}
+{"text": "My loan agreement says one rate but I'm being charged a different rate smh", "intent": "LOAN_QUERY"}
+{"text": "What are the limits for USSD transfers? smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "I joined a free tier but still got billed", "intent": "BILLING_CHARGE"}
+{"text": "Can I make a transfer from my account on the web portal?", "intent": "GENERAL_SUPPORT"}
+{"text": "I want a breakdown of all charges on my account this month???", "intent": "BILLING_CHARGE"}
+{"text": "i enbld 2fa on wrng nmbr — hw to fx ths?", "intent": "ACCOUNT_ACCESS"}
+{"text": "I was charged for a transaction that was reversed — fee should be refunded omg", "intent": "BILLING_CHARGE"}
+{"text": "How does interbank transfer work?", "intent": "TRANSFER_PROBLEM"}
+{"text": "what else can you help me with? omg", "intent": "OTHER"}
+{"text": "Transfer fee was charged but transfer failed — want fee refunded wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "i wnt to cntst an early clsre fee applied to my svngs", "intent": "BILLING_CHARGE"}
+{"text": "My salary account is showing deductions I didn't agree to!!!", "intent": "BILLING_CHARGE"}
+{"text": "my crd hs a wrng nme prntd on it — hw do i fx tht?", "intent": "CARD_ISSUE"}
+{"text": "Please reverse an unauthorized transfer from yesterday omg", "intent": "FRAUD_DISPUTE"}
+{"text": "Forgot my card PIN, how do I reset it? smh", "intent": "CARD_ISSUE"}
+{"text": "i need a txi", "intent": "OTHER"}
+{"text": "Account locked after wrong PIN, now card is rejected smh", "intent": "CARD_ISSUE"}
+{"text": "I have a complaint about a customer service interaction???", "intent": "GENERAL_SUPPORT"}
+{"text": "transfr went out but no one on the other end received it — smells like fraud", "intent": "FRAUD_DISPUTE"}
+{"text": "How do I report a complaint formally?", "intent": "GENERAL_SUPPORT"}
+{"text": "Why is there a dormancy fee on my account?", "intent": "BILLING_CHARGE"}
+{"text": "My card was cloned I think, please block and reissue???", "intent": "CARD_ISSUE"}
+{"text": "my crd is shwng as invld whn i try to py onlne", "intent": "CARD_ISSUE"}
+{"text": "I just want to say I'm satisfied with your service smh", "intent": "OTHER"}
+{"text": "cn nn-slry earnrs gt a loan?", "intent": "LOAN_QUERY"}
+{"text": "I want a breakdown of all charges on my account this month!!", "intent": "BILLING_CHARGE"}
+{"text": "i rceivd an sms about a trnsction i nvr mde at a ps", "intent": "FRAUD_DISPUTE"}
+{"text": "Transfer went to wrong number on USSD", "intent": "TRANSFER_PROBLEM"}
+{"text": "i wnt to rst my scrty questions", "intent": "ACCOUNT_ACCESS"}
+{"text": "I ordered a new card last month but haven't received it", "intent": "CARD_ISSUE"}
+{"text": "the app looks different today omg", "intent": "OTHER"}
+{"text": "International wire sent 5 days ago but not received overseas!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "hi", "intent": "OTHER"}
+{"text": "I received an SMS about a transaction I never made at a POS omg", "intent": "FRAUD_DISPUTE"}
+{"text": "my prtnr's spplmntry crd is nt wrkng", "intent": "CARD_ISSUE"}
+{"text": "i ws tld to cntct you by a friend", "intent": "OTHER"}
+{"text": "I received a new card but it shows an error when I try to activate omg", "intent": "CARD_ISSUE"}
+{"text": "abc omg", "intent": "OTHER"}
+{"text": "Can my spouse be a guarantor on my loan? smh", "intent": "LOAN_QUERY"}
+{"text": "Why does my card keep declining after midnight? smh", "intent": "CARD_ISSUE"}
+{"text": "plz freeze my account, i think it's been compromised", "intent": "FRAUD_DISPUTE"}
+{"text": "please connect me to customer care omg", "intent": "OTHER"}
+{"text": "mrnng bss", "intent": "OTHER"}
+{"text": "I need an emergency access code to log in without OTP smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "i was chargd a fee for downloading my own bank statement", "intent": "BILLING_CHARGE"}
+{"text": "I want to know about your cashback program", "intent": "GENERAL_SUPPORT"}
+{"text": "i can't access my acct on the web since yesterday", "intent": "ACCOUNT_ACCESS"}
+{"text": "charges on my business account are nor matching the agreed tariff", "intent": "BILLING_CHARGE"}
+{"text": "why does my crd keep gttng dclnd at sprmrkts?", "intent": "CARD_ISSUE"}
+{"text": "hw do i fnd my account srt cde?", "intent": "GENERAL_SUPPORT"}
+{"text": "my account was debited while i was on vacation — i made no txns", "intent": "FRAUD_DISPUTE"}
+{"text": "My loan was supposed to be disbursed but hasn't arrived", "intent": "LOAN_QUERY"}
+{"text": "How do I port my salary payment to your bank?!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "How do I set up a fixed deposit? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "How do I make a transfer to another bank?", "intent": "GENERAL_SUPPORT"}
+{"text": "can you help me with something personal?", "intent": "OTHER"}
+{"text": "I want to dispute a loan-related charge on my account", "intent": "LOAN_QUERY"}
+{"text": "How do I get a bank verification number? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "I need to stop a transfer that I just initiated???", "intent": "TRANSFER_PROBLEM"}
+{"text": "trnsfr to anthr bnk faild, mny nt rtrnd", "intent": "TRANSFER_PROBLEM"}
+{"text": "i need a sttmnt of my loan rpymnt hstry", "intent": "LOAN_QUERY"}
+{"text": "I want a breakdown of all charges on my account this month", "intent": "BILLING_CHARGE"}
+{"text": "Do you charge for international transfers????", "intent": "BILLING_CHARGE"}
+{"text": "i'm tryng to do a real-tme pymnt bt it keeps failng", "intent": "TRANSFER_PROBLEM"}
+{"text": "How do I close my account?", "intent": "GENERAL_SUPPORT"}
+{"text": "There's a recurring small deduction I didn't authorize — fee or fraud?", "intent": "BILLING_CHARGE"}
+{"text": "A debit alert came through at 3am — I was asleep and didn't do it smh", "intent": "FRAUD_DISPUTE"}
+{"text": "my loan ws apprvd bt fnds hvn't ht my account aftr 3 dys", "intent": "LOAN_QUERY"}
+{"text": "i want to dispute a txn from a vendor i've never dealt with", "intent": "FRAUD_DISPUTE"}
+{"text": "I want to upgrade from a debit card to a credit card", "intent": "CARD_ISSUE"}
+{"text": "there's a suspicous withdrawal i didn't authorize", "intent": "FRAUD_DISPUTE"}
+{"text": "My bank transfer failed but the money left my account???", "intent": "TRANSFER_PROBLEM"}
+{"text": "i need to rprt smthng nt rltd to my account", "intent": "OTHER"}
+{"text": "How do I set up mobile banking?", "intent": "GENERAL_SUPPORT"}
+{"text": "Why was money taken from my account without any transaction I made? smh", "intent": "BILLING_CHARGE"}
+{"text": "cn i gt a loan against my slry?", "intent": "LOAN_QUERY"}
+{"text": "cn you explain hw your mble app wrks?", "intent": "GENERAL_SUPPORT"}
+{"text": "i accidentally transferred to a closed accnt", "intent": "TRANSFER_PROBLEM"}
+{"text": "my crd hsn't arrvd yt — it's been 2 weeks", "intent": "CARD_ISSUE"}
+{"text": "I want to apply for a student loan smh", "intent": "LOAN_QUERY"}
+{"text": "transfr via ussd failed mid-process", "intent": "TRANSFER_PROBLEM"}
+{"text": "I got phished and money left my account omg", "intent": "FRAUD_DISPUTE"}
+{"text": "my savings acct shows withdrawals i never made", "intent": "FRAUD_DISPUTE"}
+{"text": "My loan repayment failed to deduct this month!!!", "intent": "LOAN_QUERY"}
+{"text": "I want to report a fraudulent debit", "intent": "FRAUD_DISPUTE"}
+{"text": "i dn't wnt to be chrgd fr ths srvce anymre", "intent": "BILLING_CHARGE"}
+{"text": "please ignore this!!", "intent": "OTHER"}
+{"text": "I already have a loan, can I top it up? smh", "intent": "LOAN_QUERY"}
+{"text": "i gt two alrts fr one prchse bt only mde one", "intent": "FRAUD_DISPUTE"}
+{"text": "How do I know how much interest I've paid so far?", "intent": "LOAN_QUERY"}
+{"text": "What's the process for adding a co-signatory to my account? wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "I want to dispute a transaction from a vendor I've never dealt with", "intent": "FRAUD_DISPUTE"}
+{"text": "My fee was supposed to be pro-rated but I was charged in full???", "intent": "BILLING_CHARGE"}
+{"text": "i was charged a fee for an international card txn i declined", "intent": "BILLING_CHARGE"}
+{"text": "beneficiary acct closed but i still sent money there", "intent": "TRANSFER_PROBLEM"}
+{"text": "wrong acct number used and money is gone", "intent": "TRANSFER_PROBLEM"}
+{"text": "i ws chrgd a maintnnce fee i ddn't expct", "intent": "BILLING_CHARGE"}
+{"text": "Confirmation SMS said successful but beneficiary has nothing wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "thre's a sbscrption fee ddctd tht i wnt to dspte", "intent": "BILLING_CHARGE"}
+{"text": "The account maintenance fee seems higher than what I agreed to wtf", "intent": "BILLING_CHARGE"}
+{"text": "cn i tlk to a real hmn please?", "intent": "OTHER"}
+{"text": "I want to reactivate a dormant account smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "My loan was supposed to be disbursed but hasn't arrived???", "intent": "LOAN_QUERY"}
+{"text": "Can I use a loan to pay off another loan with you????", "intent": "LOAN_QUERY"}
+{"text": "app login failed and my card trasaction is also failing", "intent": "CARD_ISSUE"}
+{"text": "i ws chrgd a crrncy cnvrsion fee i ddn't expct", "intent": "BILLING_CHARGE"}
+{"text": "The transaction at 11:45pm last night was not done by me", "intent": "FRAUD_DISPUTE"}
+{"text": "i wnt to trce a mssng trnsfr frm 2 dys ago", "intent": "TRANSFER_PROBLEM"}
+{"text": "I want to refinance my current loan", "intent": "LOAN_QUERY"}
+{"text": "Unexpected monthly deduction on my account", "intent": "BILLING_CHARGE"}
+{"text": "What documents do I need to open an account?!!", "intent": "GENERAL_SUPPORT"}
+{"text": "My card has a wrong name printed on it — how do I fix that? wtf", "intent": "CARD_ISSUE"}
+{"text": "i lost my card, plz block it", "intent": "CARD_ISSUE"}
+{"text": "txn fee was applied incorrectly on my account", "intent": "BILLING_CHARGE"}
+{"text": "I received no prior notice before fees were deducted from my account", "intent": "BILLING_CHARGE"}
+{"text": "intrbnk trnsfr ddctd bt rtrnd wth errr cde", "intent": "TRANSFER_PROBLEM"}
+{"text": "Account accessed from a new location I don't recognize", "intent": "ACCOUNT_ACCESS"}
+{"text": "i snt mny and the rcpient hsn't rceivd it", "intent": "TRANSFER_PROBLEM"}
+{"text": "The transfer receipt shows successful but bank denies credit!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "when does the bank open tomorrow?", "intent": "OTHER"}
+{"text": "I received a call asking for OTP and gave it — now money is gone!!", "intent": "FRAUD_DISPUTE"}
+{"text": "my account ws deactvtd aftr inctvty", "intent": "ACCOUNT_ACCESS"}
+{"text": "Why can't I use my card for subscriptions?!!!", "intent": "CARD_ISSUE"}
+{"text": "My old card expired and the new one doesn't arrive for another week???", "intent": "CARD_ISSUE"}
+{"text": "Login is failing with 'user not found' error!!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "Wrong account number used and money is gone wtf", "intent": "TRANSFER_PROBLEM"}
+{"text": "i need to verify my identity to unlock my acct", "intent": "ACCOUNT_ACCESS"}
+{"text": "Funds transferred out and not reached beneficiary — fraud or error?", "intent": "TRANSFER_PROBLEM"}
+{"text": "my name is John", "intent": "OTHER"}
+{"text": "I was charged an overdraft fee but I didn't overdraw omg", "intent": "BILLING_CHARGE"}
+{"text": "ur bank is nice!!", "intent": "OTHER"}
+{"text": "I need to stop a transfer that I just initiated!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "can you book a ticket for me? smh", "intent": "OTHER"}
+{"text": "please connect me to customer care", "intent": "OTHER"}
+{"text": "hw lng does loan apprvl tke?", "intent": "LOAN_QUERY"}
+{"text": "i gt phshd and mny lft my account", "intent": "FRAUD_DISPUTE"}
+{"text": "the 'frgt psswrd' lnk on the wb doesn't wrk", "intent": "ACCOUNT_ACCESS"}
+{"text": "The verification email went to spam and the link is expired now smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "i'm being chargd for a premium account i downgraded from", "intent": "BILLING_CHARGE"}
+{"text": "crd gttng dclnd snce ystrdy mrnng", "intent": "CARD_ISSUE"}
+{"text": "I'm being billed for insurance I never signed up for omg", "intent": "BILLING_CHARGE"}
+{"text": "i wnt to learn about your invstmnt prdcts", "intent": "GENERAL_SUPPORT"}
+{"text": "I came to say hi to support wtf", "intent": "OTHER"}
+{"text": "I travel next week, how do I unlock international card use? smh", "intent": "CARD_ISSUE"}
+{"text": "my account is dsbld, hw do i reactvte it?", "intent": "ACCOUNT_ACCESS"}
+{"text": "I can't use my card for online payments omg", "intent": "CARD_ISSUE"}
+{"text": "My account profile doesn't load after I sign in???", "intent": "ACCOUNT_ACCESS"}
+{"text": "I missed a loan repayment, what happens now?", "intent": "LOAN_QUERY"}
+{"text": "trnsfr ddctd in stgs fr one sngle pymnt", "intent": "TRANSFER_PROBLEM"}
+{"text": "Can I open an account without visiting a branch????", "intent": "GENERAL_SUPPORT"}
+{"text": "i wnt to knw about your freign crrncy accounts", "intent": "GENERAL_SUPPORT"}
+{"text": "is there parking at your branch?", "intent": "OTHER"}
+{"text": "my acct shows a 'custody fee' i never authorized", "intent": "BILLING_CHARGE"}
+{"text": "My device is registered but I keep getting 'unrecognized device' error!!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "tp to py nt wrkng on my crd", "intent": "CARD_ISSUE"}
+{"text": "i'm locked out of my account, abeg help", "intent": "ACCOUNT_ACCESS"}
+{"text": "my acct is locked after too many login attempts", "intent": "ACCOUNT_ACCESS"}
+{"text": "my acct was deactivated after inactivity", "intent": "ACCOUNT_ACCESS"}
+{"text": "Confirmation SMS said successful but beneficiary has nothing", "intent": "TRANSFER_PROBLEM"}
+{"text": "I recently moved and the card was delivered to my old address wtf", "intent": "CARD_ISSUE"}
+{"text": "My card has a wrong name printed on it — how do I fix that????", "intent": "CARD_ISSUE"}
+{"text": "Money moved from my account without my knowledge", "intent": "FRAUD_DISPUTE"}
+{"text": "my partner's supplementary card is nor working", "intent": "CARD_ISSUE"}
+{"text": "What happens to my account if I pass away?", "intent": "GENERAL_SUPPORT"}
+{"text": "I want to add a beneficiary for transfers smh", "intent": "GENERAL_SUPPORT"}
+{"text": "I was charged a fee for an international card transaction I declined", "intent": "BILLING_CHARGE"}
+{"text": "i've been tryng to lg in fr 2 dys — nthng wrks", "intent": "ACCOUNT_ACCESS"}
+{"text": "I was billed for a service I cancelled last month???", "intent": "BILLING_CHARGE"}
+{"text": "Account suspended, how do I get it back? smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "Forgot my internet banking password smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "i thnk smeone stle my bnkng dtails", "intent": "FRAUD_DISPUTE"}
+{"text": "I see a 'management charge' on my account — I didn't agree to this", "intent": "BILLING_CHARGE"}
+{"text": "the app looks different today???", "intent": "OTHER"}
+{"text": "POS declined my card but my balance is enough", "intent": "CARD_ISSUE"}
+{"text": "👍", "intent": "OTHER"}
+{"text": "Card blocked after a suspicious transaction — fraud or card issue? wtf", "intent": "CARD_ISSUE"}
+{"text": "I want to activate my account again wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "i recieved a letter about loan default, but i've been paying", "intent": "LOAN_QUERY"}
+{"text": "I need a statement of my pending transfers???", "intent": "TRANSFER_PROBLEM"}
+{"text": "wat do u do????", "intent": "OTHER"}
+{"text": "my loan acct shows negative balance — what does that mean?", "intent": "LOAN_QUERY"}
+{"text": "abeg ignore this", "intent": "OTHER"}
+{"text": "I want to reactivate a dormant account wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "My card is showing as invalid when I try to pay online smh", "intent": "CARD_ISSUE"}
+{"text": "The card I use for direct debit is blocked — my bills won't go through smh", "intent": "CARD_ISSUE"}
+{"text": "can i reverse a transfr i made by mistake?", "intent": "TRANSFER_PROBLEM"}
+{"text": "i need to stp a trnsfr tht i jst intiatd", "intent": "TRANSFER_PROBLEM"}
+{"text": "loan dsbrsd bt amount is shrt by 10%", "intent": "LOAN_QUERY"}
+{"text": "Beneficiary account closed but I still sent money there!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "I've been scammed and money left my account smh", "intent": "FRAUD_DISPUTE"}
+{"text": "How do I access my transaction history on USSD????", "intent": "GENERAL_SUPPORT"}
+{"text": "How do I unlock my account?", "intent": "ACCOUNT_ACCESS"}
+{"text": "I was charged twice for the same ATM withdrawal!!", "intent": "BILLING_CHARGE"}
+{"text": "i made a transfr to the wrong account", "intent": "TRANSFER_PROBLEM"}
+{"text": "wrng loan amount ws ddctd frm my account", "intent": "LOAN_QUERY"}
+{"text": "hlo hw r u", "intent": "OTHER"}
+{"text": "what's the weather like? wtf", "intent": "OTHER"}
+{"text": "There's a subscription fee deducted that I want to dispute wtf", "intent": "BILLING_CHARGE"}
+{"text": "the app looks different today", "intent": "OTHER"}
+{"text": "I'd like to send feedback about the app design!!!", "intent": "OTHER"}
+{"text": "Wrong PIN locked both my card and my account!!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "I want to increase my loan amount mid-term — is that possible?", "intent": "LOAN_QUERY"}
+{"text": "I travel next week, how do I unlock international card use? omg", "intent": "CARD_ISSUE"}
+{"text": "Is there a way to make payments without data?", "intent": "GENERAL_SUPPORT"}
+{"text": "My account reactivation request has been pending for 2 weeks", "intent": "ACCOUNT_ACCESS"}
+{"text": "acct accessed from a new location i don't recognize", "intent": "ACCOUNT_ACCESS"}
+{"text": "My account was debited while I was on vacation — I made no transactions!!!", "intent": "FRAUD_DISPUTE"}
+{"text": "I'm on a new SIM and can't receive OTP for my old number smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "Interbank transfer deducted but returned with error code", "intent": "TRANSFER_PROBLEM"}
+{"text": "I'm having a terrible day???", "intent": "OTHER"}
+{"text": "Can my spouse be a guarantor on my loan?!!!", "intent": "LOAN_QUERY"}
+{"text": "Account access restricted after failed login attempts???", "intent": "ACCOUNT_ACCESS"}
+{"text": "trnsfr rvrsd autmtclly — why dd tht hppn?", "intent": "TRANSFER_PROBLEM"}
+{"text": "my funds were stolen from my acct", "intent": "FRAUD_DISPUTE"}
+{"text": "I sent money to the right number but wrong bank — can I recover it?", "intent": "TRANSFER_PROBLEM"}
+{"text": "testing 1 2 3", "intent": "OTHER"}
+{"text": "i entrd the crrct otp bt the lgn stll fails", "intent": "ACCOUNT_ACCESS"}
+{"text": "My salary account is showing deductions I didn't agree to smh", "intent": "BILLING_CHARGE"}
+{"text": "I saw an unusual transaction on USSD mini statement???", "intent": "FRAUD_DISPUTE"}
+{"text": "do you sell insurance?!!", "intent": "OTHER"}
+{"text": "international wire sent 5 days ago but not rcvd overseas", "intent": "TRANSFER_PROBLEM"}
+{"text": "How do I apply for services on your platform? omg", "intent": "GENERAL_SUPPORT"}
+{"text": "Someone used my card without my permission", "intent": "FRAUD_DISPUTE"}
+{"text": "My card was rejected at the fuel station today wtf", "intent": "CARD_ISSUE"}
+{"text": "Money left my account but the recipient says they got nothing!!!", "intent": "FRAUD_DISPUTE"}
+{"text": "How do I link my NIN to my bank account? omg", "intent": "GENERAL_SUPPORT"}
+{"text": "cn you hlp me fnd a rstaurnt?", "intent": "OTHER"}
+{"text": "I never got an OTP but my card was used online omg", "intent": "CARD_ISSUE"}
+{"text": "Strange debit of 50k showed on my app just now smh", "intent": "FRAUD_DISPUTE"}
+{"text": "Why is there a dormancy fee on my account?!!", "intent": "BILLING_CHARGE"}
+{"text": "I got phished and money left my account!!", "intent": "FRAUD_DISPUTE"}
+{"text": "I want to order a premium card, how do I do that?!!!", "intent": "CARD_ISSUE"}
+{"text": "wrong pin locked both my card and my accnt", "intent": "ACCOUNT_ACCESS"}
+{"text": "i think the transaction charges on my acnt are wrong", "intent": "BILLING_CHARGE"}
+{"text": "i thnk thre's an errr in hw my srvce chrgs are cmptd", "intent": "BILLING_CHARGE"}
+{"text": "I already have a loan, can I top it up????", "intent": "LOAN_QUERY"}
+{"text": "What is your process for handling complaints? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "This annual fee was supposed to be waived", "intent": "BILLING_CHARGE"}
+{"text": "I need to activate my new card!!", "intent": "CARD_ISSUE"}
+{"text": "My loan was supposed to be disbursed but hasn't arrived omg", "intent": "LOAN_QUERY"}
+{"text": "my account is lckd aftr too mny lgn attmpts", "intent": "ACCOUNT_ACCESS"}
+{"text": "My card was flagged and now I can't use it!!", "intent": "CARD_ISSUE"}
+{"text": "App login failed and my card transaction is also failing omg", "intent": "CARD_ISSUE"}
+{"text": "failed transfer nor reversed after 3 days", "intent": "TRANSFER_PROBLEM"}
+{"text": "i received a letter abt loan default, but i've been paying", "intent": "LOAN_QUERY"}
+{"text": "why cn't i use my crd fr sbscrptions?", "intent": "CARD_ISSUE"}
+{"text": "Money left my account but the recipient says they got nothing", "intent": "FRAUD_DISPUTE"}
+{"text": "There's a debit that happened after I requested account closure", "intent": "FRAUD_DISPUTE"}
+{"text": "My card was rejected at POS even though I have balance???", "intent": "CARD_ISSUE"}
+{"text": "i trvl nxt week, hw do i unlck intrntionl crd use?", "intent": "CARD_ISSUE"}
+{"text": "There's a debit that happened after I requested account closure???", "intent": "FRAUD_DISPUTE"}
+{"text": "I need to file a fraud complaint", "intent": "FRAUD_DISPUTE"}
+{"text": "i recieved a call asking for otp and gave it — now money is gone", "intent": "FRAUD_DISPUTE"}
+{"text": "My account was auto-enrolled in a fee-based service without my knowledge", "intent": "BILLING_CHARGE"}
+{"text": "ll ok", "intent": "OTHER"}
+{"text": "do you sll insrnce?", "intent": "OTHER"}
+{"text": "i ws chrgd smthng and wnt to knw if it's a fee or fraudlnt", "intent": "BILLING_CHARGE"}
+{"text": "my crd ws clnd i thnk, please blck and reissue", "intent": "CARD_ISSUE"}
+{"text": "I can't access my account and my card is also blocked wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "hw do i knw hw mch intrst i've paid so fr?", "intent": "LOAN_QUERY"}
+{"text": "My old card expired and the new one doesn't arrive for another week!!!", "intent": "CARD_ISSUE"}
+{"text": "Can I get a loan if I already have one with another bank? omg", "intent": "LOAN_QUERY"}
+{"text": "My account is fine but the app won't let me in — server error?!!", "intent": "ACCOUNT_ACCESS"}
+{"text": "morning boss smh", "intent": "OTHER"}
+{"text": "How do I find my account sort code? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "Can I have a zero-balance account? wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "i want to know abt your foreign currency accts", "intent": "GENERAL_SUPPORT"}
+{"text": "Card expired but replacement not received", "intent": "CARD_ISSUE"}
+{"text": "App asks for face ID but I disabled it — how to reconfigure?", "intent": "ACCOUNT_ACCESS"}
+{"text": "why is there a dormancy fee on my acnt?", "intent": "BILLING_CHARGE"}
+{"text": "how do i check my acnt opening date?", "intent": "GENERAL_SUPPORT"}
+{"text": "My transfer didn't go through, am I being charged a fee anyway? smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "hw do i st a spndng lmt on my account?", "intent": "GENERAL_SUPPORT"}
+{"text": "How do I unlock my account? smh", "intent": "ACCOUNT_ACCESS"}
+{"text": "can you help me with something personal? smh", "intent": "OTHER"}
+{"text": "I've repaid the loan in full, when will my account be updated? omg", "intent": "LOAN_QUERY"}
+{"text": "Transfer went out but no one on the other end received it — smells like fraud smh", "intent": "FRAUD_DISPUTE"}
+{"text": "forget it I'll figure it out smh", "intent": "OTHER"}
+{"text": "Transfer is stuck in pending since yesterday smh", "intent": "TRANSFER_PROBLEM"}
+{"text": "Account access restricted after failed login attempts wtf", "intent": "ACCOUNT_ACCESS"}
+{"text": "Can I make a transfer from my account on the web portal?!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "Card keeps getting declined on international websites only smh", "intent": "CARD_ISSUE"}
+{"text": "please investigate suspicious txns on my acct", "intent": "FRAUD_DISPUTE"}
+{"text": "Login is failing with 'user not found' error", "intent": "ACCOUNT_ACCESS"}
+{"text": "Unexpected monthly deduction on my account!!", "intent": "BILLING_CHARGE"}
+{"text": "pls jst help me smh", "intent": "OTHER"}
+{"text": "mnthly ddction appeard tht i nvr agreed to", "intent": "BILLING_CHARGE"}
+{"text": "Why does my card keep getting declined at supermarkets????", "intent": "CARD_ISSUE"}
+{"text": "i made a transfer to the wrong acct", "intent": "TRANSFER_PROBLEM"}
+{"text": "Tell me more about the accounts and services you offer wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "There's a recurring small deduction I didn't authorize — fee or fraud? omg", "intent": "BILLING_CHARGE"}
+{"text": "I need help registering for online banking for the first time omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "I need to speak to a relationship manager!!!", "intent": "GENERAL_SUPPORT"}
+{"text": "crd ws usd aftr i rprtd it lst — tht's fraud rght?", "intent": "FRAUD_DISPUTE"}
+{"text": "Transfer took 2 days to arrive — I want to know why???", "intent": "TRANSFER_PROBLEM"}
+{"text": "cn i chnge my loan rpymnt dte?", "intent": "LOAN_QUERY"}
+{"text": "my pyrll trnsfr ddn't go through tdy", "intent": "TRANSFER_PROBLEM"}
+{"text": "I want to activate SMS banking wtf", "intent": "GENERAL_SUPPORT"}
+{"text": "The charge on my account is for goods I never ordered!!!", "intent": "FRAUD_DISPUTE"}
+{"text": "I want to contest an early closure fee applied to my savings", "intent": "BILLING_CHARGE"}
+{"text": "tll me about your loan prdcts", "intent": "LOAN_QUERY"}
+{"text": "Card declined then an unknown charge appeared on my account wtf", "intent": "CARD_ISSUE"}
+{"text": "asdfghjkl!!!", "intent": "OTHER"}
+{"text": "Money left my account for a transfer but no one knows what happened to it", "intent": "TRANSFER_PROBLEM"}
+{"text": "Can I make a transfer from my account on the web portal? smh", "intent": "GENERAL_SUPPORT"}
+{"text": "Can I get a physical card if I only have a virtual one? smh", "intent": "CARD_ISSUE"}
+{"text": "I need a loan for home renovation — what are my options?!!!", "intent": "LOAN_QUERY"}
+{"text": "I was not informed of any fee changes yet I see higher charges", "intent": "BILLING_CHARGE"}
+{"text": "i want to add a beneficiary for transfrs", "intent": "GENERAL_SUPPORT"}
+{"text": "I applied for a card upgrade 3 weeks ago with no update???", "intent": "CARD_ISSUE"}
+{"text": "I got a fraud warning from my bank but don't know what transaction triggered it!!", "intent": "FRAUD_DISPUTE"}
+{"text": "I changed my phone number and now I can't get OTP omg", "intent": "ACCOUNT_ACCESS"}
+{"text": "Is there a way to reduce or waive my monthly account fees?", "intent": "BILLING_CHARGE"}
+{"text": "account rstrctd due to crd dspte", "intent": "ACCOUNT_ACCESS"}
+{"text": "Strange recurring charge I don't recognize, might be fraud", "intent": "FRAUD_DISPUTE"}
+{"text": "i wnt to actvte sms bnkng", "intent": "GENERAL_SUPPORT"}
+{"text": "my bank transfer failed but the money left my acct", "intent": "TRANSFER_PROBLEM"}
+{"text": "A debit alert came through at 3am — I was asleep and didn't do it omg", "intent": "FRAUD_DISPUTE"}
+{"text": "i wnt to knw my outstndng loan amount", "intent": "LOAN_QUERY"}
+{"text": "I want to know what the 'other charges' line item is on my statement???", "intent": "BILLING_CHARGE"}
+{"text": "I want to report suspicious activity before more money disappears!!!", "intent": "FRAUD_DISPUTE"}
+{"text": "I was debited for a failed transaction — why am I being charged?!!!", "intent": "BILLING_CHARGE"}
+{"text": "i'm nt sre wht i wnt", "intent": "OTHER"}
+{"text": "I'm being charged for a premium account I downgraded from omg", "intent": "BILLING_CHARGE"}
+{"text": "how do i close my acnt?", "intent": "GENERAL_SUPPORT"}
+{"text": "i see a trnsction i nvr mde", "intent": "FRAUD_DISPUTE"}
+{"text": "Card keeps getting declined on international websites only", "intent": "CARD_ISSUE"}
+{"text": "I never got an OTP but my card was used online", "intent": "CARD_ISSUE"}
+{"text": "I want a breakdown of all charges on my account this month omg", "intent": "BILLING_CHARGE"}
+{"text": "I need flight information", "intent": "OTHER"}
+{"text": "i need a rfrnce nmbr fr a trnsction i dd lst week", "intent": "GENERAL_SUPPORT"}
+{"text": "I was logged out automatically and can't get back in???", "intent": "ACCOUNT_ACCESS"}
+{"text": "I don't understand why I'm paying two different service fees omg", "intent": "BILLING_CHARGE"}
+{"text": "I want to know the total cost of the loan including fees", "intent": "LOAN_QUERY"}
+{"text": "my accnt was debited for a service i never subscribed to", "intent": "BILLING_CHARGE"}
+{"text": "My loan account shows negative balance — what does that mean?", "intent": "LOAN_QUERY"}
+{"text": "I have seven issues — which do I start with? wtf", "intent": "OTHER"}
+{"text": "I need a letter confirming my loan has been fully repaid", "intent": "LOAN_QUERY"}
+{"text": "Two-factor authentication code is not arriving", "intent": "ACCOUNT_ACCESS"}
+{"text": "can I rate my experience?", "intent": "OTHER"}
+{"text": "illegal activity on my acct since yesterday", "intent": "FRAUD_DISPUTE"}
+{"text": "USSD deducted me and no transfer happened — could be fraud omg", "intent": "TRANSFER_PROBLEM"}
+{"text": "My card has a wrong name printed on it — how do I fix that?", "intent": "CARD_ISSUE"}
+{"text": "I can't access my account and my card is also not working", "intent": "CARD_ISSUE"}
+{"text": "My transfer disappeared and I'm not sure if it was fraud or a tech issue!!!", "intent": "TRANSFER_PROBLEM"}
+{"text": "why was a penalty fee applied to my acnt?", "intent": "BILLING_CHARGE"}
+{"text": "My PIN was reset but I still can't access the account", "intent": "ACCOUNT_ACCESS"}
+{"text": "you're really helpful", "intent": "OTHER"}
+{"text": "what are the benefits of upgrading my acct?", "intent": "GENERAL_SUPPORT"}
+{"text": "How much is the monthly maintenance fee for my account?!!", "intent": "BILLING_CHARGE"}
+{"text": "I want to temporarily suspend my card while traveling omg", "intent": "CARD_ISSUE"}
+{"text": "My card is not working at the POS", "intent": "CARD_ISSUE"}
+{"text": "My card hasn't arrived yet — it's been 2 weeks!!!", "intent": "CARD_ISSUE"}
+{"text": "I don't understand this service charge on my statement smh", "intent": "BILLING_CHARGE"}
+{"text": "I already have a loan, can I top it up?!!!", "intent": "LOAN_QUERY"}

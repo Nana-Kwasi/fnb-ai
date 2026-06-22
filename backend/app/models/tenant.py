@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 from sqlalchemy import String, Boolean, Numeric, Text, DateTime, JSON
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 from app.database import Base
 from app.db_types import UuidType
 
@@ -14,6 +14,7 @@ class TenantBank(Base):
     country_code: Mapped[str] = mapped_column(String(2), nullable=False)
     api_key_hash: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
     api_key_prefix: Mapped[str] = mapped_column(String(8), nullable=False)
+    logo_path: Mapped[str | None] = mapped_column(Text, nullable=True)
     webhook_url: Mapped[str | None] = mapped_column(Text, nullable=True)
     fraud_threshold: Mapped[float] = mapped_column(Numeric(4, 3), default=0.75)
     care_model: Mapped[str] = mapped_column(String(50), default="phi3")

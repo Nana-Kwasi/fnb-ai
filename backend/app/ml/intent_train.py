@@ -21,6 +21,8 @@ from transformers import (
     TrainingArguments,
 )
 
+from app.model_paths import packaged_care_intent_classifier_train_dir
+
 INTENT_LABELS = [
     "FRAUD_INQUIRY",
     "BALANCE_INQUIRY",
@@ -95,7 +97,7 @@ def main():
     train_ds = IntentDataset(tokenizer, train_examples)
     val_ds = IntentDataset(tokenizer, val_examples)
 
-    out_dir = Path(os.getenv("MODEL_PATH", "/models")).parent / "care" / "intent_classifier"
+    out_dir = packaged_care_intent_classifier_train_dir()
     out_dir.mkdir(parents=True, exist_ok=True)
 
     training_args = TrainingArguments(

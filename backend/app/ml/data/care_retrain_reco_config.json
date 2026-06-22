@@ -1,0 +1,5 @@
+{
+  "trust_green_min": 0.72,
+  "dup_green_max": 0.45,
+  "trust_amber_min": 0.52
+}

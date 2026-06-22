@@ -286,8 +286,8 @@ def load_intent_rules(data_dir: Path | None = None) -> Tuple[List[Dict[str, Any]
     """Load rules from disk.
 
     Priority:
-    1) Explicit bank_chatbot Excel files if present (user-authored training sheet)
-    2) care_intent_rules.json
+    1) care_intent_rules.json (standard, version-controlled defaults)
+    2) Explicit bank_chatbot Excel files if present (user-authored training sheet)
     3) care_intent_rules.xlsx
     4) care_intent_rules.docx
     5) care_intent_rules.csv
@@ -295,8 +295,20 @@ def load_intent_rules(data_dir: Path | None = None) -> Tuple[List[Dict[str, Any]
     if data_dir is None:
         data_dir = Path(__file__).resolve().parent / "data"
 
-    # 1) Prefer explicit bank_chatbot Excel files if the user has dropped one in ml/data,
-    #    but only if they actually contain intents; otherwise continue to JSON.
+    merged_intents: List[Dict[str, Any]] = []
+    merged_out_of_scope: Dict[str, Any] = {}
+
+    # 1) Load standard JSON rules if present, then optionally merge with user Excel.
+    json_path = data_dir / "care_intent_rules.json"
+    if json_path.exists():
+        intents, out_of_scope = load_from_json(json_path)
+        if intents:
+            merged_intents = intents
+            merged_out_of_scope = out_of_scope or {}
+            logger.info("care_rules: loaded %d intents from care_intent_rules.json", len(intents))
+            print(f"[CARE_RULES] loaded {len(intents)} intents from care_intent_rules.json")
+
+    # 2) Merge explicit bank_chatbot Excel files if present; keep compatibility for user-authored sheets.
     for fname in ("bank_chatbot_v2.xlsx", "bank_chatbbot.xlsx", "bank_chatbot_training_data.xlsx"):
         alt = data_dir / fname
         if alt.exists():
@@ -304,11 +316,65 @@ def load_intent_rules(data_dir: Path | None = None) -> Tuple[List[Dict[str, Any]
             if intents:
                 logger.info("care_rules: loaded %d intents from %s", len(intents), fname)
                 print(f"[CARE_RULES] loaded {len(intents)} intents from {fname}")
-                return intents, out_of_scope
-            logger.warning("care_rules: %s returned 0 intents (check sheet 'intents', headers Intent / User Input (Phrase), or pip install openpyxl in app venv)", fname)
-            print(f"[CARE_RULES] {fname} returned 0 intents — check sheet 'intents', headers Intent, User Input (Phrase); or run: pip install openpyxl")
 
-    # 2) Fallback to the standard care_intent_rules.* files
+                by_id: Dict[str, Dict[str, Any]] = {str(i.get("id") or "").strip(): i for i in merged_intents if (i.get("id") or "").strip()}
+                order: List[str] = list(by_id.keys())
+
+                def _extend_unique(dst: Dict[str, Any], key: str, values: List[str]) -> None:
+                    cur = dst.get(key) or []
+                    if not isinstance(cur, list):
+                        cur = [cur]
+                    merged = list(cur)
+                    for v in values:
+                        if v not in merged:
+                            merged.append(v)
+                    dst[key] = merged
+
+                for intent in intents:
+                    intent_id = str(intent.get("id") or "").strip()
+                    if not intent_id:
+                        continue
+                    if intent_id in by_id:
+                        target = by_id[intent_id]
+                        # Prefer existing response fields (JSON), but merge phrases & suggested actions.
+                        for k in ("phrases", "short_phrases", "suggested_actions"):
+                            if intent.get(k):
+                                _extend_unique(target, k, list(intent.get(k) or []))
+                        # Only fill response if it's missing.
+                        if not target.get("response") and intent.get("response"):
+                            target["response"] = intent.get("response")
+                        if not target.get("short_response") and intent.get("short_response"):
+                            target["short_response"] = intent.get("short_response")
+                    else:
+                        by_id[intent_id] = intent
+                        order.append(intent_id)
+
+                # Rebuild with stable order (JSON first, then new Excel intents).
+                merged_intents = [by_id[iid] for iid in order if iid in by_id]
+
+                # Merge out_of_scope: keep JSON response if present.
+                if out_of_scope:
+                    if not merged_out_of_scope.get("response") and out_of_scope.get("response"):
+                        merged_out_of_scope["response"] = out_of_scope.get("response")
+                    if out_of_scope.get("suggested_actions"):
+                        cur = merged_out_of_scope.get("suggested_actions") or []
+                        if not isinstance(cur, list):
+                            cur = [cur]
+                        for a in out_of_scope["suggested_actions"]:
+                            if a not in cur:
+                                cur.append(a)
+                        merged_out_of_scope["suggested_actions"] = cur
+
+                return merged_intents, merged_out_of_scope
+            logger.warning(
+                "care_rules: %s returned 0 intents (check sheet 'intents', headers Intent / User Input (Phrase), or pip install openpyxl in app venv)",
+                fname,
+            )
+            print(
+                f"[CARE_RULES] {fname} returned 0 intents — check sheet 'intents', headers Intent, User Input (Phrase); or run: pip install openpyxl"
+            )
+
+    # 3) Fallback to the standard care_intent_rules.* files
     for ext, loader in [
         (".json", load_from_json),
         (".xlsx", load_from_xlsx),

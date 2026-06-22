@@ -4,7 +4,7 @@ import uuid
 from sqlalchemy import String, Text, JSON
 from sqlalchemy.types import TypeDecorator, LargeBinary
 from sqlalchemy.dialects import postgresql
-from sqlalchemy.dialects.postgresql import ARRAY as PG_ARRAY
+from sqlalchemy.dialects.postgresql import ARRAY as PG_ARRAY, INET as PG_INET
 
 
 class UuidType(TypeDecorator):
@@ -82,3 +82,15 @@ class EmbeddingType(TypeDecorator):
         if isinstance(value, str):
             return json.loads(value) if value else []
         return value
+
+
+class IpAddressType(TypeDecorator):
+    """INET on PostgreSQL; VARCHAR(45) on SQLite (IPv6-safe)."""
+
+    impl = String(45)
+    cache_ok = True
+
+    def load_dialect_impl(self, dialect):
+        if dialect.name == "postgresql":
+            return dialect.type_descriptor(PG_INET())
+        return dialect.type_descriptor(String(45))

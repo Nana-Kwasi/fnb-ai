@@ -18,6 +18,8 @@ class Transaction(Base):
     currency: Mapped[str] = mapped_column(String(3), nullable=False)
     merchant_category: Mapped[str | None] = mapped_column(String(50), nullable=True)
     merchant_name: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    # Stable merchant entity key (MID). If not provided by the core, we fall back to merchant_category.
+    merchant_id: Mapped[str | None] = mapped_column(String(255), nullable=True)
     location_country: Mapped[str | None] = mapped_column(String(2), nullable=True)
     location_city: Mapped[str | None] = mapped_column(String(100), nullable=True)
     device_id: Mapped[str | None] = mapped_column(String(255), nullable=True)

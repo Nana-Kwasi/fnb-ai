@@ -5,6 +5,13 @@
 body {
   margin: 0;
   font-family: "DM Mono", "Courier New", monospace;
+  color: #f1f5f9;
+}
+
+@layer base {
+  ::selection {
+    background: rgba(56, 189, 248, 0.35);
+  }
 }
 
 @keyframes pulse {
